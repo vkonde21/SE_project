@@ -1,6 +1,8 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const hbs = require('hbs');
+
 require('dotenv').config();
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology:true});
@@ -10,14 +12,36 @@ connection.once('open', () => {
 })
 const app = express();
 const port = process.env.port || 5000;
-const expressLayouts = require('express-ejs-layouts');
 
-app.use(expressLayouts);
-app.set('views', "/Users/vaishnavikonde/Documents/SEM_VI/SE_project/Farms/src/views");
-app.set('view engine', 'ejs');
+var handlebars = hbs.create({
+    layoutsDir:  '/Users/vaishnavikonde/Documents/SEM_VI/SE_project/Farms/src/views/layouts',
+    helpers      : {
+        section: function(name, options){
+            if(!this._sections) this._sections = {};
+            this._sections[name] = options.fn(this);
+            return null;
+        }
+    },
+    extname: 'hbs',
+    defaultLayout: 'layout'
+    });
 
+
+//console.log(handlebars)
 app.use(cors());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); //to parse json data
+app.set('view engine', 'hbs');
+app.set('views', "/Users/vaishnavikonde/Documents/SEM_VI/SE_project/Farms/src/views");
+app.set('view options', { layout: 'layouts/layout.hbs' });
+hbs.registerHelper("section", function(name, options){
+    if(!this._sections) this._sections = {};
+    this._sections[name] = options.fn(this);
+    return null;
+});
+hbs.layoutsDir = '/Users/vaishnavikonde/Documents/SEM_VI/SE_project/Farms/src/views/layouts';
+//hbs.
+
 
 const userRouter = require('./routes/users');
 app.use('/users', userRouter);

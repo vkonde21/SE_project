@@ -1,10 +1,19 @@
-<div class="row mt-5">
+{{#section 'title'}}
+    <title>Register</title>
+{{/section}}
+{{#section 'link'}}
+<link
+      rel="stylesheet"
+      href="https://bootswatch.com/4/journal/bootstrap.min.css"
+    />
+{{/section}}
+<div class="container">
+  <div class="row mt-5">
     <div class="col-md-6 m-auto">
       <div class="card card-body">
         <h1 class="text-center mb-3">
           <i class="fas fa-user-plus"></i> Register
         </h1>
-        
         <form action="/users/register" method="POST">
           <div class="form-group">
             <label for="name">Name</label>
@@ -14,7 +23,7 @@
               name="username"
               class="form-control"
               placeholder="Enter Name"
-              value="<%= typeof name != 'undefined' ? name : '' %>"
+              
             />
           </div>
           <div class="form-group">
@@ -25,7 +34,7 @@
               name="email"
               class="form-control"
               placeholder="Enter Email"
-              value="<%= typeof email != 'undefined' ? email : '' %>"
+              
             />
           </div>
           <div class="form-group">
@@ -58,3 +67,4 @@
       </div>
     </div>
   </div>
+</div>

@@ -17,11 +17,6 @@ router.route('/register').post(async (req, res) => {
     const type = req.body.type;
     const is_verified = false;
     const newUser = new User({username, password:hashedPassword, email, type, is_verified});
-    /* for matching the passwords
-    const isMatch = bcrypt.compare('plain', hashedpass);
-    if(isMatch){
-        //passwords matched
-    }*/
     newUser.save()
       .then(async () => {const token = await newUser.generateAuthToken();
         res.json({"msg":'User added!', token})})
@@ -29,12 +24,16 @@ router.route('/register').post(async (req, res) => {
       
   });
 
+router.route('/login').get((req, res) => {
+    res.render('login');
+});
 router.route('/login').post(async (req, res) => {
-    
     try{
         const user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
         const token = await user.generateAuthToken();
-        res.send({user, token: token});
+        res.user = user;
+        res.header.Authorization = token;
+        res.render('dashboard', {user, token: token, title:"dashboard"});
     }
     catch(e){
         res.status(400).send();
