@@ -31,8 +31,7 @@ router.route('/login').post(async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
         const token = await user.generateAuthToken();
-        res.user = user;
-        res.header.Authorization = token;
+        res.cookie("jwt", token, {secure: true, httpOnly: true})
         res.render('dashboard', {user, token: token, title:"dashboard"});
     }
     catch(e){
@@ -46,7 +45,7 @@ router.route('/logout').post(auth, async (req, res) => {
             return token.token !== req.token;
         });
         await req.user.save();
-        res.send();
+        res.render("homepage");
     }
     catch(e){
         res.status(500).send({error:"Logout failed!" });
@@ -58,7 +57,7 @@ router.route('/logoutall').post(auth, async (req, res) => {
     try{
         req.user.tokens = [];
         await req.user.save();
-        res.send();
+        res.render("homepage");
     }
     catch(e){
         res.status(500).send({error:"Logout failed!" });

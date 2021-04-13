@@ -1,6 +1,7 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const cookieParser = require('cookie-parser')
 const hbs = require('hbs');
 
 require('dotenv').config();
@@ -40,7 +41,7 @@ hbs.registerHelper("section", function(name, options){
     return null;
 });
 hbs.layoutsDir = '/Users/vaishnavikonde/Documents/SEM_VI/SE_project/Farms/src/views/layouts';
-//hbs.
+app.use(cookieParser());
 
 
 const userRouter = require('./routes/users');
