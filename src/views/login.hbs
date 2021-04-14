@@ -31,7 +31,8 @@
     </div>
     <br>
     <!-- form -->
-    <section id="form-dom">
+    <form method="POST" action="/users/login">
+      <section id="form-dom">
         <div class="container" style="margin-bottom: 30px; opacity: 90%;">
           <div class="row">
             <div class="col-12">
@@ -51,8 +52,8 @@
                           <input
                             type="text"
                             class="form-control"
-                            placeholder="Login Id"
-                            name="login-email"
+                            placeholder="Enter username"
+                            name="username"
                           />
                         </div>
                       </div>
@@ -62,7 +63,7 @@
                             type="Password"
                             class="form-control"
                             placeholder="Password"
-                            name="login-password"
+                            name="password"
                           />
                         </div>
                       </div>
@@ -122,6 +123,7 @@
           </div>
         </div>
       </section>
+    </form>
     </div>
       <footer id="contact" class="footer-area section-padding" style="opacity: 80%;">
         <div class="container">
