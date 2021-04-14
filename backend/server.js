@@ -3,7 +3,7 @@ const cors = require('cors');
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser')
 const hbs = require('hbs');
-
+const multer = require('multer');
 require('dotenv').config();
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology:true});
@@ -25,8 +25,7 @@ hbs.registerHelper("section", function(name, options){
     return null;
 });
 app.use(cookieParser());
-app.use(express.static("public"));
-console.log("hello");
+app.use(express.static("../src/public"));
 const userRouter = require('./routes/users');
 app.use('/users', userRouter);
 app.use('/', require("./routes/index"));
