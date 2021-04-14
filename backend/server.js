@@ -26,6 +26,7 @@ hbs.registerHelper("section", function(name, options){
 });
 app.use(cookieParser());
 app.use(express.static("public"));
+console.log("hello");
 const userRouter = require('./routes/users');
 app.use('/users', userRouter);
 app.use('/', require("./routes/index"));
