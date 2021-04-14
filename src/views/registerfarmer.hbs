@@ -45,7 +45,7 @@
                   Register as a Farmer
                 </h1>
                 <div class="design">
-                  <form id="register-form">
+                  <form id="register-form" action="/users/registerfarmer" method="POST" enctype="multipart/form-data">
                     <h3></h3>
                     <div class="row">
                       <div class="col">
@@ -53,7 +53,7 @@
                           type="text"
                           class="form-control"
                           placeholder="Full Name"
-                          name="register-name"
+                          name="registername"
                         />
                       </div>
                     </div>
@@ -73,7 +73,7 @@
                           type="email"
                           class="form-control"
                           placeholder="Email Id"
-                          name="register-email"
+                          name="email"
                         />
                       </div>
                     </div>
@@ -83,7 +83,7 @@
                           type="Password"
                           class="form-control"
                           placeholder="Password"
-                          name="login-password"
+                          name="password"
                         />
                       </div>
                     </div>
@@ -103,10 +103,10 @@
                             Do you need an investor?
                         </div>
                         <div class="col-2">
-                            <input type="radio" name="investoryes">Yes</input>
+                            <input type="radio" name="investoryes" value="1">Yes</input>
                         </div>
                         <div class="col-2">   
-                            <input type="radio" name="investorno">No</input>
+                            <input type="radio" name="investorno" value="0">No</input>
                         </div>
                     </div>
                     <br>
@@ -115,17 +115,18 @@
                             Do you need buyers for your organic produce?
                         </div>
                         <div class="col-2">
-                            <input type="radio" name="buyeryes">Yes</input>
+                            <input type="radio" name="buyeryes" value="1">Yes</input>
                         </div>
                         <div class="col-2">   
-                            <input type="radio" name="buyerno">No</input>
+                            <input type="radio" name="buyerno" value="0">No</input>
                         </div>
                     </div>
                     <br>
                     <div class="row">
                       <div class="col">
                         <input
-                          type="text"
+                          type="number"
+                          step="0.01"
                           class="form-control"
                           placeholder="Area of land(in acres)"
                           name="landarea"
@@ -141,6 +142,19 @@
                           placeholder="Land ownership proof"
                           name="landpaper"
                           id="landpaper"
+                        />
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <label for="aadhar">Upload organic farm certificate:</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          placeholder="Orgaanic farm certificate"
+                          name="certificate"
+                          id="certificate"
                         />
                       </div>
                     </div>
