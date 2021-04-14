@@ -1,0 +1,233 @@
+
+    {{#section 'style'}}
+    .cover {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1 0 auto;
+    }
+    #contact {
+      flex-shrink: 0;
+    }
+    #mygif {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+    {{/section}}
+  
+    
+  
+  <div class="cover">
+  <img src="/img/crops.gif" id="mygif" alt="...">
+  <div class="content">
+    <br><br>
+    <section id="form-dom" class="services">
+      <div class="container" style="margin-bottom: 30px; opacity:90%">
+        <div class="row">
+          <div class="col-12">
+            <div class="col-12 col-md-8 col-lg-6 log-style">
+              <div id="form-main">
+                <h1
+                  class="section-title wow fadeInUp animated"
+                  data-wow-delay="0.2s"
+                  style="
+                    visibility: visible;
+                    -webkit-animation-delay: 0.2s;
+                    -moz-animation-delay: 0.2s;
+                    animation-delay: 0.2s;
+                  "
+                >
+                  Register as a Farmer
+                </h1>
+                <div class="design">
+                  <form id="register-form">
+                    <h3></h3>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Full Name"
+                          name="register-name"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Username"
+                          name="username"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="email"
+                          class="form-control"
+                          placeholder="Email Id"
+                          name="register-email"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="Password"
+                          class="form-control"
+                          placeholder="Password"
+                          name="login-password"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="Password"
+                          class="form-control"
+                          placeholder="Confirm Password"
+                          name="login-password"
+                        />
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-5">
+                            Do you need an investor?
+                        </div>
+                        <div class="col-2">
+                            <input type="radio" name="investoryes">Yes</input>
+                        </div>
+                        <div class="col-2">   
+                            <input type="radio" name="investorno">No</input>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-8">
+                            Do you need buyers for your organic produce?
+                        </div>
+                        <div class="col-2">
+                            <input type="radio" name="buyeryes">Yes</input>
+                        </div>
+                        <div class="col-2">   
+                            <input type="radio" name="buyerno">No</input>
+                        </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Area of land(in acres)"
+                          name="landarea"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="aadhar">Upload land ownership proof:</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          placeholder="Land ownership proof"
+                          name="landpaper"
+                          id="landpaper"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                       <div class="col-lg-4 col-md-4 col-3"></div> 
+                       <div class="col">
+                      <button
+                        type="submit"
+                        href=""
+                        class="btn btn-common btn-nv-sty"
+                        style="width: 50%;"
+                      >
+                        Register
+                      </button>
+                    </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col-md-2 col-1 col-lg-2"></div>
+                      <div class="col">
+                        <a href="login" style="font-size: 20px">Already registered? Login here!</a>
+                      </div>
+                    </div>
+
+                    <div class="row">
+                      <div class="col">
+                        <p class="error text-danger" align="center"></p>
+                        <p class="success text-success" align="center"></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-6"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+      <footer id="contact" class="footer-area section-padding" style="opacity: 80%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <h3>QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="login">LOGIN</a></li>
+                        <li><a href="register">REGISTER</a></li>
+                        <li><a href="about.html">ABOUT ORGANIQUE</a></li>
+                        <li><a href="contact.html">CONTACT US</a></li>
+                        <li><a href="help.html">HELP</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Go to Top Link -->
+    <a href="#" class="back-to-top">
+        <i class="lni-chevron-up"></i>
+    </a>
+
+    
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+
+                $(this).addClass('transition');
+            }, function() {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    </div>

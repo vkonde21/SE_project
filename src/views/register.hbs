@@ -1,65 +1,140 @@
-{{#section 'title'}}
-    <title>Register</title>
-{{/section}}
 
-<div class="container">
-  <div class="row mt-5">
-    <div class="col-md-6 m-auto">
-      <div class="card card-body">
-        <h1 class="text-center mb-3">
-          <i class="fas fa-user-plus"></i> Register
-        </h1>
-        <form action="/users/register" method="POST">
-          <div class="form-group">
-            <label for="name">Name</label>
-            <input
-              type="name"
-              id="name"
-              name="username"
-              class="form-control"
-              placeholder="Enter Name"
-              
-            />
+    {{#section 'style'}}
+    .cover {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1 0 auto;
+    }
+    #contact {
+      flex-shrink: 0;
+    }
+    #mygif {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+    {{/section}}
+  
+    
+  
+  <div class="cover">
+  <img src="/img/crops.gif" id="mygif" alt="...">
+  <div class="content">
+    <br><br>
+    <section id="form-dom" class="services">
+      <div class="container" style="margin-bottom: 30px; opacity:90%">
+        <div class="row">
+          <div class="col-12">
+            <div class="col-12 col-md-12 col-lg-10 log-style">
+              <div id="form-main">
+                <h1
+                  class="section-title wow fadeInUp animated"
+                  data-wow-delay="0.2s"
+                  style="
+                    visibility: visible;
+                    -webkit-animation-delay: 0.2s;
+                    -moz-animation-delay: 0.2s;
+                    animation-delay: 0.2s;
+                  "
+                >
+                  Register
+                </h1>
+                <div class="design">
+                  <form id="register-form">
+                    <h3></h3>
+                    <div class="row">
+                      <div class="col">
+                        <a href="registerfarmer" class="btn btn-common btn-nv-sty" style="width: 100%;">Register as farmer</a>
+                      </div>
+                      <div class="col">
+                        <a href="registerinvestor" class="btn btn-common btn-nv-sty" style="width: 100%;">Register as investor</a>
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <a href="registerinstitution" class="btn btn-common btn-nv-sty" style="width: 100%;">Register as food-making institution</a>
+                      </div>
+                      <div class="col">
+                        <a href="registerbuyer" class="btn btn-common btn-nv-sty" style="width: 100%;">Register as buyer</a>
+                      </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                      <div class="col-md-3 col-lg-4"></div>
+                      <div class="col">
+                        <a href="login" style="font-size: 20px">Already registered? Login here!</a>
+                      </div>
+                    </div>
+                    
+
+                    <div class="row">
+                      <div class="col">
+                        <p class="error text-danger" align="center"></p>
+                        <p class="success text-success" align="center"></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-6"></div>
           </div>
-          <div class="form-group">
-            <label for="email">Email</label>
-            <input
-              type="email"
-              id="email"
-              name="email"
-              class="form-control"
-              placeholder="Enter Email"
-              
-            />
-          </div>
-          <div class="form-group">
-            <label for="password">Password</label>
-            <input
-              type="password"
-              id="password"
-              name="password"
-              class="form-control"
-              placeholder="Create Password"
-              value="<%= typeof password != 'undefined' ? password : '' %>"
-            />
-          </div>
-          <!--div class="form-group">
-            <label for="password2">Confirm Password</label>
-            <input
-              type="password"
-              id="password2"
-              name="password2"
-              class="form-control"
-              placeholder="Confirm Password"
-              value="<%= typeof password2 != 'undefined' ? password2 : '' %>"
-            />
-          </div-->
-          <button type="submit" class="btn btn-primary btn-block">
-            Register
-          </button>
-        </form>
-        <p class="lead mt-4">Have An Account? <a href="/users/login">Login</a></p>
+        </div>
       </div>
+    </section>
     </div>
-  </div>
-</div>
+      <footer id="contact" class="footer-area section-padding" style="opacity: 80%;">
+        <div class="container">
+            <div class="row">
+                <div class="col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <h3>QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="login">LOGIN</a></li>
+                        <li><a href="register">REGISTER</a></li>
+                        <li><a href="about.html">ABOUT ORGANIQUE</a></li>
+                        <li><a href="contact.html">CONTACT US</a></li>
+                        <li><a href="help.html">HELP</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Go to Top Link -->
+    <a href="#" class="back-to-top">
+        <i class="lni-chevron-up"></i>
+    </a>
+
+    
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+
+                $(this).addClass('transition');
+            }, function() {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    </div>

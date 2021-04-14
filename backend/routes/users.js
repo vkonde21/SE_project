@@ -27,6 +27,18 @@ router.route('/register').post(async (req, res) => {
 router.route('/login').get((req, res) => {
     res.render('login');
 });
+router.route('/registerfarmer').get((req, res) => {
+    res.render('registerfarmer');
+});
+router.route('/registerinvestor').get((req, res) => {
+    res.render('registerinvestor');
+});
+router.route('/registerinstitution').get((req, res) => {
+    res.render('registerinstitution');
+});
+router.route('/registerbuyer').get((req, res) => {
+    res.render('registerbuyer');
+});
 router.route('/login').post(async (req, res) => {
     try{
         const user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/

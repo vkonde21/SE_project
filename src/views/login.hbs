@@ -1,5 +1,16 @@
 
     {{#section 'style'}}
+    .cover {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1 0 auto;
+    }
+    #contact {
+      flex-shrink: 0;
+    }
     #mygif {
       position: fixed;
       right: 0;
@@ -11,19 +22,20 @@
   
     
   
-  
-  <img src="https://i.pinimg.com/originals/47/7b/7c/477b7c1c999a42694b936fd191279b84.gif" id="mygif" alt="...">
-  <!--img src="/img/d3e4e37f704421b41d9dcab5e95a1ff4.jpg" id="mygif" alt="..."-->
+  <div class="cover">
+  <img src="/img/crops.gif" id="mygif" alt="...">
+  <div class="content">
+    <br><br>
     <div style="text-align: center; position: sticky;">
       <h1> <span style="background-color: #fff; font-size: 50px; color:#016168; padding: 15px; opacity: 80%;">Organique</span> </h1>
     </div>
     <br>
     <!-- form -->
     <section id="form-dom">
-        <div class="container" style="margin-bottom: 30px; opacity: 80%;">
+        <div class="container" style="margin-bottom: 30px; opacity: 90%;">
           <div class="row">
             <div class="col-12">
-              <div class="col-12 col-md-6 log-style">
+              <div class="col-12 col-md-8 col-lg-6 log-style">
                 <div id="form-main">
                   <h1
                     class="section-title wow fadeInUp animated"
@@ -87,10 +99,14 @@
                           </button>
                         </div>
                       </div>
-
-                      <!-- <a href="/signup.html">Don't have an account? Register here!</a> -->
                       <br>
-                      <p style="font-size: 20px;">Don't have an account? Register using the link given below.</p>
+                      <div class="row">
+                      <div class="col-md-2 col-lg-2"></div>
+                      <div class="col">
+                        <a href="register" style="font-size: 20px">Don't have an account? Register here!</a>
+                      </div>
+                    </div>
+                      {{!-- <p style="font-size: 20px;">Don't have an account? Register using the link given below.</p> --}}
                       <div class="row">
                         <div class="col">
                           <p class="error text-danger" align="center"></p>
@@ -106,17 +122,15 @@
           </div>
         </div>
       </section>
-      <footer id="contact" class="footer-area section-padding" style="position: absolute; margin-top: 25px; width: 100%; opacity: 80%;">
+    </div>
+      <footer id="contact" class="footer-area section-padding" style="opacity: 80%;">
         <div class="container">
             <div class="row">
                 <div class="col-12 wow fadeInUp" data-wow-delay="0.4s">
                     <h3>QUICK LINKS</h3>
                     <ul>
-                        <li><a href="login.html">LOGIN</a></li>
-                        <li><a href="farmer-reg.html">REGISTRATION FOR NEW FARMER</a></li>
-                        <li><a href="investor-reg.html">REGISTRATION FOR NEW INVESTOR</a></li>
-                        <li><a href="institution-reg.html">REGISTRATION FOR NEW FOOD-MAKING INSTITUTION</a></li>
-                        <li><a href="buyer-reg.html">REGISTRATION FOR NEW BUYER</a></li>
+                        <li><a href="login">LOGIN</a></li>
+                        <li><a href="register">REGISTER</a></li>
                         <li><a href="about.html">ABOUT ORGANIQUE</a></li>
                         <li><a href="contact.html">CONTACT US</a></li>
                         <li><a href="help.html">HELP</a></li>
@@ -158,4 +172,4 @@
         });
     </script>
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
-    
+    </div>
