@@ -30,7 +30,7 @@
       <div class="container" style="margin-bottom: 30px; opacity:90%">
         <div class="row">
           <div class="col-12">
-            <div class="col-12 col-md-10 col-lg-8 log-style">
+            <div class="col-12 col-md-12 col-lg-8 log-style">
               <div id="form-main">
                 <h1
                   class="section-title wow fadeInUp animated"
@@ -42,7 +42,7 @@
                     animation-delay: 0.2s;
                   "
                 >
-                  Register as a Farmer
+                  Register as a Buyer
                 </h1>
                 <div class="design">
                   <form id="register-form">
@@ -97,55 +97,40 @@
                         />
                       </div>
                     </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-5">
-                            Do you need an investor?
-                        </div>
-                        <div class="col-2">
-                            <input type="radio" name="investoryes">Yes</input>
-                        </div>
-                        <div class="col-2">   
-                            <input type="radio" name="investorno">No</input>
-                        </div>
-                    </div>
-                    <br>
-                    <div class="row">
-                        <div class="col-7">
-                            Do you need buyers for your organic produce?
-                        </div>
-                        <div class="col-2">
-                            <input type="radio" name="buyeryes">Yes</input>
-                        </div>
-                        <div class="col-2">   
-                            <input type="radio" name="buyerno">No</input>
-                        </div>
-                    </div>
-                    <br>
                     <div class="row">
                       <div class="col">
                         <input
                           type="text"
                           class="form-control"
-                          placeholder="Area of land(in acres)"
-                          name="landarea"
+                          placeholder="Pan number"
+                          name="pannumber"
                         />
                       </div>
                     </div>
                     <div class="row">
                       <div class="col">
-                        <label for="landpaper">Upload land ownership proof:</label>
                         <input
-                          type="file"
+                          type="text"
                           class="form-control"
-                          placeholder="Land ownership proof"
-                          name="landpaper"
-                          id="landpaper"
+                          placeholder="Requirements(specify the names of crops you would usually prefer to buy)"
+                          name="pannumber"
                         />
                       </div>
                     </div>
                     <div class="row">
-                       <div class="col-lg-4 col-md-4 col-3"></div> 
+                      <div class="col">
+                        <label for="pancard">Upload image of Pan Card:</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          placeholder="Pancard"
+                          name="pancard"
+                          id="pancard"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                       <div class="col-lg-3 col-md-4 col-3"></div> 
                        <div class="col">
                       <button
                         type="submit"
@@ -159,7 +144,7 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-md-2 col-1 col-lg-3"></div>
+                      <div class="col-md-3 col-1 col-lg-3"></div>
                       <div class="col">
                         <a href="login" style="font-size: 20px">Already registered? Login here!</a>
                       </div>
