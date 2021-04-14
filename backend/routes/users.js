@@ -1,6 +1,9 @@
 const router = require('express').Router();
 let User = require('../models/user.model');
 let Farmer = require('../models/farmer.model');
+let Investor = require('../models/investor.model');
+let Buyer = require('../models/buyer.model');
+let Institution = require('../models/institution.model');
 const bcrypt = require('bcrypt');
 const auth = require("../middleware/auth");
 const multer = require("multer");
@@ -10,14 +13,11 @@ const upload = multer({
         fileSize: 1000000
     },
     fileFilter(req, file, cb) {
-        if (file.fieldname == "landpaper" || file.fieldname == "certificate") {
+        
             if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
                 return cb(new Error('Please upload an image'))
             }
             cb(undefined, true)
-        }
-
-
     }
 })
 
@@ -27,8 +27,9 @@ router.route('/me').get(auth, (req, res) => {
 });
 
 router.get('/register', (req, res) => res.render('register'));
-
-
+router.route('/registerfarmer').get((req, res) => {
+    res.render('registerfarmer');
+});
 router.route('/registerfarmer').post(upload.fields([{
     name: 'landpaper', maxCount: 1
 }, {
@@ -75,22 +76,96 @@ router.route('/registerfarmer').post(upload.fields([{
         res.render('homepage', { msg: "Registration completed successfully" });
     }
     catch (err) {
-        res.status(400).json('error: ' + err)
+        res.status(400).json('error: ' + err);
     }
 
 
 });
-router.route('/registerfarmer').get((req, res) => {
-    res.render('registerfarmer');
-});
+
 router.route('/registerinvestor').get((req, res) => {
     res.render('registerinvestor');
+});
+
+router.route('/registerinvestor').post(upload.single('incomestatement'), async (req, res) => {
+    try{
+        const username = req.body.username;
+        const password = req.body.password;
+        const fullname = req.body.registername;
+        const hashedPassword = await bcrypt.hash(password, 8);
+        const email = req.body.email;
+        const start = req.body.startingrange;
+        const end = req.body.endingrange;
+        const pan_number = req.body.pannumber;
+        const type = "investor";
+        const is_verified = false;
+        const deals = 0;
+        const income_statement = req.file.buffer;
+        const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
+        newUser.save();
+        const user_id = newUser._id;
+        const investor = new Investor({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number});
+        investor.save();
+        res.render('homepage', { msg: "Registration completed successfully" });
+    }
+    catch(err){
+        res.status(400).json('error: ' + err);
+    }
 });
 router.route('/registerinstitution').get((req, res) => {
     res.render('registerinstitution');
 });
+router.route('/registerinstitution').post(upload.single('incomestatement'), async (req, res) => {
+    try{
+        const username = req.body.username;
+        const password = req.body.password;
+        const fullname = req.body.registername;
+        const hashedPassword = await bcrypt.hash(password, 8);
+        const email = req.body.email;
+        const start = req.body.startingrange;
+        const end = req.body.endingrange;
+        const pan_number = req.body.pannumber;
+        const type = "investor";
+        const is_verified = false;
+        const deals = 0;
+        const income_statement = req.file.buffer;
+        /*const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
+        newUser.save();
+        const user_id = newUser._id;
+        const institution = new Institution({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number});
+        institution.save();*/
+        res.render('homepage', { msg: "Registration completed successfully" });
+    }
+    catch(err){
+        res.status(400).json('error: ' + err);
+    }
+});
 router.route('/registerbuyer').get((req, res) => {
     res.render('registerbuyer');
+});
+
+router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) => {
+    try{
+        const username = req.body.username;
+        const password = req.body.password;
+        const fullname = req.body.registername;
+        const hashedPassword = await bcrypt.hash(password, 8);
+        const email = req.body.email;
+        const pan_number = req.body.pannumber;
+        const requirements = req.body.requirements;
+        const type = "buyer";
+        const is_verified = false;
+        const orders = 0;
+        const pan_card = req.file.buffer;
+        const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
+        newUser.save();
+        const user_id = newUser._id;
+        const buyer = new Buyer({_id:user_id, fullname, pan_number, orders, pan_card, requirements });
+        buyer.save();
+        res.render('homepage', {msg:"Registration completed successfully"});
+    }
+    catch(err){
+        res.status(400).json('error: ' + err);
+    }
 });
 
 router.route('/login').get((req, res) => {
