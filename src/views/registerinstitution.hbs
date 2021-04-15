@@ -45,7 +45,7 @@
                   Register as a food-making institution
                 </h1>
                 <div class="design">
-                  <form id="register-form">
+                  <form id="register-form" method="POST" action="registerinstitution" enctype="multipart/form-data">
                     <h3></h3>
                     <div class="row">
                       <div class="col">
@@ -53,7 +53,7 @@
                           type="text"
                           class="form-control"
                           placeholder="Full Name"
-                          name="register-name"
+                          name="registername"
                         />
                       </div>
                     </div>
@@ -73,7 +73,7 @@
                           type="email"
                           class="form-control"
                           placeholder="Email Id"
-                          name="register-email"
+                          name="email"
                         />
                       </div>
                     </div>
@@ -83,7 +83,7 @@
                           type="Password"
                           class="form-control"
                           placeholder="Password"
-                          name="login-password"
+                          name="password"
                         />
                       </div>
                     </div>
@@ -93,20 +93,11 @@
                           type="Password"
                           class="form-control"
                           placeholder="Confirm Password"
-                          name="login-password"
+                          name="password2"
                         />
                       </div>
                     </div>
-                    <div class="row">
-                      <div class="col">
-                        <input
-                          type="text"
-                          class="form-control"
-                          placeholder="Pan number"
-                          name="pannumber"
-                        />
-                      </div>
-                    </div>
+                    
                     <div class="row">
                         <div class="col">Enter the starting and ending amount of range you are interested in investing:</div>
                     </div>
@@ -132,13 +123,13 @@
                     </div>
                     <div class="row">
                       <div class="col">
-                        <label for="pancard">Upload image of Pan Card:</label>
+                        <label for="pancard">Upload image of Business Proof:</label>
                         <input
                           type="file"
                           class="form-control"
                           placeholder="Pancard"
-                          name="pancard"
-                          id="pancard"
+                          name="businessproof"
+                          id="businessproof"
                         />
                       </div>
                     </div>

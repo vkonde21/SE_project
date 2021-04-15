@@ -21,10 +21,14 @@ const institutionSchema = new Schema({
         required:true,
     },
     
-    income_statement:{
+    business_proof:{
         type:Buffer,
         required:true,
     }, 
+
+    requirements:{
+        type:String,
+    }
     
 });
 

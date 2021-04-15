@@ -28,7 +28,9 @@ const investorSchema = new Schema({
         type:Buffer,
         required:true,
     }, 
-    
+    profit_share:{
+        type:Number
+    }
 });
 
 

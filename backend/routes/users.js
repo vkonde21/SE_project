@@ -100,10 +100,11 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         const is_verified = false;
         const deals = 0;
         const income_statement = req.file.buffer;
+        const profit_share = 0;
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;
-        const investor = new Investor({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number});
+        const investor = new Investor({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number, profit_share});
         investor.save();
         res.render('homepage', { msg: "Registration completed successfully" });
     }
@@ -114,7 +115,7 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
 router.route('/registerinstitution').get((req, res) => {
     res.render('registerinstitution');
 });
-router.route('/registerinstitution').post(upload.single('incomestatement'), async (req, res) => {
+router.route('/registerinstitution').post(upload.single('businessproof'), async (req, res) => {
     try{
         const username = req.body.username;
         const password = req.body.password;
@@ -123,16 +124,16 @@ router.route('/registerinstitution').post(upload.single('incomestatement'), asyn
         const email = req.body.email;
         const start = req.body.startingrange;
         const end = req.body.endingrange;
-        const pan_number = req.body.pannumber;
-        const type = "investor";
+        const business_proof = req.file.buffer;
+        const type = "institution";
         const is_verified = false;
         const deals = 0;
-        const income_statement = req.file.buffer;
-        /*const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
+        
+        const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;
-        const institution = new Institution({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number});
-        institution.save();*/
+        const institution = new Institution({ _id: user_id, fullname, deals, business_proof, start, end});
+        institution.save();
         res.render('homepage', { msg: "Registration completed successfully" });
     }
     catch(err){
