@@ -5,11 +5,12 @@ let Investor = require('../models/investor.model');
 let Buyer = require('../models/buyer.model');
 let Institution = require('../models/institution.model');
 let Crop = require('../models/crop.model');
+let Deal = require('../models/deal.model');
 const bcrypt = require('bcrypt');
 const auth = require("../middleware/auth");
 const multer = require("multer");
 const FileType = require('file-type');
-var ab2str = require('arraybuffer-to-string')
+var ab2str = require('arraybuffer-to-string');
 /* to avoid saving the file on the local file system remove the dest parameter from multer*/
 const upload = multer({
     limits: {
@@ -76,7 +77,7 @@ router.route('/registerfarmer').post(upload.fields([{
         const user_id = newUser._id;
         const farmer = new Farmer({ _id: user_id, fullname, deals, orders, buyer_req, investor_req, rating, land_area, land_doc, certificate });
         farmer.save();
-        res.render('login', { msg: "Registration completed successfully" });
+        res.redirect("login");
     }
     catch (err) {
         res.status(400).json('error: ' + err);
@@ -109,7 +110,7 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         const user_id = newUser._id;
         const investor = new Investor({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number, profit_share});
         investor.save();
-        res.render('login', { msg: "Registration completed successfully" });
+        res.redirect("login");
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -137,7 +138,7 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const user_id = newUser._id;
         const institution = new Institution({ _id: user_id, fullname, deals, business_proof, start, end});
         institution.save();
-        res.render('login', { msg: "Registration completed successfully" });
+        res.redirect("login");
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -165,7 +166,7 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         const user_id = newUser._id;
         const buyer = new Buyer({_id:user_id, fullname, pan_number, orders, pan_card, requirements });
         buyer.save();
-        res.render('homepage', {msg:"Registration completed successfully"});
+        res.redirect("login");
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -244,17 +245,35 @@ router.route('/dashboard').get(auth, async(req,res) => {
     }
 
     else if(req.user.type == "investor"){
-        res.render('investor_dashboard');
+        const investor = await Investor.findById(req.user._id);
+        res.render('investor_dashboard', {investor});
     }
 
     else if(req.user.type == "institution"){
-        res.render('institution_dashboard');
+        const institution = await Institution.findById(req.user._id);
+        res.render('institution_dashboard', {institution});
     }
 
     else if(req.user.type == "buyer"){
-        res.render('buyer_dashboard');
+        const buyer = await Buyer.findById(req.user._id);
+        res.render('buyer_dashboard', {buyer});
     }
 
 });
+router.route('/deal_lock').post(auth, async(req,res) => {
+    const farmer_user = req.body.farmerusername;
+    const farmer = await User.findOne({username:farmer_user});
+    if(farmer.length == 0){
+        res.status(400).send();
+    }
+    const farmer_id = farmer._id;
+    const other_id = req.user._id;
+    const farmer_locked = false;
+    const newdeal = new Deal({farmer_id, other_id, farmer_locked});
+    newdeal.save();
+    res.redirect("dashboard");
+
+});
+
 
 module.exports = router;

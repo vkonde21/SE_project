@@ -114,7 +114,7 @@
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Range of investment</h5>
-            <p class="card-text">INR 100000 - 200000</p>
+            <p class="card-text">INR {{investor.start}} - {{investor.end}}</p>
           </div>
         </div>
       </div>
@@ -128,14 +128,17 @@
           <div class="card-body">
             <h5 class="card-title">New deal confirmation</h5>
             <p class="card-text">Enter the username of the farmer who you signed a deal with (It will reflect on your account after the farmer has confirmed the deal):</p>
-            <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" />
+            <form method="POST" action="deal_lock">
+              <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" />
             <div class="row">
                 <div class="col-4"></div>
                 <div class="col-4">
                     <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;">Submit</button> 
                 </div>
                 <div class="col-4"></div>
-            </div>          
+            </div>  
+            </form>
+                    
           </div>
         </div>
       </div>
