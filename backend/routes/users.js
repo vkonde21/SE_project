@@ -143,6 +143,12 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
 router.route('/registerbuyer').get((req, res) => {
     res.render('registerbuyer');
 });
+router.route('/dashboard').get((req, res) => {
+    res.render('dashboard');
+});
+router.route('/addcrops').get((req, res) => {
+    res.render('addcrops');
+});
 
 router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) => {
     try{

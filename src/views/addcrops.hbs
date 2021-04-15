@@ -1,0 +1,198 @@
+
+    {{#section 'style'}}
+    .cover {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1 0 auto;
+    }
+    #contact {
+      flex-shrink: 0;
+    }
+    #mygif {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+    {{/section}}
+  
+    
+  
+  <div class="cover">
+  <img src="/img/crops.gif" id="mygif" alt="...">
+  <header id="header-wrap">
+      <!-- Navbar Start -->
+      <nav
+        class="navbar navbar-expand-lg fixed-top scrolling-navbar"
+        style="background-color: #fff;"
+      >
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#main-navbar"
+              aria-controls="main-navbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+              <span class="icon-menu"></span>
+              <span class="icon-menu"></span>
+              <span class="icon-menu"></span>
+            </button>
+            <img src="/img/logo.png" class="navbar-brand" style="width: 250px" alt=""/>
+          </div>
+          <div class="collapse navbar-collapse" id="main-navbar" style="margin-left: 350px;">
+            <ul class="navbar-nav mr-auto w-100">
+              <li class="nav-item">
+                <a class="nav-link" href="dashboard">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="updateprofile">Update Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="chat">Chat</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <ul class="mobile-menu">
+          <li>
+            <a class="page-scroll" href="dashboard">Dashboard</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="updateprofile">Update Profile</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="chat">Chat</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <br><br><br>
+  <div class="content">
+    <br><br>
+    <section id="form-dom" class="services">
+      <div class="container" style="margin-bottom: 30px; opacity:90%">
+        <div class="row">
+          <div class="col-12">
+            <div class="col-12 col-md-10 col-lg-8 log-style">
+              <div id="form-main">
+                <h1
+                  class="section-title wow fadeInUp animated"
+                  data-wow-delay="0.2s"
+                  style="
+                    visibility: visible;
+                    -webkit-animation-delay: 0.2s;
+                    -moz-animation-delay: 0.2s;
+                    animation-delay: 0.2s;
+                  "
+                >
+                  Add new crop
+                </h1>
+                <div class="design">
+                  <form id="addcrop-form" action="/users/addcrops" method="POST" enctype="multipart/form-data">
+                    <h3></h3>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Name of the crop"
+                          name="cropname"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="Stage of growth of the crop"
+                          name="stageofgrowth"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <label for="landpaper">Upload latest photo of the crop:</label>
+                        <input
+                          type="file"
+                          class="form-control"
+                          placeholder="Iamge of the crop"
+                          name="cropimage"
+                          id="cropimage"
+                        />
+                      </div>
+                    </div>
+                    <div class="row">
+                       <div class="col-lg-4 col-md-4 col-3"></div> 
+                       <div class="col">
+                      <button
+                        type="submit"
+                        href=""
+                        class="btn btn-common btn-nv-sty"
+                        style="width: 50%;"
+                      >
+                        Add
+                      </button>
+                    </div>
+                    </div>
+                    <div class="row">
+                      <div class="col">
+                        <p class="error text-danger" align="center"></p>
+                        <p class="success text-success" align="center"></p>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+            <div class="col-6"></div>
+          </div>
+        </div>
+      </div>
+    </section>
+    </div>
+    
+    <!-- Go to Top Link -->
+    <a href="#" class="back-to-top">
+        <i class="lni-chevron-up"></i>
+    </a>
+
+    
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+
+                $(this).addClass('transition');
+            }, function() {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    </div>
