@@ -195,13 +195,13 @@ router.route('/login').post(async (req, res) => {
     }
 });
 
-router.route('/logout').post(auth, async (req, res) => {
+router.route('/logout').get(auth, async (req, res) => {
     try {
         req.user.tokens = req.user.tokens.filter((token) => {
             return token.token !== req.token;
         });
         await req.user.save();
-        res.render("homepage");
+        res.redirect("/");
     }
     catch (e) {
         res.status(500).send({ error: "Logout failed!" });
@@ -209,11 +209,11 @@ router.route('/logout').post(auth, async (req, res) => {
 
 });
 
-router.route('/logoutall').post(auth, async (req, res) => {
+router.route('/logoutall').get(auth, async (req, res) => {
     try {
         req.user.tokens = [];
         await req.user.save();
-        res.render("homepage");
+        res.redirect("/");
     }
     catch (e) {
         res.status(500).send({ error: "Logout failed!" });
