@@ -93,120 +93,53 @@
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Name</h5>
-            <p class="card-text">{{farmer.fullname}}</p>
+            <p class="card-text">{{investor.fullname}}</p>
           </div>
         </div>
       </div>
-      <div class="col">
-        <div class="card" style="opacity: 90%; height: 130px">
-          <div class="card-body">
-            <h5 class="card-title">Average Rating</h5>
-            <p class="card-text">{{farmer.rating}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2"></div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-lg-2"></div>
       <div class="col">
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Number of deals</h5>
-            <p class="card-text">{{farmer.deals}}</p>
+            <p class="card-text">{{investor.deals}}</p>
           </div>
         </div>
       </div>
+      <div class="col-lg-2"></div>
+    </div>
+    <br>
+    <div class="row">
+      <div class="col-lg-3"></div>
       <div class="col">
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
-            <h5 class="card-title">Number of orders</h5>
-            <p class="card-text">{{farmer.orders}}</p>
+            <h5 class="card-title">Range of investment</h5>
+            <p class="card-text">INR 100000 - 200000</p>
           </div>
         </div>
       </div>
-      <div class="col-lg-2"></div>
+      <div class="col-lg-3"></div>
     </div>
     <br>
-    {{#if Crops}}
-    {{#each Crops}}
-    
     <div class="row">
-      <div class="col-lg-2"></div>
+      <div class="col-lg-3"></div>
       <div class="col">
-        <div class="card" style="opacity: 90%; height: 400px">
-          <img class="card-img-top" src="data:{{this.1.filetype}};base64,{{this.1.bString}}" alt="Card image cap" style="height: 250px; padding: 10px">
+        <div class="card" style="opacity: 90%; height: 250px">
           <div class="card-body">
-            <h5 class="card-title">Crop name : {{this.1.cropname}}</h5>
-            <p class="card-text">Stage of growth :{{this.1.dev_stage}} </p>
+            <h5 class="card-title">New deal confirmation</h5>
+            <p class="card-text">Enter the username of the farmer who you signed a deal with (It will reflect on your account after the farmer has confirmed the deal):</p>
+            <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" />
             <div class="row">
-              <div class="col-3"></div>
-              <div class="col">
-                <a href="updatecrops" class="btn btn-common btn-nv-sty">Update crop details</a>
-              </div>
-            </div>
+                <div class="col-4"></div>
+                <div class="col-4">
+                    <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;">Submit</button> 
+                </div>
+                <div class="col-4"></div>
+            </div>          
           </div>
         </div>
       </div>
-      
-      <div class="col">
-        {{#if this.2.filetype}}
-        <div class="card" style="opacity: 90%; height: 400px">
-          <img class="card-img-top" src="data:{{this.2.filetype}};base64,{{this.2.bString}}" alt="Card image cap" style="height: 250px; padding: 10px">
-          <div class="card-body">
-            <h5 class="card-title">Crop name : {{this.2.cropname}}</h5>
-            <p class="card-text">Stage of growth :{{this.2.dev_stage}} </p>
-            <div class="row">
-              <div class="col-3"></div>
-              <div class="col">
-                <a href="updatecrops" class="btn btn-common btn-nv-sty">Update crop details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {{/if}}
-      </div>
-      
-      <div class="col-lg-2"></div>
-      
-    </div>
-    <br>
-    {{/each}}
-    {{/if}}
-    <br>
-    <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col">
-        <div class="card" style="opacity: 90%; height: 160px">
-          <div class="card-body">
-            <h5 class="card-title">Add new crop details</h5>
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col">
-                <a href="addcrops" class="btn btn-common btn-nv-sty" style="width: 50%;">Add</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="opacity: 90%; height: 160px">
-          <div class="card-body">
-            <h5 class="card-title">New notifications</h5>
-            <p class="card-text">New deal/order confirmation request from </p>
-            <div class="row">
-              <div class="col">
-                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;">Accept</button>
-              </div>
-              <div class="col">
-                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;">Reject</button>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2"></div>
+      <div class="col-lg-3"></div>
     </div>
   </div>
   
