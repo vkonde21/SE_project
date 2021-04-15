@@ -87,7 +87,7 @@
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Name</h5>
-            <p class="card-text">Full name</p>
+            <p class="card-text">{{farmer.fullname}}</p>
           </div>
         </div>
       </div>
@@ -95,7 +95,7 @@
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Average Rating</h5>
-            <p class="card-text">5</p>
+            <p class="card-text">{{farmer.rating}}</p>
           </div>
         </div>
       </div>
@@ -108,7 +108,7 @@
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Number of deals</h5>
-            <p class="card-text">0</p>
+            <p class="card-text">{{farmer.deals}}</p>
           </div>
         </div>
       </div>
@@ -116,7 +116,7 @@
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Number of orders</h5>
-            <p class="card-text">0</p>
+            <p class="card-text">{{farmer.orders}}</p>
           </div>
         </div>
       </div>
@@ -142,9 +142,9 @@
       </div>
       <div class="col">
         <div class="card" style="opacity: 90%; height: 400px">
-          <img class="card-img-top" src="/img/sample.jpg" alt="Card image cap" style="height: 250px; padding: 10px">
+          <img class="card-img-top" src="data:{{Crops.filetype}};base64,{{Crops.cropimage.buffer}}" alt="Card image cap" style="height: 250px; padding: 10px">
           <div class="card-body">
-            <h5 class="card-title">Crop name : </h5>
+            <h5 class="card-title">Crop name : data:{{Crops.filetype}};base64,{{Crops.cropimage.buffer}}</h5>
             <p class="card-text">Stage of growth : </p>
             <div class="row">
               <div class="col-3"></div>
@@ -209,6 +209,5 @@
     </div> --}}
 
     
-
 
 

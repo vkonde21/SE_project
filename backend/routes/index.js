@@ -3,6 +3,6 @@ const router = require('express').Router();
 
 router.get('/',  (req, res) => {
     
-    res.render('homepage')});
+    res.render('login')});
 module.exports = router;
 

@@ -4,9 +4,11 @@ let Farmer = require('../models/farmer.model');
 let Investor = require('../models/investor.model');
 let Buyer = require('../models/buyer.model');
 let Institution = require('../models/institution.model');
+let Crop = require('../models/crop.model');
 const bcrypt = require('bcrypt');
 const auth = require("../middleware/auth");
 const multer = require("multer");
+const FileType = require('file-type');
 /* to avoid saving the file on the local file system remove the dest parameter from multer*/
 const upload = multer({
     limits: {
@@ -73,7 +75,7 @@ router.route('/registerfarmer').post(upload.fields([{
         const user_id = newUser._id;
         const farmer = new Farmer({ _id: user_id, fullname, deals, orders, buyer_req, investor_req, rating, land_area, land_doc, certificate });
         farmer.save();
-        res.render('homepage', { msg: "Registration completed successfully" });
+        res.render('login', { msg: "Registration completed successfully" });
     }
     catch (err) {
         res.status(400).json('error: ' + err);
@@ -106,7 +108,7 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         const user_id = newUser._id;
         const investor = new Investor({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number, profit_share});
         investor.save();
-        res.render('homepage', { msg: "Registration completed successfully" });
+        res.render('login', { msg: "Registration completed successfully" });
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -134,7 +136,7 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const user_id = newUser._id;
         const institution = new Institution({ _id: user_id, fullname, deals, business_proof, start, end});
         institution.save();
-        res.render('homepage', { msg: "Registration completed successfully" });
+        res.render('login', { msg: "Registration completed successfully" });
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -142,12 +144,6 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
 });
 router.route('/registerbuyer').get((req, res) => {
     res.render('registerbuyer');
-});
-router.route('/dashboard').get((req, res) => {
-    res.render('dashboard');
-});
-router.route('/addcrops').get((req, res) => {
-    res.render('addcrops');
 });
 
 router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) => {
@@ -185,11 +181,11 @@ router.route('/login').post(async (req, res) => {
         if(user.type != "admin"){
             const token = await user.generateAuthToken();
             res.cookie("jwt", token, { secure: true, httpOnly: true })
-            res.render('dashboard', { user, token: token, title: "dashboard" });
+            res.redirect ('/users/dashboard');
         }
         else{
             /*get the list of users who are not verified*/
-            res.render('admin_dashboard', { user, title: "dashboard" });
+            res.redirect({ user },'/users/dashboard');
         }
         
     }
@@ -220,6 +216,25 @@ router.route('/logoutall').post(auth, async (req, res) => {
     }
     catch (e) {
         res.status(500).send({ error: "Logout failed!" });
+    }
+
+});
+
+router.route('/dashboard').get(auth, async(req,res) => {
+    if(req.user.type == "farmer"){
+        /*get all the crop names, deals etc and send it in the json format*/
+        //console.log(req.user._id);
+        const Crops = await Crop.find({_id:req.user._id});
+        const farmer = await Farmer.findById(req.user._id);
+        //console.log(Crops);
+        if(Crops[0]!= undefined){
+            //console.log(Crops[0]);
+            res.render('farmer_dashboard', {Crops: Crops[0],farmer});
+        }
+            
+        else{
+            res.render('farmer_dashboard', {farmer});
+        }
     }
 
 });
