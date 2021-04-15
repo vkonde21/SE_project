@@ -1,7 +1,13 @@
+const { ObjectId } = require('bson');
+const { ObjectID } = require('bson');
 const mongoose = require('mongoose');
 const validator = require('validator');
 const Schema = mongoose.Schema;
 const cropSchema = new Schema({
+    user_id:{
+        type:ObjectId,
+        required:true
+    }, 
     cropname:{
         type:String,
         required:true
@@ -16,6 +22,10 @@ const cropSchema = new Schema({
     },
 
     filetype:{
+        type:String,
+    },
+
+    bString:{
         type:String,
     }
 });

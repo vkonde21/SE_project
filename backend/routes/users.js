@@ -9,6 +9,7 @@ const bcrypt = require('bcrypt');
 const auth = require("../middleware/auth");
 const multer = require("multer");
 const FileType = require('file-type');
+var ab2str = require('arraybuffer-to-string')
 /* to avoid saving the file on the local file system remove the dest parameter from multer*/
 const upload = multer({
     limits: {
@@ -223,18 +224,35 @@ router.route('/logoutall').post(auth, async (req, res) => {
 router.route('/dashboard').get(auth, async(req,res) => {
     if(req.user.type == "farmer"){
         /*get all the crop names, deals etc and send it in the json format*/
-        //console.log(req.user._id);
-        const Crops = await Crop.find({_id:req.user._id});
+        const Cp = await Crop.find({user_id:req.user._id});
         const farmer = await Farmer.findById(req.user._id);
-        //console.log(Crops);
+        var Crops = [];
+        var i;
+        for(i=0; i<Cp.length;i+=2){
+            if(Cp[i+1] != undefined)
+                Crops.push({1:Cp[i], 2:Cp[i+1]});
+            else
+                Crops.push({1:Cp[i]});
+        }
         if(Crops[0]!= undefined){
-            //console.log(Crops[0]);
-            res.render('farmer_dashboard', {Crops: Crops[0],farmer});
+            res.render('farmer_dashboard', {Crops: Crops,farmer, });
         }
             
         else{
             res.render('farmer_dashboard', {farmer});
         }
+    }
+
+    else if(req.user.type == "investor"){
+        res.render('investor_dashboard');
+    }
+
+    else if(req.user.type == "institution"){
+        res.render('institution_dashboard');
+    }
+
+    else if(req.user.type == "buyer"){
+        res.render('buyer_dashboard');
     }
 
 });
