@@ -1,0 +1,135 @@
+
+    {{#section 'style'}}
+    .cover {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1 0 auto;
+    }
+    #contact {
+      flex-shrink: 0;
+    }
+    #mygif {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+    {{/section}}
+  
+    
+  
+  <div class="cover">
+  <img src="/img/crops.gif" id="mygif" alt="...">
+  <div class="content">
+    <br><br>
+    <div style="text-align: center; position: sticky;">
+      <h1> <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 80%;">About organique</span> </h1>
+    </div>
+    <br>
+    <!-- form -->
+      <section id="form-dom">
+        <div class="container" style="margin-bottom: 30px; opacity: 90%;">
+          <div class="row">
+            <div class="col-12">
+              <div class="col-12 col-md-12 col-lg-10 log-style">
+                  <div class="design">
+                      <ul>
+                        <li>
+                            These days, the craze for organic foods is growing exponentially.
+                            However, the production is not growing in proportion with the demand
+                            because most times, it is highly expensive to grow good quality, organic
+                            plants. Organique aims to bridge this gap and provide a solution which
+                            benefits all.
+                        </li><br>
+                        <li>
+                            Sportspersons, celebrities, nutritionists, health conscious people who
+                            consider the quality of food their topmost priority are usually the ones
+                            who are looking for organically grown fruits, vegetables, cereals, pulses,
+                            legumes, etc. Organique provides a platform to connect with verified farmers to buy these
+                            organically grown products.
+                        </li><br>
+                        <li>
+                            As growing organic food is an emerging business, quite a few investors
+                            are looking to invest in it. Similarly, in many foreign countries to which
+                            Indian produce is exported have strict regulations related to material
+                            used and quality of produce. For all these, Organique is a
+                            platform to reach out to farmers and invest in their farms and share the
+                            profits. Institutions like restaurants, canteens, mess, catering services need
+                            assured 365 days good quality farm produce. For this, they can invest
+                            money in farms and get the best supplies for their kitchens.
+                        </li><br>                        
+                        <li>
+                            Thus, Organique will help amalgamate the land, expertise and efforts
+                            of the farmers with the finance of the investors and create a viable
+                            solution for all.
+                        </li>
+                    </ul>
+                  </div>
+              </div>
+              <div class="col-6"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+      <footer id="contact" class="footer-area section-padding" style="opacity: 80%; color:white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-8 wow fadeInUp" data-wow-delay="0.4s">
+                    <h3>QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="/users/login">LOGIN</a></li>
+                        <li><a href="/users/register">REGISTER</a></li>
+                        <li><a href="/users/about">ABOUT ORGANIQUE</a></li>
+                        <li><a href="/users/help">HELP</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <h3>CONTACT US</h3>
+                    <p style="font-size:15px;">Reach out to us at :</p>
+                    <br>
+                    <ul>
+                        <li>&emsp;Email id&emsp;:&emsp;gandhias18.comp@coep.ac.in</li>
+                        <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;kondevp10.comp@coep.ac.in</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Go to Top Link -->
+    <a href="#" class="back-to-top">
+        <i class="lni-chevron-up"></i>
+    </a>
+    
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+
+            $(".zoom").hover(function() {
+
+                $(this).addClass('transition');
+            }, function() {
+
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    </div>

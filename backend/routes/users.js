@@ -89,6 +89,14 @@ router.route('/registerfarmer').post(upload.fields([{
 
 });
 
+router.route('/about').get((req, res) => {
+    res.render('about');
+});
+
+router.route('/help').get((req, res) => {
+    res.render('help');
+});
+
 router.route('/registerinvestor').get((req, res) => {
     res.render('registerinvestor');
 });
