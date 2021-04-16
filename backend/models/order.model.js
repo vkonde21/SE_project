@@ -1,29 +1,28 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
+const { ObjectId } = require('bson');
 const Schema = mongoose.Schema;
 const orderSchema = new Schema({
     farmer_id:{
-        
+        type:ObjectId
     },
-    orders:{
-        type:Number,
+    buyer_username:{
+        type: String
     },
-    
-    pan_number:{
-        type:String,
-        required:true
-    },
-    pan_card:{
-        type:Buffer,
-        required:true
+    farmer_locked:{
+        type:Boolean,
+        default:false
+    }, 
+    notified:{
+        type:Boolean,
+        default:false
     },
     requirements:{
         type:String,
-        required:true
     }
 });
 
 
 
-const Buyer = mongoose.model('Buyer', buyerSchema);
-module.exports = Buyer;
+const Order = mongoose.model('Order', orderSchema);
+module.exports = Order;

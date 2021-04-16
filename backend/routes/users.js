@@ -310,4 +310,116 @@ router.route('/crop_requirements').post(auth, async(req, res) => {
     }
 });
 
+router.route('/updateprofile').get(auth, async(req, res) => {
+    try{
+        if(req.user.type == "investor"){
+            const investor = await Investor.findById(req.user._id);
+            res.render('investor_profile', {investor, user:req.user});
+        }
+    
+        else if(req.user.type == "institution"){
+            const institution = await Institution.findById(req.user._id);
+            res.render('institution_profile', {institution, user:req.user});
+        }
+    
+        else if(req.user.type == "buyer"){
+            const buyer = await Buyer.findById(req.user._id);
+            res.render('buyer_profile', {buyer, user:req.user});
+        }
+
+        else if(req.user.type == "farmer"){
+            const farmer = await Farmer.findById(req.user._id);
+            res.render('farmer_profile', {farmer, user:req.user});
+        }
+        else{
+            throw new Error();
+        }
+    }
+    catch(err){
+        res.status(400).json('error: ' + err);
+    }
+});
+
+router.route('/updateprofile').post(auth, async(req, res) => {
+    try{
+        if(req.user.type == "investor"){
+            const investor = await Investor.findById(req.user._id);
+            const user = await User.findById(req.user._id);
+            const fullname = req.body.registername;
+            const email = req.body.email;
+            const start = req.body.startingrange;
+            const end = req.body.endingrange;
+            investor.fullname = fullname;
+            investor.start = start;
+            investor.end = end;
+            user.email = email;
+            investor.save();
+            user.save();
+        }
+    
+        else if(req.user.type == "institution"){
+            const institution = await Institution.findById(req.user._id);
+            const user = await User.findById(req.user._id);
+            const fullname = req.body.registername;
+            const email = req.body.email;
+            const start = req.body.startingrange;
+            const end = req.body.endingrange;
+            institution.fullname = fullname;
+            institution.start = start;
+            institution.end = end;
+            user.email = email;
+            institution.save();
+            user.save();
+        }
+    
+        else if(req.user.type == "buyer"){
+            const buyer = await Buyer.findById(req.user._id);
+            const user = await User.findById(req.user._id);
+            const fullname = req.body.registername;
+            const email = req.body.email;
+            const requirements = req.body.requirements
+            buyer.fullname = fullname;
+            buyer.requirements = requirements;
+            user.email = email;
+            buyer.save();
+            user.save();
+        }
+
+        else if(req.user.type == "farmer"){
+            const farmer = await Farmer.findById(req.user._id);
+            const user = await User.findById(req.user._id);
+            const fullname = req.body.registername;
+            const email = req.body.email;
+            var buyer_req = req.body.buyeryes;
+            if (buyer_req == undefined) {
+                buyer_req = false;
+            }
+            else {
+                buyer_req = true;
+            }
+            var investor_req = req.body.investoryes;
+            if (investor_req == undefined) {
+                investor_req = false;
+            }
+            else {
+                investor_req = true;
+            }
+            const land_area = req.body.landarea;
+            farmer.fullname = fullname;
+            farmer.buyer_req = buyer_req;
+            farmer.investor_req = investor_req;
+            farmer.land_area = land_area;
+            user.email = email
+            farmer.save();
+            user.save();
+        }
+        else{
+            throw new Error();
+        }
+        res.redirect('dashboard');
+    }
+    catch(err){
+        res.status(400).json('error: ' + err);
+    }
+});
 module.exports = router;

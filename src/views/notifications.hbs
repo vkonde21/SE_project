@@ -92,14 +92,16 @@
     </h1>
     <br>
     {{#if notifications}}
+    <h2 class="section-title wow fadeInUp animated">Deals</h2>
     {{#each notifications}}
+    
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col">
         <div class="card" style="opacity: 90%; height: 180px">
           <div class="card-body">
             <h5 class="card-title">New notifications</h5>
-            <p class="card-text">New deal/order confirmation request from {{this.1.other_username}}</p>
+            <p class="card-text">New deal confirmation request from {{this.1.other_username}}</p>
             <form id="{{this.1._id}}"action="deal_decision" method="POST">
             <input type="hidden" id="dealid1" name="dealid1" value="{{this.1._id}}">
             <div class="row">
@@ -119,9 +121,61 @@
         <div class="card" style="opacity: 90%; height: 180px">
           <div class="card-body">
             <h5 class="card-title">New notifications</h5>
-            <p class="card-text">New deal/order confirmation request from {{this.2.other_username}}</p>
+            <p class="card-text">New deal confirmation request from {{this.2.other_username}}</p>
             <form id="{{this.2._id}}"action="deal_decision" method="POST">
             <input type="hidden" id="dealid2" name="dealid2" value="{{this.2._id}}">
+            <div class="row">
+              <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="accept">Accept</button>
+              </div>
+              <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="reject">Reject</button>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {{/if}}
+      <div class="col-lg-2"></div>
+    </div>
+    <br>
+    {{/each}}
+    {{/if}}
+
+    {{#if not_orders}}
+    <h2 class="section-title wow fadeInUp animated">Orders</h2>
+    {{#each not_orders}}
+    
+    <div class="row">
+      <div class="col-lg-2"></div>
+      <div class="col">
+        <div class="card" style="opacity: 90%; height: 180px">
+          <div class="card-body">
+            <h5 class="card-title">New notifications</h5>
+            <p class="card-text">New order confirmation request from {{this.1.buyer_username}}</p>
+            <form id="{{this.1._id}}"action="order_decision" method="POST">
+            <input type="hidden" id="orderid1" name="orderid1" value="{{this.1._id}}">
+            <div class="row">
+              <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="accept">Accept</button>
+              </div>
+              <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="reject">Reject</button>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {{#if this.2.buyer_username}}
+      <div class="col">
+        <div class="card" style="opacity: 90%; height: 180px">
+          <div class="card-body">
+            <h5 class="card-title">New notifications</h5>
+            <p class="card-text">New order confirmation request from {{this.2.buyer_username}}</p>
+            <form id="{{this.2._id}}"action="order_decision" method="POST">
+            <input type="hidden" id="orderid2" name="orderid2" value="{{this.2._id}}">
             <div class="row">
               <div class="col">
                 <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="accept">Accept</button>

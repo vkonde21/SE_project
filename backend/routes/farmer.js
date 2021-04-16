@@ -3,12 +3,15 @@ const auth = require("../middleware/auth");
 let Farmer = require('../models/farmer.model');
 let Crop = require('../models/crop.model');
 let Deal = require('../models/deal.model');
-const multer = require("multer");
-const FileType = require('file-type');
-var ab2str = require('arraybuffer-to-string');
+let Order = require('../models/order.model');
+let Buyer = require('../models/buyer.model');
 const Investor = require('../models/investor.model');
 const User = require('../models/user.model');
 const Institution = require('../models/institution.model');
+const multer = require("multer");
+const FileType = require('file-type');
+var ab2str = require('arraybuffer-to-string');
+
 const upload = multer({
     limits: {
         fileSize: 1000000
@@ -70,9 +73,9 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req
             const cropname = req.body.cropname;
             const dev_stage = req.body.dev_stage;
             const cropimage = req.file.buffer;
-            const {ext, mime} = await (FileType.fromBuffer(crop.cropimage));
+            const {ext, mime} = await (FileType.fromBuffer(cropimage));
             const filetype = mime;
-            const bString = ab2str(crop.cropimage.buffer, 'base64');
+            const bString = ab2str(cropimage, 'base64');
             crop.filetype = filetype;
             crop.bString = bString;
             crop.cropname = cropname;
@@ -90,9 +93,26 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req
     } 
 });
 
+router.route('/deletecrops/:id').get(auth,async(req, res) => {
+    try{
+        const id = req.params.id;
+        const crop = await Crop.findById(id);
+        if(crop.user_id.equals(req.user._id)){
+            await Crop.deleteOne({_id:id});
+            res.redirect('/users/dashboard');
+        }
+        else{
+            throw new Error();
+        }
+    }catch(e){
+        res.status(400).json('error: ' + e);
+    }
+});
 router.route('/notifications').get(auth, async (req, res) => {
     const deals = await Deal.find({farmer_id:req.user._id, notified:false});
+    const orders = await Order.find({farmer_id:req.user._id, notified:false});
     var notifications = [];
+    var not_orders = [];
         var i;
         for(i=0; i<deals.length;i+=2){
             if(deals[i+1] != undefined)
@@ -100,7 +120,13 @@ router.route('/notifications').get(auth, async (req, res) => {
             else
                 notifications.push({1:deals[i]});
         }
-    res.render('notifications', {notifications});
+        for(i=0; i<orders.length;i+=2){
+            if(orders[i+1] != undefined)
+                not_orders.push({1:orders[i], 2:orders[i+1]});
+            else
+                not_orders.push({1:orders[i]});
+        }
+    res.render('notifications', {notifications, not_orders});
 });
 
 router.route('/deal_decision').post(auth, async(req, res) => {
@@ -142,6 +168,49 @@ router.route('/deal_decision').post(auth, async(req, res) => {
             const deal = await Deal.findById(deal_id);
             deal.notified = true;
             deal.save();
+        }
+        res.redirect('notifications');
+    }
+    catch(e){
+        res.status(400).json('error: ' + e);
+    }
+    
+});
+
+router.route('/order_decision').post(auth, async(req, res) => {
+    var order_id;
+    var other;
+    try{
+        if(req.body.accept != undefined){
+            if(req.body.orderid1 != undefined){
+                order_id = req.body.orderid1;  
+            }
+            else{
+                order_id = req.body.orderid2;
+            }
+            const order = await Order.findById(order_id);
+            order.notified = true;
+            order.farmer_locked = true;
+            order.save();
+            const farmer = await Farmer.findOne({_id:req.user._id});
+            farmer.orders += 1;
+            farmer.save();
+            o = await User.findOne({username:order.buyer_username}); 
+            other = await Buyer.findOne({_id:o._id});
+            other.orders += 1;
+            other.save();
+
+        }
+        else if(req.body.accept == undefined){
+            if(req.body.orderid1 != undefined){
+                order_id = req.body.orderid1;  
+            }
+            else{
+                order_id = req.body.orderid2;
+            }
+            const order = await Order.findById(order_id);
+            order.notified = true;
+            order.save();
         }
         res.redirect('notifications');
     }
