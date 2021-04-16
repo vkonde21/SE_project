@@ -156,13 +156,15 @@
             <h5 class="card-title">Add/update crop requirements</h5>
             <p class="card-text">All the previous crop requirements will be overwritten by the ones entered here so if you want to retain the previous requirements, enter them here along with the new ones.</p>
             <br>
-            <input type="text" class="form-control" placeholder="New crop requirements" name="croprequirements"/>
-            <div class="row">
-              <div class="col-4"></div>
-              <div class="col">
-                <a href="" class="btn btn-common btn-nv-sty" style="width: 50%;">Add</a>
+            <form id="requirements" action="crop_requirements" method="POST">
+              <input type="text" class="form-control" placeholder="New crop requirements" name="croprequirements" value="{{buyer.requirements}}"/>
+              <div class="row">
+                <div class="col-4"></div>
+                <div class="col">
+                  <button type="submit" class="btn btn-common btn-nv-sty" style="width: 50%;">Add Requirements</button>
+                </div>
               </div>
-            </div>
+            </form>
           </div>
         </div>
       </div>
