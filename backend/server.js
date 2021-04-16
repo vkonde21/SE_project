@@ -28,8 +28,10 @@ app.use(cookieParser());
 app.use(express.static("../src/public"));
 const userRouter = require('./routes/users');
 const farmerRouter = require('./routes/farmer');
+const buyerRouter = require('./routes/buyer');
 app.use('/users', userRouter);
 app.use('/users', farmerRouter);
+app.use('/users', buyerRouter);
 app.use('/', require("./routes/index"));
 app.listen(port , () => {
     console.log(`Server listening at port ${port}`);

@@ -106,7 +106,7 @@
       <div class="col">
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
-            <h5 class="card-title">Number of deals</h5>
+            <h5 class="card-title">Number of orders</h5>
             <p class="card-text">{{buyer.orders}}</p>
           </div>
         </div>
@@ -171,6 +171,7 @@
       <div class="col">
         <div class="card" style="opacity: 90%; height: 300px; margin-bottom: 20px">
           <div class="card-body">
+            <form id="orderuser" action="order_lock" method="POST">
             <h5 class="card-title">New order confirmation</h5>
             <p class="card-text">Enter the username of the farmer you bought produce from (It will reflect on your account after the farmer has confirmed the order)</p>
             <br>
@@ -181,7 +182,8 @@
                     <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 85%;">Submit</button> 
                 </div>
                 <div class="col-3"></div>
-            </div>          
+            </div>
+            </form>          
           </div>
         </div>
       </div>
