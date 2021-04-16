@@ -93,6 +93,21 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req
     } 
 });
 
+router.route('/deletecrops/:id').get(auth,async(req, res) => {
+    try{
+        const id = req.params.id;
+        const crop = await Crop.findById(id);
+        if(crop.user_id.equals(req.user._id)){
+            await Crop.deleteOne({_id:id});
+            res.redirect('/users/dashboard');
+        }
+        else{
+            throw new Error();
+        }
+    }catch(e){
+        res.status(400).json('error: ' + e);
+    }
+});
 router.route('/notifications').get(auth, async (req, res) => {
     const deals = await Deal.find({farmer_id:req.user._id, notified:false});
     const orders = await Order.find({farmer_id:req.user._id, notified:false});
