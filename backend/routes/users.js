@@ -287,4 +287,23 @@ router.route('/deal_lock').post(auth, async(req,res) => {
 });
 
 
+router.route('/crop_requirements').post(auth, async(req, res) => {
+    try{
+        if(req.user.type == "buyer"){
+            const buyer = await Buyer.findById(req.user._id);
+            buyer.requirements = req.body.croprequirements;
+            buyer.save();
+        }
+        else if(req.user.type == "institution"){
+            const institution = await Institution.findById(req.user._id);
+            institution.requirements = req.body.croprequirements;
+            institution.save();
+        }
+        res.redirect('dashboard');
+    }
+    catch(err){
+        res.status(400).json('error: ' + err);
+    }
+});
+
 module.exports = router;

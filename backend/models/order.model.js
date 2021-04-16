@@ -1,10 +1,9 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 const Schema = mongoose.Schema;
-const buyerSchema = new Schema({
-    fullname:{
-        type:String,
-        required:true
+const orderSchema = new Schema({
+    farmer_id:{
+        
     },
     orders:{
         type:Number,

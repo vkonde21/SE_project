@@ -26,7 +26,6 @@ router.route('/addcrops').get(auth, async(req,res) => {
 });
 
 router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) => {
-    
     try{
         const cropname = req.body.cropname;
         const dev_stage = req.body.dev_stage;
@@ -44,6 +43,51 @@ router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) 
         res.status(400).json('error: ' + e);
     }
     
+});
+
+router.route('/updatecrops/:id').get(auth, async(req, res) => {
+    try{
+        const id = req.params.id;
+        const crop = await Crop.findById(id);
+        
+        if(crop.user_id.equals(req.user._id)){
+            res.render('updatecrops', {crop});
+            
+        }
+        else
+            throw new Error();
+        
+    }catch(e){
+        res.status(400).json('error: ' + e);
+    } 
+});
+
+router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req, res) => {
+    try{
+        const id = req.params.id;
+        const crop = await Crop.findById(id);
+        if(crop.user_id.equals(req.user._id)){
+            const cropname = req.body.cropname;
+            const dev_stage = req.body.dev_stage;
+            const cropimage = req.file.buffer;
+            const {ext, mime} = await (FileType.fromBuffer(crop.cropimage));
+            const filetype = mime;
+            const bString = ab2str(crop.cropimage.buffer, 'base64');
+            crop.filetype = filetype;
+            crop.bString = bString;
+            crop.cropname = cropname;
+            crop.dev_stage = dev_stage;
+            crop.cropimage = cropimage;
+            await crop.save();
+            res.redirect('/users/dashboard');
+        }
+        else{
+            throw new Error();
+        }
+        
+    }catch(e){
+        res.status(400).json('error: ' + e);
+    } 
 });
 
 router.route('/notifications').get(auth, async (req, res) => {
