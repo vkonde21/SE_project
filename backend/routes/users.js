@@ -93,6 +93,10 @@ router.route('/about').get((req, res) => {
     res.render('about');
 });
 
+router.route('/viewfarmers').get((req, res) => {
+    res.render('viewfarmers');
+});
+
 router.route('/help').get((req, res) => {
     res.render('help');
 });
