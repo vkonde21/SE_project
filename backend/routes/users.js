@@ -34,6 +34,11 @@ router.get('/register', (req, res) => res.render('register'));
 router.route('/registerfarmer').get((req, res) => {
     res.render('registerfarmer');
 });
+
+router.route('/notifications').get((req, res) => {
+    res.render('notifications');
+});
+
 router.route('/registerfarmer').post(upload.fields([{
     name: 'landpaper', maxCount: 1
 }, {

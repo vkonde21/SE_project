@@ -47,15 +47,15 @@
               <span class="icon-menu"></span>
               <span class="icon-menu"></span>
             </button>
-            <img src="/img/logo.png" class="navbar-brand" style="width: 230px; height:70px" alt=""/>
+            <img src="/img/logo.png" class="navbar-brand" style="width: 250px; height: 70px" alt=""/>
           </div>
-          <div class="collapse navbar-collapse" id="main-navbar" style="margin-left: 10%;">
+          <div class="collapse navbar-collapse" id="main-navbar" style="margin-left: 20%;">
             <ul class="navbar-nav mr-auto w-100">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="dashboard">Dashboard</a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link" href="viewfarmers">View Farmer's Profiles</a>
+              <li class="nav-item active">
+                <a class="nav-link" href="notifications">Notifications</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="updateprofile">Update Profile</a>
@@ -69,12 +69,10 @@
             </ul>
           </div>
         </div>
+
         <ul class="mobile-menu">
           <li>
             <a class="page-scroll" href="dashboard">Dashboard</a>
-          </li>
-          <li>
-            <a class="page-scroll" href="viewfarmers">View Farmer's Profiles</a>
           </li>
           <li>
             <a class="page-scroll" href="updateprofile">Update Profile</a>
@@ -90,62 +88,46 @@
     </header>
     <br><br><br><br><br>
     <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
-       <span style="background-color: #fff; font-size: 50px; color:#016168; padding: 15px; opacity: 90%;">Dashboard</span> 
+       <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Notifications</span> 
     </h1>
-    <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col">
-        <div class="card" style="opacity: 90%; height: 130px">
-          <div class="card-body">
-            <h5 class="card-title">Name</h5>
-            <p class="card-text">{{investor.fullname}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col">
-        <div class="card" style="opacity: 90%; height: 130px">
-          <div class="card-body">
-            <h5 class="card-title">Number of deals</h5>
-            <p class="card-text">{{investor.deals}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-2"></div>
-    </div>
     <br>
     <div class="row">
       <div class="col-lg-4"></div>
       <div class="col">
-        <div class="card" style="opacity: 90%; height: 130px">
+        <div class="card" style="opacity: 90%; height: 180px">
           <div class="card-body">
-            <h5 class="card-title">Range of investment</h5>
-            <p class="card-text">INR {{investor.start}} - {{investor.end}}</p>
-          </div>
-        </div>
-      </div>
-      <div class="col-lg-4"></div>
-    </div>
-    <br>
-    <div class="row">
-      <div class="col-lg-4"></div>
-      <div class="col">
-        <div class="card" style="opacity: 90%; height: 250px">
-          <div class="card-body">
-            <h5 class="card-title">New deal confirmation</h5>
-            <p class="card-text">Enter the username of the farmer who you signed a deal with (It will reflect on your account after the farmer has confirmed the deal):</p>
-            <form method="POST" action="deal_lock">
-              <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" />
+            <h5 class="card-title">New notifications</h5>
+            <p class="card-text">New deal/order confirmation request from </p>
             <div class="row">
-                <div class="col-4"></div>
-                <div class="col-4">
-                    <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;">Submit</button> 
-                </div>
-                <div class="col-4"></div>
-            </div>  
-            </form>                   
+              <div class="col">
+                <button type="submit" href="deal_accept" class="btn btn-common btn-nv-sty" style="width: 100%;">Accept</button>
+              </div>
+              <div class="col">
+                <button type="submit" href="deal_reject" class="btn btn-common btn-nv-sty" style="width: 100%;">Reject</button>
+              </div>
+            </div>
           </div>
         </div>
       </div>
       <div class="col-lg-4"></div>
     </div>
   </div>
+  
+    {{!-- <div class="container">
+      <h1 class="mt-4">Dashboard</h1>
+<p class="lead mb-3">Welcome {{user.username }}</p>
+<form action = "/users/logout" method="POST">
+    <button type="submit" class="btn btn-primary btn-block">
+        Logout
+      </button>
+</form>
+<form action = "/users/logoutall" method="POST">
+    <button type="submit" class="btn btn-primary btn-block">
+        Logout from all devices
+      </button>
+</form>
+    </div> --}}
+
+    
+
+
