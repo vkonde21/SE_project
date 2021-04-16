@@ -91,42 +91,58 @@
        <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Notifications</span> 
     </h1>
     <br>
+    {{#if notifications}}
+    {{#each notifications}}
     <div class="row">
       <div class="col-lg-4"></div>
       <div class="col">
         <div class="card" style="opacity: 90%; height: 180px">
           <div class="card-body">
             <h5 class="card-title">New notifications</h5>
-            <p class="card-text">New deal/order confirmation request from </p>
+            <p class="card-text">New deal/order confirmation request from {{this.1.other_username}}</p>
+            <form id="{{this.1._id}}"action="deal_decision" method="POST">
+            <input type="hidden" id="dealid1" name="dealid1" value="{{this.1._id}}">
             <div class="row">
               <div class="col">
-                <button type="submit" href="deal_accept" class="btn btn-common btn-nv-sty" style="width: 100%;">Accept</button>
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="accept">Accept</button>
               </div>
               <div class="col">
-                <button type="submit" href="deal_reject" class="btn btn-common btn-nv-sty" style="width: 100%;">Reject</button>
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="reject">Reject</button>
               </div>
             </div>
+            </form>
           </div>
         </div>
       </div>
+      {{#if this.2.other_username}}
+      <div class="col">
+        <div class="card" style="opacity: 90%; height: 180px">
+          <div class="card-body">
+            <h5 class="card-title">New notifications</h5>
+            <p class="card-text">New deal/order confirmation request from {{this.2.other_username}}</p>
+            <form id="{{this.2._id}}"action="deal_decision" method="POST">
+            <input type="hidden" id="dealid2" name="dealid2" value="{{this.2._id}}">
+            <div class="row">
+              <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="accept">Accept</button>
+              </div>
+              <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;" name="reject">Reject</button>
+              </div>
+            </div>
+            </form>
+          </div>
+        </div>
+      </div>
+      {{/if}}
       <div class="col-lg-4"></div>
     </div>
+    <br>
+    {{/each}}
+    {{/if}}
   </div>
   
-    {{!-- <div class="container">
-      <h1 class="mt-4">Dashboard</h1>
-<p class="lead mb-3">Welcome {{user.username }}</p>
-<form action = "/users/logout" method="POST">
-    <button type="submit" class="btn btn-primary btn-block">
-        Logout
-      </button>
-</form>
-<form action = "/users/logoutall" method="POST">
-    <button type="submit" class="btn btn-primary btn-block">
-        Logout from all devices
-      </button>
-</form>
-    </div> --}}
+    
 
     
 

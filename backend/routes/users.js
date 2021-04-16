@@ -35,9 +35,7 @@ router.route('/registerfarmer').get((req, res) => {
     res.render('registerfarmer');
 });
 
-router.route('/notifications').get((req, res) => {
-    res.render('notifications');
-});
+
 
 router.route('/registerfarmer').post(upload.fields([{
     name: 'landpaper', maxCount: 1
@@ -272,9 +270,9 @@ router.route('/deal_lock').post(auth, async(req,res) => {
         res.status(400).send();
     }
     const farmer_id = farmer._id;
-    const other_id = req.user._id;
+    const other_username = req.user.username;
     const farmer_locked = false;
-    const newdeal = new Deal({farmer_id, other_id, farmer_locked});
+    const newdeal = new Deal({farmer_id, other_username, farmer_locked});
     newdeal.save();
     res.redirect("dashboard");
 

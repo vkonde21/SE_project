@@ -6,11 +6,15 @@ const dealSchema = new Schema({
     farmer_id:{
         type:ObjectId
     },
-    other_id:{
-        type:ObjectId
+    other_username:{
+        type:String
     },
     farmer_locked:{
         type:Boolean
+    }, 
+    notified:{
+        type:Boolean,
+        default:false
     }
 });
 
