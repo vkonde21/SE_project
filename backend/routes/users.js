@@ -123,7 +123,7 @@ router.route('/viewfarmers').get(auth, async (req, res) => {
                 else
                     profiles.push({1:f1, 2:c1});
             }
-                res.render('viewfarmers', {profiles});
+                res.render('viewfarmers', {profiles, user:req.user});
         }
         else{
             throw new Error();

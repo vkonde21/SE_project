@@ -24,6 +24,11 @@ hbs.registerHelper("section", function(name, options){
     this._sections[name] = options.fn(this);
     return null;
 });
+
+hbs.registerHelper('ifeq', function (a, b, options) {
+    if (a == b) { return options.fn(this); }
+    return options.inverse(this);
+});
 app.use(cookieParser());
 app.use(express.static("../src/public"));
 const userRouter = require('./routes/users');

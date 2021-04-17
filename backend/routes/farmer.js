@@ -5,11 +5,12 @@ let Crop = require('../models/crop.model');
 let Deal = require('../models/deal.model');
 let Order = require('../models/order.model');
 let Buyer = require('../models/buyer.model');
-const Investor = require('../models/investor.model');
-const User = require('../models/user.model');
-const Institution = require('../models/institution.model');
-const multer = require("multer");
-const FileType = require('file-type');
+let Investor = require('../models/investor.model');
+let User = require('../models/user.model');
+let Institution = require('../models/institution.model');
+let Rating = require('../models/rating.model');
+let multer = require("multer");
+let FileType = require('file-type');
 var ab2str = require('arraybuffer-to-string');
 
 const upload = multer({
@@ -179,6 +180,7 @@ router.route('/deal_decision').post(auth, async(req, res) => {
 router.route('/order_decision').post(auth, async(req, res) => {
     var order_id;
     var other;
+    //Search a rating model with this farmer and buyer id
     try{
         if(req.body.accept != undefined){
             if(req.body.orderid1 != undefined){
@@ -198,7 +200,11 @@ router.route('/order_decision').post(auth, async(req, res) => {
             other = await Buyer.findOne({_id:o._id});
             other.orders += 1;
             other.save();
-
+            const r = await Rating.findOne({farmer_username:req.user.username, buyer_id: other._id});
+            if(r == null){
+                const rating = new Rating({farmer_username:req.user.username, buyer_id:other._id});
+                rating.save();
+            }
         }
         else if(req.body.accept == undefined){
             if(req.body.orderid1 != undefined){

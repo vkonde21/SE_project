@@ -47,24 +47,22 @@
               <span class="icon-menu"></span>
               <span class="icon-menu"></span>
             </button>
-            <img src="/img/logo.png" class="navbar-brand" style="width: 230px; height:70px" alt=""/>
+            <img src="/img/logo.png" class="navbar-brand" style="width: 250px; height: 70px" alt=""/>
           </div>
           <div class="collapse navbar-collapse" id="main-navbar" style="margin-left: 10%;">
             <ul class="navbar-nav mr-auto w-100">
               <li class="nav-item">
                 <a class="nav-link" href="dashboard">Dashboard</a>
               </li>
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="viewfarmers">View Farmer's Profiles</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="updateprofile">Update Profile</a>
               </li>
-              {{#ifeq user.type "buyer"}}
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="buyer_orders">Orders</a>
               </li>
-              {{/ifeq}}
               <li class="nav-item">
                 <a class="nav-link" href="chat">Chat</a>
               </li>
@@ -74,6 +72,7 @@
             </ul>
           </div>
         </div>
+
         <ul class="mobile-menu">
           <li>
             <a class="page-scroll" href="dashboard">Dashboard</a>
@@ -84,11 +83,9 @@
           <li>
             <a class="page-scroll" href="updateprofile">Update Profile</a>
           </li>
-          {{#ifeq user.type "buyer"}}
-              <li class="nav-item">
-                <a class="page-scroll" href="buyer_orders">Orders</a>
-              </li>
-              {{/ifeq}}
+          <li>
+            <a class="page-scroll" href="buyer_orders">Orders</a>
+          </li>
           <li>
             <a class="page-scroll" href="chat">Chat</a>
           </li>
@@ -98,50 +95,47 @@
         </ul>
       </nav>
     </header>
-    <br><br><br><br>
+    <br><br><br><br><br>
     <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
-       <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Farmer profiles</span> 
+       <span style="background-color: #fff; font-size: 50px; color:#016168; padding: 15px; opacity: 90%;">Orders</span> 
     </h1>
-    {{#if profiles}}
-    {{#each profiles}}
+    {{#if rating}}
+    {{#each rating}}
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-4 col-12">
         <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
-            <h5 class="card-title">Name : {{this.1.fullname}}</h5>
-            <p class="card-text">Number of deals : {{this.1.deals}}</p>
-            <p class="card-text">Number of orders : {{this.1.orders}}</p>
-            <p class="card-text">Ratings : {{this.1.rating}}</p>
-            <p class="card-text">Crops grown :{{2}} </p>
-            <p class="card-text">Area of land : {{this.1.land_area}} acres</p>
-            <div class="row">
-                <div class="col-lg-3 col-2"></div>
-                <div class="col-lg-6 col-8">
-                  <button type="submit" class="btn btn-common btn-nv-sty" style="width: 100%;">Initiate chat</button>
-                </div>
-                <div class="col-lg-3 col-2"></div>
+            <h5 class="card-title">Farmer: {{this.1.farmer_username}}</h5>
+            {{#if this.1.given }}
+                <p class="card-text">Rating given: {{this.1.rating}}</p>
+            {{else}}
+            <form action="save_rating/{{this.1._id}}" method="POST">
+                <input type="number" step="0.5" class="form-control" placeholder="Rating(out of 5 in steps of 0.5)" name="farmerrating" max="5"/>
+                <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 70%;">Submit rating</button>
               </div>
+            </form>
+            {{/if}}
+            
           </div>
         </div>
       </div>
-      {{#if this.3.fullname}}
+      {{#if this.2.farmer_username}}
       <div class="col-lg-4 col-12">
         <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
-            <h5 class="card-title">Name : {{this.3.fullname}} </h5>
-            <p class="card-text">Number of deals : {{this.3.deals}}</p>
-            <p class="card-text">Number of orders : {{this.3.orders}}</p>
-            <p class="card-text">Ratings : {{this.3.rating}}</p>
-            <p class="card-text">Crops grown : {{4}}</p>
-            <p class="card-text">Area of land : {{this.3.land_area}} acres</p>
-            <div class="row">
-                <div class="col-lg-3 col-2"></div>
-                <div class="col-lg-6 col-8">
-                  <button type="submit" class="btn btn-common btn-nv-sty" style="width: 100%;">Initiate chat</button>
-                </div>
-                <div class="col-lg-3 col-2"></div>
+            <h5 class="card-title">Farmer : {{this.2.farmer_username}} </h5>
+            {{#if this.2.given }}
+                <p class="card-text">Rating given: {{this.2.rating}}</p>
+            {{else}}
+            <form action="save_rating/{{this.2._id}}" method="POST">
+                <input type="number" step="0.5" class="form-control" placeholder="Rating(out of 5 in steps of 0.5)" name="farmerrating" max="5"/>
+                <div class="col">
+                <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 70%;">Submit rating</button>
               </div>
+            </form>
+            {{/if}}
           </div>
         </div>
       </div>
@@ -151,12 +145,4 @@
     <br><br>
     {{/each}}
     {{/if}}
-  </div>
-  <script>
-    var data = {
-      sampleString:{{user.type}}
-    }
-    $.extend(data, {equal: function() {
-    return this.sampleString ==  'buyer';}
-});
-  </script>
+    </div>
