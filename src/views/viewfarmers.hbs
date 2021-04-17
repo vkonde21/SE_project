@@ -92,16 +92,19 @@
     <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
        <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Farmer profiles</span> 
     </h1>
+    {{#if profiles}}
+    {{#each profiles}}
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-4 col-12">
         <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
-            <h5 class="card-title">Name : </h5>
-            <p class="card-text">Number of deals : </p>
-            <p class="card-text">Ratings : </p>
-            <p class="card-text">Crops grown : </p>
-            <p class="card-text">Area of land : </p>
+            <h5 class="card-title">Name : {{this.1.fullname}}</h5>
+            <p class="card-text">Number of deals : {{this.1.deals}}</p>
+            <p class="card-text">Number of orders : {{this.1.orders}}</p>
+            <p class="card-text">Ratings : {{this.1.rating}}</p>
+            <p class="card-text">Crops grown :{{2}} </p>
+            <p class="card-text">Area of land : {{this.1.land_area}} acres</p>
             <div class="row">
                 <div class="col-lg-3 col-2"></div>
                 <div class="col-lg-6 col-8">
@@ -112,14 +115,16 @@
           </div>
         </div>
       </div>
+      {{#if this.3.fullname}}
       <div class="col-lg-4 col-12">
         <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
-            <h5 class="card-title">Name : </h5>
-            <p class="card-text">Number of deals : </p>
-            <p class="card-text">Ratings : </p>
-            <p class="card-text">Crops grown : </p>
-            <p class="card-text">Area of land : </p>
+            <h5 class="card-title">Name : {{this.3.fullname}} </h5>
+            <p class="card-text">Number of deals : {{this.3.deals}}</p>
+            <p class="card-text">Number of orders : {{this.3.orders}}</p>
+            <p class="card-text">Ratings : {{this.3.rating}}</p>
+            <p class="card-text">Crops grown : {{4}}</p>
+            <p class="card-text">Area of land : {{this.3.land_area}} acres</p>
             <div class="row">
                 <div class="col-lg-3 col-2"></div>
                 <div class="col-lg-6 col-8">
@@ -130,6 +135,10 @@
           </div>
         </div>
       </div>
+      {{/if}}
       <div class="col-lg-2"></div>
     </div>
+    <br><br>
+    {{/each}}
+    {{/if}}
   </div>

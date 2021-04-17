@@ -25,7 +25,7 @@ const upload = multer({
     }
 })
 
-//localhost:5000/users/
+
 router.route('/me').get(auth, (req, res) => {
     res.send(req.user);
 });
@@ -43,7 +43,7 @@ router.route('/registerfarmer').post(upload.fields([{
     name: 'certificate', maxCount: 1
 }]), async (req, res) => {
     try {
-        //console.log(req.files);
+       
         const username = req.body.username;
         const password = req.body.password;
         const fullname = req.body.registername;
@@ -93,9 +93,50 @@ router.route('/about').get((req, res) => {
     res.render('about');
 });
 
-router.route('/viewfarmers').get((req, res) => {
-    res.render('viewfarmers');
+router.route('/viewfarmers').get(auth, async (req, res) => {
+    try{
+        if(req.user.type == "investor" || req.user.type == "buyer" || req.user.type == "institution"){
+            const users = await User.find({is_verified:true, type:"farmer"});
+            var profiles = [];
+            var crops, f1, f2;
+            var c1 = "";
+            var c2 = "";
+            var i;
+            for(i=0; i<users.length;i+=2){
+                c1="";
+                c2="";
+                crops = await Crop.find({user_id:users[i]._id});
+                f1 = await Farmer.findOne({_id:users[i]._id});
+                for(var j=0; j < crops.length;  j++){
+                    c1 += crops[j].cropname + " ";
+                }
+            
+                if(users[i+1] != undefined){
+                    f2 = await Farmer.findOne({_id:users[i+1]._id});
+                    crops = await Crop.find({user_id:users[i+1]._id});
+                    for(var j=0; j < crops.length;  j++){
+                        c2 += crops[j].cropname + " ";
+                    }
+                    
+                    profiles.push({1:f1, 2:c1, 3:f2, 4:c2});
+                }
+                else
+                    profiles.push({1:f1, 2:c1});
+            }
+                res.render('viewfarmers', {profiles});
+        }
+        else{
+            throw new Error();
+        }
+    } 
+    catch(err) {
+        res.status(400).json('error: ' + err);
+    } 
+    
+    
 });
+
+
 
 router.route('/help').get((req, res) => {
     res.render('help');
@@ -195,13 +236,13 @@ router.route('/login').get((req, res) => {
 router.route('/login').post(async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
-        if(user.type != "admin"){
+        if(user.type != "admin" && user.is_verified == true){
             const token = await user.generateAuthToken();
             res.cookie("jwt", token, { secure: true, httpOnly: true })
             res.redirect ('/users/dashboard');
         }
         else{
-            /*get the list of users who are not verified*/
+            
             res.redirect({ user },'/users/dashboard');
         }
         
