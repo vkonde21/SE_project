@@ -1,3 +1,6 @@
+{{#section 'link'}}
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+{{/section}}
 {{#section 'style'}}
     .cover {
       display: flex;
@@ -17,6 +20,35 @@
       min-width: 100%;
       min-height: 100%;
     }
+
+    .stars-outer {
+  position: relative;
+  display: inline-block;
+}
+
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: 0;
+}
+
+.stars-outer::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #ccc;
+}
+
+.stars-inner::before {
+  content: "\f005 \f005 \f005 \f005 \f005";
+  font-family: "Font Awesome 5 Free";
+  font-weight: 900;
+  color: #f8ce0b;
+}
+
     {{/section}}
   
     
@@ -112,7 +144,10 @@
             <h5 class="card-title">Name : {{this.1.fullname}}</h5>
             <p class="card-text">Number of deals : {{this.1.deals}}</p>
             <p class="card-text">Number of orders : {{this.1.orders}}</p>
-            <p class="card-text">Ratings : {{this.1.rating}}</p>
+            <p class="card-text">Ratings : {{this.1.rating}}<div class="stars-outer" id="stars-outer{{this.1._id}}">
+                <div class="stars-inner" id="stars-inner{{this.1._id}}" style="width:{{this.1.rating}}";color="#f8ce0b">
+                </div>
+            </div></p>
             <p class="card-text">Crops grown :{{2}} </p>
             <p class="card-text">Area of land : {{this.1.land_area}} acres</p>
             <div class="row">
@@ -132,7 +167,12 @@
             <h5 class="card-title">Name : {{this.3.fullname}} </h5>
             <p class="card-text">Number of deals : {{this.3.deals}}</p>
             <p class="card-text">Number of orders : {{this.3.orders}}</p>
-            <p class="card-text">Ratings : {{this.3.rating}}</p>
+            <p class="card-text">Ratings : {{this.3.rating}}
+              <div class="stars-outer" id="stars-outer{{this.3._id}}">
+                <div class="stars-inner" id="stars-inner{{this.3._id}}" style="width:{{this.3.rating}}";;color="#f8ce0b">
+                </div>
+            </div>
+            </p>
             <p class="card-text">Crops grown : {{4}}</p>
             <p class="card-text">Area of land : {{this.3.land_area}} acres</p>
             <div class="row">
@@ -149,14 +189,8 @@
       <div class="col-lg-2"></div>
     </div>
     <br><br>
+    
     {{/each}}
     {{/if}}
   </div>
-  <script>
-    var data = {
-      sampleString:{{user.type}}
-    }
-    $.extend(data, {equal: function() {
-    return this.sampleString ==  'buyer';}
-});
-  </script>
+  
