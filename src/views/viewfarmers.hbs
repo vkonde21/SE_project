@@ -26,14 +26,14 @@
       display: inline-block;
     }
 
-.stars-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  width: calc(var(--a) * var(--r));
-}
+    .stars-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: calc(var(--a) * var(--r));
+    }
 
     .stars-outer::before {
       content: "\f005 \f005 \f005 \f005 \f005";
@@ -144,10 +144,12 @@
             <h5 class="card-title">Name : {{this.1.fullname}}</h5>
             <p class="card-text">Number of deals : {{this.1.deals}}</p>
             <p class="card-text">Number of orders : {{this.1.orders}}</p>
-            <p class="card-text">Ratings : {{this.1.rating}}<div class="stars-outer" id="stars-outer{{this.1._id}}">
+            <p class="card-text">Ratings : {{this.1.rating}}
+              <div class="stars-outer" id="stars-outer{{this.1._id}}">
                 <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">
                 </div>
-            </div></p>
+              </div>
+            </p>
             <p class="card-text">Crops grown :{{2}} </p>
             <p class="card-text">Area of land : {{this.1.land_area}} acres</p>
             <div class="row">
@@ -188,29 +190,7 @@
       {{/if}}
       <div class="col-lg-2"></div>
     </div>
-    <br><br>
-    <script >
-// Initial Ratings
-    var rating = {{this.1.rating}}
-    var id  =  {{this.1._id}}
-    // Total Stars
-    var starsTotal = 5;
-
-    // Run getRatings when DOM loads
-    //document.addEventListener('DOMContentLoaded', getRatings);
-    // Get ratings
-    (function () {
-      
-        // Get percentage
-        var starPercentage = (rating / starsTotal) * 100;
-
-        // Round to nearest 10
-        //var starPercentageRounded = `${Math.round(starPercentage / 10) * 10}%`;
-
-        // Set width of stars-inner to percentage
-        document.querySelector(`#stars-inner` + id).style.width = starPercentage;
-    })();
-</script>
+    <br>
     {{/each}}
     {{/if}}
   </div>

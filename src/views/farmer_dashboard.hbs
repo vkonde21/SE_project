@@ -1,3 +1,6 @@
+{{#section 'link'}}
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+{{/section}}
 {{#section 'style'}}
     .cover {
       display: flex;
@@ -17,6 +20,35 @@
       min-width: 100%;
       min-height: 100%;
     }
+
+    .stars-outer {
+      position: relative;
+      display: inline-block;
+    }
+
+    .stars-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: calc(var(--a) * var(--r));
+    }
+
+    .stars-outer::before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #ccc;
+    }
+
+    .stars-inner::before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #f8ce0b;
+    }
+
     {{/section}}
   
     
@@ -61,7 +93,7 @@
                 <a class="nav-link" href="updateprofile">Update Profile</a>
               </li>
               <li class="nav-item">
-                <a class="nav-link" href="chat">Chat</a>
+                <a class="nav-link" href="/chat/chat_app_farmer">Chat</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="logout">Logout</a>
@@ -81,7 +113,7 @@
             <a class="page-scroll" href="updateprofile">Update Profile</a>
           </li>
           <li>
-            <a class="page-scroll" href="chat">Chat</a>
+            <a class="page-scroll" href="/chat/chat_app_farmer">Chat</a>
           </li>
           <li>
             <a class="page-scroll" href="logout">Logout</a>
@@ -107,7 +139,12 @@
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
             <h5 class="card-title">Average Rating</h5>
-            <p class="card-text">{{farmer.rating}}</p>
+            <p class="card-text">Rating : {{farmer.rating}}
+              <div class="stars-outer">
+                <div class="stars-inner" style="color:#f8ce0b; --r:20%; --a:{{farmer.rating}}">
+                </div>
+              </div>
+            </p>
           </div>
         </div>
       </div>

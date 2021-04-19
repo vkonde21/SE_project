@@ -53,8 +53,11 @@
               <li class="nav-item">
                 <a class="nav-link" href="viewfarmers">View Farmer's Profiles</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="updateprofile">Update Profile</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="buyer_orders">Orders</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="chat">Chat</a>
@@ -77,6 +80,9 @@
             <a class="page-scroll" href="updateprofile">Update Profile</a>
           </li>
           <li>
+            <a class="page-scroll" href="buyer_orders">Orders</a>
+          </li>
+          <li>
             <a class="page-scroll" href="chat">Chat</a>
           </li>
           <li>
@@ -85,7 +91,7 @@
         </ul>
       </nav>
     </header>
-<br><br><br><br><br>
+<br><br>
 
 
   <div class="content">
@@ -129,19 +135,16 @@
                             placeholder="Requirements(specify the names of crops you would usually prefer to buy)"
                             name="requirements" value="{{buyer.requirements}}"/>
                         </div>
-                      </div>
-                      
+                      </div>                    
                       <div class="row">
-                        <div class="col-lg-3 col-md-4 col-3"></div>
-                        <div class="col">
-                          <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 50%;">
+                        <div class="col-lg-4 col-md-4 col-4"></div>
+                        <div class="col-lg-4 col-md-4 col-4">
+                          <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 100%;">
                             Update
                           </button>
                         </div>
                       </div>
-
-
-                      <div class="row">
+                     <div class="row">
                         <div class="col">
                           <p class="error text-danger" align="center"></p>
                           <p class="success text-success" align="center"></p>
@@ -158,30 +161,6 @@
       </section>
     
   </div>
-  <footer id="contact" class="footer-area section-padding" style="opacity: 80%; color:white">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-8 wow fadeInUp" data-wow-delay="0.4s">
-                    <h3>QUICK LINKS</h3>
-                    <ul>
-                        <li><a href="/users/login">LOGIN</a></li>
-                        <li><a href="/users/register">REGISTER</a></li>
-                        <li><a href="/users/about">ABOUT ORGANIQUE</a></li>
-                        <li><a href="/users/help">HELP</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-                    <h3>CONTACT US</h3>
-                    <p style="font-size:15px;">Reach out to us at :</p>
-                    <br>
-                    <ul>
-                        <li>&emsp;Email id&emsp;:&emsp;gandhias18.comp@coep.ac.in</li>
-                        <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;kondevp10.comp@coep.ac.in</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer>
 
   <!-- Go to Top Link -->
   <a href="#" class="back-to-top">
