@@ -188,7 +188,6 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const type = "institution";
         const is_verified = false;
         const deals = 0;
-        
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;

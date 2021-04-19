@@ -180,7 +180,6 @@ router.route('/deal_decision').post(auth, async(req, res) => {
 router.route('/order_decision').post(auth, async(req, res) => {
     var order_id;
     var other;
-    //Search a rating model with this farmer and buyer id
     try{
         if(req.body.accept != undefined){
             if(req.body.orderid1 != undefined){
