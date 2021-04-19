@@ -26,14 +26,14 @@
       display: inline-block;
     }
 
-    .stars-inner {
-      position: absolute;
-      top: 0;
-      left: 0;
-      white-space: nowrap;
-      overflow: hidden;
-      width: 0;
-    }
+.stars-inner {
+  position: absolute;
+  top: 0;
+  left: 0;
+  white-space: nowrap;
+  overflow: hidden;
+  width: calc(var(--a) * var(--r));
+}
 
     .stars-outer::before {
       content: "\f005 \f005 \f005 \f005 \f005";
@@ -145,7 +145,7 @@
             <p class="card-text">Number of deals : {{this.1.deals}}</p>
             <p class="card-text">Number of orders : {{this.1.orders}}</p>
             <p class="card-text">Ratings : {{this.1.rating}}<div class="stars-outer" id="stars-outer{{this.1._id}}">
-                <div class="stars-inner" id="stars-inner{{this.1._id}}" style="width:{{this.1.rating}}";color="#f8ce0b">
+                <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">
                 </div>
             </div></p>
             <p class="card-text">Crops grown :{{2}} </p>
@@ -153,7 +153,7 @@
             <div class="row">
                 <div class="col-lg-3 col-2"></div>
                 <div class="col-lg-6 col-8">
-                  <button type="submit" class="btn btn-common btn-nv-sty" style="width: 100%;">Initiate chat</button>
+                  <a href="/chat/{{this.1._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Initiate chat</a>
                 </div>
                 <div class="col-lg-3 col-2"></div>
               </div>
@@ -169,7 +169,7 @@
             <p class="card-text">Number of orders : {{this.3.orders}}</p>
             <p class="card-text">Ratings : {{this.3.rating}}
               <div class="stars-outer" id="stars-outer{{this.3._id}}">
-                <div class="stars-inner" id="stars-inner{{this.3._id}}" style="width:{{this.3.rating}}; color: #f8ce0b">
+                <div class="stars-inner" id="stars-inner{{this.3._id}}"  style="color:#f8ce0b; --r:20%; --a:{{this.3.rating}}">
                 </div>
             </div>
             </p>
@@ -178,7 +178,7 @@
             <div class="row">
                 <div class="col-lg-3 col-2"></div>
                 <div class="col-lg-6 col-8">
-                  <button type="submit" class="btn btn-common btn-nv-sty" style="width: 100%;">Initiate chat</button>
+                  <a href="/chat/{{this.3._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Initiate chat</a>
                 </div>
                 <div class="col-lg-3 col-2"></div>
               </div>
