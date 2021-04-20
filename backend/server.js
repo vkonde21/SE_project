@@ -69,7 +69,7 @@ io.on('connection', (socket) => { /*specify the event and the function */
         ch.save();
         /*change the ch.notified value on the receiver messsage*/
         console.log(x.message);
-        io.emit('message', generateMessage(message), chat);
+        io.emit('message', generateMessage(message));
         callback(msg);
     });
     
