@@ -197,18 +197,33 @@ overflow-y: auto;
                     <form id="chatform" style="margin-bottom: 0;">
                       <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
                       <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
+                      <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
                       <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg" required/>
                       <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton"><i
                           class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </form>
                     <template id="message-template" >
+                      
+                      {{#ifeq out "1"}}
                       <div class="outgoing_msg">
                       <div class="sent_msg">
                           <p>\{{message}}</p>
                           <span class="time_date"> \{{createdAt}}| June 9</span>
                         </div> 
                       </div>
+                      {{else}}
+                      <div class="incoming_msg">
+                      <div class="received_msg">
+                        <div class="received_withd_msg">
+                          <p>\{{message}}</p>
+                          <span class="time_date"> \{{createdAt}}| June 9</span>
+                          </div>
+                        </div> 
+                      </div>
+                      {{/ifeq}}
                     </template>
+
+                    
                   </div>
                 </div>
               </div>

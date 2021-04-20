@@ -58,23 +58,27 @@ server.listen(port , () => {
 });
 io.on('connection', (socket) => { /*specify the event and the function */
     console.log("New connection ");
-    /* send an event from the server */
+    socket.on('join', ({room}) => {
+        socket.join(room);
+        socket.room = room;
+    });
+    
     socket.on('sendMessage', async (message, username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
-        
         console.log(username, other_username);
         var x = await Connection.initiateChat(other_username, username); //username is current user i.e sender
         var msg = generateMessage(message)
         /* save the chat message */
         const ch = new Chat({sender:username, receiver:other_username, chat_msg:msg.text, time:msg.createdAt});
         ch.save();
+        const sender = await User.findOne({username:ch.sender});
         /*change the ch.notified value on the receiver messsage*/
         console.log(x.message);
-        io.emit('message', generateMessage(message));
+        io.to(socket.room).emit('message', {message:msg, sender});
         callback(msg);
     });
     
     
-    socket.on('disconnect', () => {
+    /*socket.on('disconnect', () => {
         io.emit('message', "User left");
-    });   //when a user disconnects
+    });   //when a user disconnects*/
 });

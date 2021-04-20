@@ -99,7 +99,7 @@ router.route('/chat').get(auth, async(req, res) => {
     if(connections.length == 0){
         connections = await Connection.find({conn_user: req.user.username});
     }
-    var i =0, j= 0;
+    var i =0, j= 0, room;
     var buyer = [];
     var investor = [];
     var farmer = [];
@@ -113,14 +113,17 @@ router.route('/chat').get(auth, async(req, res) => {
             u = await User.findOne({username: x.chat_initiator});
             if(u.type == "buyer"){
                 b = await Buyer.findById(u._id);
+                b.room_id = connections[i]._id;
                 buyer.push(b);
             }
             else if(u.type == "investor"){
                 inv = await Investor.findById(u._id);
+                inv.room_id = connections[i]._id;
                 investor.push(inv);
             }
             else{
                 ins = await Institution.findById(u._id);
+                ins.room_id = connections[i]._id;
                 institution.push(ins)
             }
         }
@@ -128,6 +131,7 @@ router.route('/chat').get(auth, async(req, res) => {
             u = await User.findOne({username: x.conn_user});
             f = await Farmer.findById(u._id);
             crops = await Crop.find({user_id:u._id});
+            f.room_id = connections[i]._id;
             c ="";
             for(j = 0; j<crops.length;j++){
                 c += crops[j].cropname + " ";
