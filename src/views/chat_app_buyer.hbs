@@ -1,5 +1,6 @@
 {{#section 'link'}}
 <link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 {{/section}}
 {{#section 'style'}}
     .cover {
@@ -47,6 +48,16 @@
       font-family: "Font Awesome 5 Free";
       font-weight: 900;
       color: #f8ce0b;
+    }
+
+    .btn-circle {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.428571429;
+      border-radius: 15px;
     }
 
     {{/section}}
@@ -138,17 +149,20 @@
             <div class="card" style="opacity: 90%; height: 80px;">
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-7">
                             <h5 class="card-title" style="margin-bottom: 2px;">Rohit Sharma</h5>
                             <p class="card-text">Crops grown : Tomato, potato, rice</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <p class="card-text">Rating : 5
                                 <div class="stars-outer" id="stars-outer{{this.1._id}}">
                                     <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">
                                     </div>
                                 </div>
                             </p>
+                        </div>
+                        <div class="col-1" style="margin-top: 17px;">
+                          <button type="button" class="btn btn-success btn-circle">1</button>
                         </div>
                     </div>
                 </div>
@@ -163,17 +177,20 @@
             <div class="card" style="opacity: 90%; height: 80px;">
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-7">
                             <h5 class="card-title" style="margin-bottom: 2px;">Rohit Sharma</h5>
                             <p class="card-text">Crops grown : Tomato, potato, rice</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <p class="card-text">Rating : 5
                                 <div class="stars-outer" id="stars-outer{{this.1._id}}">
                                     <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">
                                     </div>
                                 </div>
                             </p>
+                        </div>
+                        <div class="col-1" style="margin-top: 17px;">
+                          <button type="button" class="btn btn-success btn-circle">1</button>
                         </div>
                     </div>
                 </div>
@@ -188,11 +205,11 @@
             <div class="card" style="opacity: 90%; height: 80px;">
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-7">
                             <h5 class="card-title" style="margin-bottom: 2px;">Rohit Sharma</h5>
                             <p class="card-text">Crops grown : Tomato, potato, rice</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-3">
                             <p class="card-text">Rating : 5
                                 <div class="stars-outer" id="stars-outer{{this.1._id}}">
                                     <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">

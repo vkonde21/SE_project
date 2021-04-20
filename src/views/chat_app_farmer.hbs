@@ -1,3 +1,6 @@
+{{#section 'link'}}
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+{{/section}}
 {{#section 'style'}}
     .cover {
       display: flex;
@@ -16,6 +19,16 @@
       bottom: 0;
       min-width: 100%;
       min-height: 100%;
+    }
+
+    .btn-circle {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.428571429;
+      border-radius: 15px;
     }
 
     {{/section}}
@@ -52,7 +65,7 @@
           </div>
           <div class="collapse navbar-collapse" id="main-navbar" style="margin-left: 20%;">
             <ul class="navbar-nav mr-auto w-100">
-              <li class="nav-item active">
+              <li class="nav-item">
                 <a class="nav-link" href="/users/dashboard">Dashboard</a>
               </li>
               <li class="nav-item">
@@ -61,7 +74,7 @@
               <li class="nav-item">
                 <a class="nav-link" href="/users/updateprofile">Update Profile</a>
               </li>
-              <li class="nav-item">
+              <li class="nav-item active">
                 <a class="nav-link" href="/chat/chat_app_farmer">Chat</a>
               </li>
               <li class="nav-item">
@@ -101,11 +114,14 @@
             <div class="card" style="opacity: 90%; height: 90px;">
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-9">
                             <h5 class="card-title" style="margin-bottom: 2px;">Buyer</h5>
                             <p class="card-text">Crop requirements : Tomato, potato, rice</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-1">
+                          <div class="col-1" style="margin-top: 17px;">
+                            <button type="button" class="btn btn-success btn-circle">1</button>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -120,11 +136,14 @@
             <div class="card" style="opacity: 90%; height: 90px;">
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-9">
                             <h5 class="card-title" style="margin-bottom: 2px;">Investor</h5>
                             <p class="card-text">Investment range : 10000-20000 INR</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-1">
+                          <div class="col-1" style="margin-top: 17px;">
+                            <button type="button" class="btn btn-success btn-circle">1</button>
+                          </div>
                         </div>
                     </div>
                 </div>
@@ -136,15 +155,18 @@
         <div class="col-lg-4"></div>
         <div class="col-lg-4 col-12">
             <a href="" style="color: black;">
-            <div class="card" style="opacity: 90%; height: 90px;">
+            <div class="card" style="opacity: 90%; height: 110px;">
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
-                        <div class="col-8">
+                        <div class="col-9">
                             <h5 class="card-title" style="margin-bottom: 2px;">Institution</h5>
                             <p class="card-text">Crop requirements : Tomato, potato, rice</p>
                             <p class="card-text">Investment range : 10000-20000 INR</p>
                         </div>
-                        <div class="col-4">
+                        <div class="col-1">
+                          <div class="col-1" style="margin-top: 17px;">
+                            <button type="button" class="btn btn-success btn-circle">1</button>
+                          </div>
                         </div>
                     </div>
                 </div>
