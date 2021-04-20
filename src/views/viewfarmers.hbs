@@ -22,32 +22,32 @@
     }
 
     .stars-outer {
-  position: relative;
-  display: inline-block;
-}
+      position: relative;
+      display: inline-block;
+    }
 
-.stars-inner {
-  position: absolute;
-  top: 0;
-  left: 0;
-  white-space: nowrap;
-  overflow: hidden;
-  width: calc(var(--a) * var(--r));
-}
+    .stars-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: calc(var(--a) * var(--r));
+    }
 
-.stars-outer::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  color: #ccc;
-}
+    .stars-outer::before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #ccc;
+    }
 
-.stars-inner::before {
-  content: "\f005 \f005 \f005 \f005 \f005";
-  font-family: "Font Awesome 5 Free";
-  font-weight: 900;
-  color: #f8ce0b;
-}
+    .stars-inner::before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #f8ce0b;
+    }
 
     {{/section}}
   
@@ -139,15 +139,17 @@
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-4 col-12">
-        <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
+        <div class="card" style="opacity: 90%; height: 300px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
             <h5 class="card-title">Name : {{this.1.fullname}}</h5>
             <p class="card-text">Number of deals : {{this.1.deals}}</p>
             <p class="card-text">Number of orders : {{this.1.orders}}</p>
-            <p class="card-text">Ratings : {{this.1.rating}}<div class="stars-outer" id="stars-outer{{this.1._id}}">
+            <p class="card-text">Ratings : {{this.1.rating}}
+              <div class="stars-outer" id="stars-outer{{this.1._id}}">
                 <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">
                 </div>
-            </div></p>
+              </div>
+            </p>
             <p class="card-text">Crops grown :{{2}} </p>
             <p class="card-text">Area of land : {{this.1.land_area}} acres</p>
             <div class="row">
@@ -162,7 +164,7 @@
       </div>
       {{#if this.3.fullname}}
       <div class="col-lg-4 col-12">
-        <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
+        <div class="card" style="opacity: 90%; height: 300px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
             <h5 class="card-title">Name : {{this.3.fullname}} </h5>
             <p class="card-text">Number of deals : {{this.3.deals}}</p>
@@ -188,8 +190,7 @@
       {{/if}}
       <div class="col-lg-2"></div>
     </div>
-    <br><br>
-    
+    <br>
     {{/each}}
     {{/if}}
   </div>

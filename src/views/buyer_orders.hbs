@@ -1,3 +1,6 @@
+{{#section 'link'}}
+<link href="https://use.fontawesome.com/releases/v5.0.8/css/all.css" rel="stylesheet">
+{{/section}}
 {{#section 'style'}}
     .cover {
       display: flex;
@@ -17,6 +20,35 @@
       min-width: 100%;
       min-height: 100%;
     }
+
+    .stars-outer {
+      position: relative;
+      display: inline-block;
+    }
+
+    .stars-inner {
+      position: absolute;
+      top: 0;
+      left: 0;
+      white-space: nowrap;
+      overflow: hidden;
+      width: calc(var(--a) * var(--r));
+    }
+
+    .stars-outer::before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #ccc;
+    }
+
+    .stars-inner::before {
+      content: "\f005 \f005 \f005 \f005 \f005";
+      font-family: "Font Awesome 5 Free";
+      font-weight: 900;
+      color: #f8ce0b;
+    }
+
     {{/section}}
   
     
@@ -104,14 +136,19 @@
     <div class="row">
       <div class="col-lg-2"></div>
       <div class="col-lg-4 col-12">
-        <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
+        <div class="card" style="opacity: 90%; height: 170px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
             <h5 class="card-title">Farmer: {{this.1.farmer_username}}</h5>
             {{#if this.1.given }}
-                <p class="card-text">Rating given: {{this.1.rating}}</p>
+              <p class="card-text" style="font-size: 17px;">Rating given : {{this.1.rating}}
+                <div class="stars-outer" id="stars-outer{{this.1._id}}" style="margin: 10px;">
+                  <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">
+                  </div>
+                </div>
+              </p>
             {{else}}
             <form action="save_rating/{{this.1._id}}" method="POST">
-                <input type="number" step="0.5" class="form-control" placeholder="Rating(out of 5 in steps of 0.5)" name="farmerrating" max="5"/>
+                <input type="number" step="0.5" class="form-control" placeholder="Rating(out of 5 in steps of 0.5)" name="farmerrating" max="5" style="margin-bottom: 5px;"/>
                 <div class="col">
                 <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 70%;">Submit rating</button>
               </div>
@@ -123,14 +160,19 @@
       </div>
       {{#if this.2.farmer_username}}
       <div class="col-lg-4 col-12">
-        <div class="card" style="opacity: 90%; height: 250px; margin-bottom: 20px; text-align:center">
+        <div class="card" style="opacity: 90%; height: 170px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
             <h5 class="card-title">Farmer : {{this.2.farmer_username}} </h5>
             {{#if this.2.given }}
-                <p class="card-text">Rating given: {{this.2.rating}}</p>
+              <p class="card-text" style="font-size: 17px;">Rating given : {{this.2.rating}}
+                <div class="stars-outer" id="stars-outer{{this.2._id}}" style="margin: 10px;">
+                  <div class="stars-inner" id="stars-inner{{this.2._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.2.rating}}">
+                  </div>
+                </div>
+              </p>
             {{else}}
             <form action="save_rating/{{this.2._id}}" method="POST">
-                <input type="number" step="0.5" class="form-control" placeholder="Rating(out of 5 in steps of 0.5)" name="farmerrating" max="5"/>
+                <input type="number" step="0.5" class="form-control" placeholder="Rating(out of 5 in steps of 0.5)" name="farmerrating" max="5" style="margin-bottom: 5px;"/>
                 <div class="col">
                 <button type="submit" href="" class="btn btn-common btn-nv-sty" style="width: 70%;">Submit rating</button>
               </div>
@@ -142,7 +184,7 @@
       {{/if}}
       <div class="col-lg-2"></div>
     </div>
-    <br><br>
+    <br>
     {{/each}}
     {{/if}}
     </div>

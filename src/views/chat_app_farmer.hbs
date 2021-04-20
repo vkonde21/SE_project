@@ -1,0 +1,177 @@
+{{#section 'link'}}
+<script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+{{/section}}
+{{#section 'style'}}
+    .cover {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1 0 auto;
+    }
+    #contact {
+      flex-shrink: 0;
+    }
+    #mygif {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+
+    .btn-circle {
+      width: 30px;
+      height: 30px;
+      text-align: center;
+      padding: 6px 0;
+      font-size: 12px;
+      line-height: 1.428571429;
+      border-radius: 15px;
+    }
+
+    {{/section}}
+  
+    
+  
+<div class="cover">
+  <img src="/img/crops.gif" id="mygif" alt="...">
+
+  <header id="header-wrap">
+      <!-- Navbar Start -->
+      <nav
+        class="navbar navbar-expand-lg fixed-top scrolling-navbar"
+        style="background-color: #fff;"
+      >
+        <div class="container">
+          <!-- Brand and toggle get grouped for better mobile display -->
+          <div class="navbar-header">
+            <button
+              class="navbar-toggler"
+              type="button"
+              data-toggle="collapse"
+              data-target="#main-navbar"
+              aria-controls="main-navbar"
+              aria-expanded="false"
+              aria-label="Toggle navigation"
+            >
+              <span class="navbar-toggler-icon"></span>
+              <span class="icon-menu"></span>
+              <span class="icon-menu"></span>
+              <span class="icon-menu"></span>
+            </button>
+            <img src="/img/logo.png" class="navbar-brand" style="width: 250px; height: 70px" alt=""/>
+          </div>
+          <div class="collapse navbar-collapse" id="main-navbar" style="margin-left: 20%;">
+            <ul class="navbar-nav mr-auto w-100">
+              <li class="nav-item">
+                <a class="nav-link" href="/users/dashboard">Dashboard</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/notifications">Notifications</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/updateprofile">Update Profile</a>
+              </li>
+              <li class="nav-item active">
+                <a class="nav-link" href="/chat/chat_app_farmer">Chat</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="/users/logout">Logout</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+
+        <ul class="mobile-menu">
+          <li>
+            <a class="page-scroll" href="/users/dashboard">Dashboard</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="/users/notifications">Notifications</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="/users/updateprofile">Update Profile</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="/chat/chat_app_farmer">Chat</a>
+          </li>
+          <li>
+            <a class="page-scroll" href="/users/logout">Logout</a>
+          </li>
+        </ul>
+      </nav>
+    </header>
+    <br><br><br><br>
+    <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
+       <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Chat list</span> 
+    </h1>
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 col-12">
+            <a href="" style="color: black;">
+            <div class="card" style="opacity: 90%; height: 90px;">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-9">
+                            <h5 class="card-title" style="margin-bottom: 2px;">Buyer</h5>
+                            <p class="card-text">Crop requirements : Tomato, potato, rice</p>
+                        </div>
+                        <div class="col-1">
+                          <div class="col-1" style="margin-top: 17px;">
+                            <button type="button" class="btn btn-success btn-circle">1</button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 col-12">
+            <a href="" style="color: black;">
+            <div class="card" style="opacity: 90%; height: 90px;">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-9">
+                            <h5 class="card-title" style="margin-bottom: 2px;">Investor</h5>
+                            <p class="card-text">Investment range : 10000-20000 INR</p>
+                        </div>
+                        <div class="col-1">
+                          <div class="col-1" style="margin-top: 17px;">
+                            <button type="button" class="btn btn-success btn-circle">1</button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-lg-4"></div>
+        <div class="col-lg-4 col-12">
+            <a href="" style="color: black;">
+            <div class="card" style="opacity: 90%; height: 110px;">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-9">
+                            <h5 class="card-title" style="margin-bottom: 2px;">Institution</h5>
+                            <p class="card-text">Crop requirements : Tomato, potato, rice</p>
+                            <p class="card-text">Investment range : 10000-20000 INR</p>
+                        </div>
+                        <div class="col-1">
+                          <div class="col-1" style="margin-top: 17px;">
+                            <button type="button" class="btn btn-success btn-circle">1</button>
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+</div>
