@@ -1,9 +1,7 @@
-
-    {{#section 'style'}}
+{{#section 'style'}}
     .cover {
       display: flex;
       flex-direction: column;
-      height: 100%;
     }
     .content {
       flex: 1 0 auto;
@@ -229,7 +227,6 @@
         function openForm() {
             document.getElementById("myForm").style.display = "block";
         }
-
         function closeForm() {
             document.getElementById("myForm").style.display = "none";
         }
@@ -240,12 +237,9 @@
                 openEffect: "none",
                 closeEffect: "none"
             });
-
             $(".zoom").hover(function() {
-
                 $(this).addClass('transition');
             }, function() {
-
                 $(this).removeClass('transition');
             });
         });

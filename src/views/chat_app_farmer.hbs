@@ -5,7 +5,6 @@
     .cover {
       display: flex;
       flex-direction: column;
-      height: 100%;
     }
     .content {
       flex: 1 0 auto;
@@ -107,6 +106,7 @@
     <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
        <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Chat list</span> 
     </h1>
+    {{#each buyer}}
     <div class="row">
         <div class="col-lg-4"></div>
         <div class="col-lg-4 col-12">
@@ -115,8 +115,8 @@
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
                         <div class="col-9">
-                            <h5 class="card-title" style="margin-bottom: 2px;">Buyer</h5>
-                            <p class="card-text">Crop requirements : Tomato, potato, rice</p>
+                            <h5 class="card-title" style="margin-bottom: 2px;">{{this.fullname}}</h5>
+                            <p class="card-text">Crop requirements : {{this.requirements}}</p>
                         </div>
                         <div class="col-1">
                           <div class="col-1" style="margin-top: 17px;">
@@ -129,6 +129,8 @@
             </a>
         </div>
     </div>
+    {{/each}}
+    {{#each investor}}
     <div class="row">
         <div class="col-lg-4"></div>
         <div class="col-lg-4 col-12">
@@ -137,8 +139,8 @@
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
                         <div class="col-9">
-                            <h5 class="card-title" style="margin-bottom: 2px;">Investor</h5>
-                            <p class="card-text">Investment range : 10000-20000 INR</p>
+                            <h5 class="card-title" style="margin-bottom: 2px;">{{this.fullname}}</h5>
+                            <p class="card-text">Investment range : {{this.start}}-{{this.end}} INR</p>
                         </div>
                         <div class="col-1">
                           <div class="col-1" style="margin-top: 17px;">
@@ -151,6 +153,8 @@
             </a>
         </div>
     </div>
+    {{/each}}
+    {{#each institution}}
     <div class="row">
         <div class="col-lg-4"></div>
         <div class="col-lg-4 col-12">
@@ -159,9 +163,9 @@
                 <div class="card-body" style="padding: 10px;">
                     <div class="row">
                         <div class="col-9">
-                            <h5 class="card-title" style="margin-bottom: 2px;">Institution</h5>
-                            <p class="card-text">Crop requirements : Tomato, potato, rice</p>
-                            <p class="card-text">Investment range : 10000-20000 INR</p>
+                            <h5 class="card-title" style="margin-bottom: 2px;">{{this.fullname}}</h5>
+                            <p class="card-text">Crop requirements : {{this.requirements}}</p>
+                            <p class="card-text">Investment range : {{this.start}}-{{this.end}} INR</p>
                         </div>
                         <div class="col-1">
                           <div class="col-1" style="margin-top: 17px;">
@@ -174,4 +178,5 @@
             </a>
         </div>
     </div>
+    {{/each}}
 </div>
