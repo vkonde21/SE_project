@@ -3,10 +3,10 @@ const { ObjectId } = require('bson');
 const Schema = mongoose.Schema;
 const chatSchema = new Schema({
     sender:{
-        type:ObjectId
+        type:String
     },
     receiver:{
-        type:ObjectId
+        type:String
     },
     conn_user_name:{
         type:String, //fullname of other user
@@ -17,6 +17,8 @@ const chatSchema = new Schema({
     notified:{
         type:Boolean,
         default:false
+    }, time:{
+        type:Date
     }
 });
 const Chat = mongoose.model('Chat', chatSchema);

@@ -20,6 +20,7 @@ const io = socketio(server);
 const {generateMessage} = require('./utils/messages/messages');
 let Connection = require('./models/connection.model');
 let User = require('./models/user.model');
+let Chat = require('./models/chat.model');
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); //to parse json data
@@ -61,7 +62,12 @@ io.on('connection', (socket) => { /*specify the event and the function */
     socket.on('sendMessage', async (message, username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
         io.emit('message', generateMessage(message));
         console.log(username, other_username);
-        var x = await Connection.initiateChat(other_username, username);
+        var x = await Connection.initiateChat(other_username, username); //username is current user i.e sender
+        var msg = generateMessage(message)
+        /* save the chat message */
+        const ch = new Chat({sender:username, receiver:other_username, chat_msg:msg.text, time:msg.createdAt});
+        ch.save();
+        /*change the ch.notified value on the receiver messsage*/
         console.log(x.message);
         callback(message);
     });
