@@ -17,9 +17,7 @@ const port = process.env.port || 5000;
 const socketio = require('socket.io');
 const server = http.createServer(app);
 const io = socketio(server);
-const {generateMessage} = require('./utils/messages/messages');
-let Connection = require('./models/connection.model');
-let User = require('./models/user.model');
+ 
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); //to parse json data
@@ -58,15 +56,14 @@ server.listen(port , () => {
 io.on('connection', (socket) => { /*specify the event and the function */
     console.log("New connection ");
     /* send an event from the server */
-    socket.on('sendMessage', async (message, username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
-        io.emit('message', generateMessage(message));
-        console.log(username, other_username);
-        var x = await Connection.initiateChat(other_username, username);
-        console.log(x.message);
+    socket.emit('message', 'Welcome'); 
+    socket.on('sendMessage', (message, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
+        io.emit('message', message);
         callback(message);
-    });
-    
-    
+    })
+    /*io.emit (event_name, f):->emits the events to every single connection*/
+    /*socket.emit(event_name, f):->emits the events to only a specific connection*/
+    /*socket.broadcast.emit(event_name, f):->emit event to all the connections on that particular socket*/
     socket.on('disconnect', () => {
         io.emit('message', "User left");
     });   //when a user disconnects

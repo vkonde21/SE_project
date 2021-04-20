@@ -10,14 +10,7 @@ const chatSchema = new Schema({
     },
     conn_user_name:{
         type:String, //fullname of other user
-    },
-    chat_msg:{
-        type:String,
-    },
-    notified:{
-        type:Boolean,
-        default:false
     }
 });
-const Chat = mongoose.model('Chat', chatSchema);
-module.exports = Chat;
+const Connection = mongoose.model('Connection', connectionSchema);
+module.exports = Connection;
