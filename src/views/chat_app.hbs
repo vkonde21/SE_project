@@ -1,3 +1,13 @@
 Chat app
-
-   
+<div id="messages"></div>
+<form id="chatform">
+    <input type="text" name="msg"><br>
+    <button type="submit" class="btn btn-common btn-nv-sty" style="width: 50%;" id="chatbutton" name="chatbutton">
+        Send
+    </button>   
+</form>
+<template id="message-template" >
+            <div>
+                <p>\{{message}}</p>
+            </div>
+    </template>

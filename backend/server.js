@@ -38,6 +38,7 @@ hbs.registerHelper('ifeq', function (a, b, options) {
 hbs.registerHelper("multiply", function(a,b) {
     return a*b;
   });
+
 app.use(cookieParser());
 app.use(express.static("../src/public"));
 const userRouter = require('./routes/users');
@@ -48,14 +49,22 @@ app.use('/users', farmerRouter);
 app.use('/users', buyerRouter);
 app.use('/', require("./routes/index"));
 app.use('/chat', require('./routes/chat'));
+hbs.registerPartials('../src/views/partials');
 server.listen(port , () => {
     console.log(`Server listening at port ${port}`);
 });
 io.on('connection', (socket) => { /*specify the event and the function */
     console.log("New connection ");
     /* send an event from the server */
-    socket.emit('event_name'); 
+    socket.emit('message', 'Welcome'); 
+    socket.on('sendMessage', (message, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
+        io.emit('message', message);
+        callback(message);
+    })
     /*io.emit (event_name, f):->emits the events to every single connection*/
     /*socket.emit(event_name, f):->emits the events to only a specific connection*/
-    /*socket.braodcast.emit(event_name, f):->emit event to all the connections on that particular socket*/
+    /*socket.broadcast.emit(event_name, f):->emit event to all the connections on that particular socket*/
+    socket.on('disconnect', () => {
+        io.emit('message', "User left");
+    });   //when a user disconnects
 });
