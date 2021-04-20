@@ -60,7 +60,7 @@ io.on('connection', (socket) => { /*specify the event and the function */
     console.log("New connection ");
     /* send an event from the server */
     socket.on('sendMessage', async (message, username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
-        io.emit('message', generateMessage(message));
+        
         console.log(username, other_username);
         var x = await Connection.initiateChat(other_username, username); //username is current user i.e sender
         var msg = generateMessage(message)
@@ -69,7 +69,8 @@ io.on('connection', (socket) => { /*specify the event and the function */
         ch.save();
         /*change the ch.notified value on the receiver messsage*/
         console.log(x.message);
-        callback(message);
+        io.emit('message', generateMessage(message), chat);
+        callback(msg);
     });
     
     

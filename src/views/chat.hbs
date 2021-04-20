@@ -117,38 +117,38 @@ overflow-y: auto;
         <div class="collapse navbar-collapse" id="main-navbar" style="margin-left: 10%;">
           <ul class="navbar-nav mr-auto w-100">
             <li class="nav-item">
-              <a class="nav-link" href="dashboard">Dashboard</a>
+              <a class="nav-link" href="/users/dashboard">Dashboard</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="viewfarmers">View Farmer's Profiles</a>
+              <a class="nav-link" href="/users/viewfarmers">View Farmer's Profiles</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="updateprofile">Update Profile</a>
+              <a class="nav-link" href="/users/updateprofile">Update Profile</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="chat">Chat</a>
+              <a class="nav-link" href="/users/chat">Chat</a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="logout">Logout</a>
+              <a class="nav-link" href="/users/logout">Logout</a>
             </li>
           </ul>
         </div>
       </div>
       <ul class="mobile-menu">
         <li>
-          <a class="page-scroll" href="dashboard">Dashboard</a>
+          <a class="page-scroll" href="/users/dashboard">Dashboard</a>
         </li>
         <li>
-          <a class="page-scroll" href="viewfarmers">View Farmer's Profiles</a>
+          <a class="page-scroll" href="/users/viewfarmers">View Farmer's Profiles</a>
         </li>
         <li>
-          <a class="page-scroll" href="updateprofile">Update Profile</a>
+          <a class="page-scroll" href="/users/updateprofile">Update Profile</a>
         </li>
         <li>
-          <a class="page-scroll" href="chat">Chat</a>
+          <a class="page-scroll" href="/users/chat">Chat</a>
         </li>
         <li>
-          <a class="page-scroll" href="logout">Logout</a>
+          <a class="page-scroll" href="/users/logout">Logout</a>
         </li>
       </ul>
     </nav>
@@ -168,46 +168,26 @@ overflow-y: auto;
               <div class="mesgs" style="background-color: white;">
                 <div class="msg_history" style="display: flex; flex-direction: column-reverse">
                   <div>
-                    <div class="outgoing_msg">
-                      <div class="sent_msg">
-                        <p>Test which is a new approach to have all
-                          solutions</p>
-                        <span class="time_date"> 11:01 AM | June 9</span>
-                      </div>
-                    </div>
-                    <div class="outgoing_msg">
-                      <div class="sent_msg">
-                        <p>Test which is a new approach to have all
-                          solutions</p>
-                        <span class="time_date"> 11:01 AM | June 9</span>
-                      </div>
-                    </div>
-                    <div class="outgoing_msg">
-                      <div class="sent_msg">
-                        <p>Test which is a new approach to have all
-                          solutions</p>
-                        <span class="time_date"> 11:01 AM | June 9</span>
-                      </div>
-                    </div>
-                    <div class="incoming_msg">
-                      <div class="received_msg">
-                        <div class="received_withd_msg">
-                          <p>Test, which is a new approach to have</p>
-                          <span class="time_date"> 11:01 AM | Yesterday</span>
+                    
+                    {{#each msgs}}
+                      {{#ifeq this.send "y" }}
+                        <div class="outgoing_msg">
+                          <div class="sent_msg">
+                            <p>{{this.chat_msg}}</p>
+                            <span class="time_date"> {{this.time}} | June 9</span>
+                          </div>
                         </div>
-                      </div>
-                    </div>
-
-                    <div class="incoming_msg">
-                      <div class="received_msg">
-                        <div class="received_withd_msg">
-                          <p>We work directly with our designers and suppliers,
-                            and sell direct to you, which means quality, exclusive
-                            products, at a price anyone can afford.</p>
-                          <span class="time_date"> 11:01 AM | Today</span>
+                      {{else}}
+                        <div class="incoming_msg">
+                          <div class="received_msg">
+                            <div class="received_withd_msg">
+                              <p>{{this.chat_msg}}</p>
+                              <span class="time_date"> {{this.time}} | Today</span>
+                            </div>
+                          </div>
                         </div>
-                      </div>
-                    </div>
+                      {{/ifeq}}
+                      {{/each}}
                   </div>
                 </div>
                 <div  id="messages">
@@ -217,7 +197,7 @@ overflow-y: auto;
                     <form id="chatform" style="margin-bottom: 0;">
                       <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
                       <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
-                      <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg" />
+                      <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg" required/>
                       <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton"><i
                           class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </form>
