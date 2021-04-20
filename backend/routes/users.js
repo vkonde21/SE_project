@@ -92,7 +92,14 @@ router.route('/registerfarmer').post(upload.fields([{
 router.route('/about').get((req, res) => {
     res.render('about');
 });
-
+router.route('/chat').get(auth, async(req, res) => {
+    if(req.user.type == "farmer")
+        res.render('chat_app_farmer');
+    else if(req.user.type == "buyer")
+        res.render('chat_app_buyer');
+    else
+        res.render('chat_app');
+});
 router.route('/viewfarmers').get(auth, async (req, res) => {
     try{
         if(req.user.type == "investor" || req.user.type == "buyer" || req.user.type == "institution"){

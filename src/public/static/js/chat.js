@@ -11,7 +11,7 @@ socket.on('event_name', () => { //function contains arguments passed by the serv
     console.log("client received the msg!!");
 });*/
 socket.on('message', (message) => {
-    
+    console.log(rendermsg({message}));
     messages.insertAdjacentHTML('beforeend', rendermsg({message}))
 })
 
