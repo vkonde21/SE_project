@@ -2,8 +2,11 @@
 Chat app
 {{/section}}
 <div id="messages"></div>
+
 <form id="chatform">
-    <input type="text" name="msg"><br>
+    <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
+    <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
+    <input type="text" name="msg" id="msg"><br>
     <button type="submit" class="btn btn-common btn-nv-sty" style="width: 50%;" id="chatbutton" name="chatbutton">
         Send
     </button>   
