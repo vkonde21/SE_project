@@ -31,5 +31,4 @@ router.route('/:id/:room_id').get(auth, async(req, res) => {
 
 });
 
-//for /chat i.e / display a table of initiated chats
 module.exports = router;

@@ -14,6 +14,16 @@ const chatSchema = new Schema({
     chat_msg:{
         type:String,
     },
+    img_msg:{
+        type:String,
+    },
+    type:{
+        type:String,
+        default:"text"
+    },
+    img_buf:{
+        type:Buffer,
+    },
     notified:{
         type:Boolean,
         default:false
