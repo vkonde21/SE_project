@@ -6,7 +6,6 @@ const form_input = form.querySelector('#msg');
 const messages = document.querySelector('#messages');
 const messageTemplate = document.getElementById('message-template').innerHTML;
 const rendermsg = Handlebars.compile(messageTemplate);
-var curr_username ;
 var url = new URL(document.URL)
 var pathnames =url.pathname.split('/');
 console.log(pathnames[0], pathnames[1], pathnames[2], pathnames[3]);
@@ -18,14 +17,45 @@ socket.on('event_name', () => { //function contains arguments passed by the serv
 
 socket.on('message', ({message, sender}) => {
     //console.log(rendermsg({message:message.text, createdAt: moment(message.createdAt).format('h:mm A')}));
-    
+    var p,s,q, r, t;
     if(message.text.length > 0){
         console.log(sender._id, pathnames[2]);
         if(sender._id == pathnames[2]){
-            messages.insertAdjacentHTML('beforeend', rendermsg({message:message.text, createdAt: moment(message.createdAt).format('D MMM h:mm a'), out:"0"}));
+            p = document.createElement("div");
+            p.className = "incoming_msg";
+            s = document.createElement("div");
+            s.className = "received_msg";
+            q = document.createElement("div");
+            q.className = "received_withd_msg";
+            r = document.createElement("p");
+            r.innerText = message.text;
+            r.setAttribute("style", "background: #ebebeb none repeat scroll 0 0;border-radius: 3px;color: #646464;font-size: 14px;margin: 0;padding: 5px 10px 5px 12px;width: 100%;")
+            q.appendChild(r);
+            t = document.createElement("span");
+            t.className = "time_date";
+            t.innerText = moment(message.createdAt).format('D MMM h:mm a');
+            q.appendChild(t);
+            s.appendChild(q);
+            p.appendChild(s);
         }
-        else
-            messages.insertAdjacentHTML('beforeend', rendermsg({message:message.text, createdAt: moment(message.createdAt).format('D MMM h:mm a'), out:"1"}));
+        else{
+            p = document.createElement("div");
+            p.className = "outgoing_msg";
+            s = document.createElement("div");
+            s.className = "sent_msg";
+            r = document.createElement("p");
+            r.innerText = message.text;
+            r.setAttribute("style","background: #05728f none repeat scroll 0 0;border-radius: 3px;font-size: 14px;margin: 0; color:#fff; padding: 5px 10px 5px 12px;width:100%;" );
+            s.appendChild(r);
+            t = document.createElement("span");
+            t.className = "time_date";
+            
+            t.innerText = moment(message.createdAt).format('D MMM h:mm a');
+            s.appendChild(t);
+            p.appendChild(s);
+        }
+        messages.append(p);
+        console.log(messages);
     }
     
 })

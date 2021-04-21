@@ -202,27 +202,8 @@ overflow-y: auto;
                           class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </form>
                     <template id="message-template" >
-                      
-                      {{#ifeq out "1"}}
-                      <div class="outgoing_msg">
-                      <div class="sent_msg">
-                          <p>\{{message}}</p>
-                          <span class="time_date"> \{{createdAt}}| June 9</span>
-                        </div> 
-                      </div>
-                      {{else}}
-                      <div class="incoming_msg">
-                      <div class="received_msg">
-                        <div class="received_withd_msg">
-                          <p>\{{message}}</p>
-                          <span class="time_date"> \{{createdAt}}| June 9</span>
-                          </div>
-                        </div> 
-                      </div>
-                      {{/ifeq}}
+                
                     </template>
-
-                    
                   </div>
                 </div>
               </div>
