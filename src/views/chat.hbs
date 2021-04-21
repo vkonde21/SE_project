@@ -104,7 +104,6 @@ overflow-y: auto;
     text-align: center;
     vertical-align: middle;
 }
-
 #chatimage {
    opacity: 0;
    position: absolute;
@@ -185,17 +184,26 @@ overflow-y: auto;
                     
                     {{#each msgs}}
                       {{#ifeq this.send "y" }}
-                        <div class="outgoing_msg">
-                          <div class="sent_msg">
-                            <p><span>{{this.chat_msg}}</span></p>
-                            <span class="time_date"> {{this.time}}</span>
+                          <div class="outgoing_msg">
+                            <div class="sent_msg">
+                              {{#ifeq this.type "text"}}
+                                <p><span>{{this.chat_msg}}</span></p>
+                              {{else}}
+                                <img src="data:{{this.type}};base64,{{this.img_msg}}" height="200px" width="200px">
+                              {{/ifeq}}
+                              <span class="time_date"> {{this.time}}</span>
+                            </div>
                           </div>
-                        </div>
+
                       {{else}}
                         <div class="incoming_msg">
                           <div class="received_msg">
                             <div class="received_withd_msg">
-                              <p><span>{{this.chat_msg}}</span></p>
+                              {{#ifeq this.type "text"}}
+                                <p><span>{{this.chat_msg}}</span></p>
+                              {{else}}
+                                <img src="data:{{this.type}};base64,{{this.img_msg}}" height="200px" width="200px">
+                              {{/ifeq}}
                               <span class="time_date"> {{this.time}}</span>
                             </div>
                           </div>
@@ -205,16 +213,17 @@ overflow-y: auto;
                       <div  id="messages">
                       </div>
                   </div>
-                  
                 </div>
-                
                 <div class="type_msg">
                   <div class="input_msg_write">
-                    <form id="chatform" style="margin-bottom: 2px;" enctype="multipart/form-data">
+                    <form id="chatform" style="margin-bottom: 2px;" enctype="multipart/form-data" >
                       <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
                       <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
                       <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
+                      <div>
                       <textarea rows="2" placeholder="Type a message" id="msg" name="msg" style="width: 75%; margin-top: 10px"></textarea>
+                      <img id="output_img" name="output_img" >
+                      </div>
                       <label for="chatimage" style="cursor: pointer;">
                       <p style="font-size:24px; border:none; background: white; position: absolute; right: 45px; top: 18px;">
                         <i class="fa fa-camera circle-icon" style="padding: 5px; color: white">
@@ -222,7 +231,7 @@ overflow-y: auto;
                       </p>
                       <span id="file-name" style="font-size: 13px; position: absolute; right: 20; top: 45;"></span>
                       </label>
-                      <input type="file" name="chatimage" id="chatimage" onchange='uploadFile(this)'/>
+                      <input type="file" name="chatimage" id="chatimage" onchange="uploadFile(this)"/>
                       <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton">
                         <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </form>
@@ -231,7 +240,15 @@ overflow-y: auto;
                     </template>
                     <script>
                       function uploadFile(target) {
+                        const output_img = document.getElementById("output_img");
+                        const chat_img = document.getElementById("chatimage");
                           document.getElementById("file-name").innerHTML = target.files[0].name;
+                          const reader = new FileReader();
+                          reader.onload = event => {output_img.src = event.target.result;
+                            output_img.style = "height:200px; width:200px";
+                          };
+                         reader.readAsDataURL(target.files[0]);
+                         
                       }
                     </script>
                   </div>

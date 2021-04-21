@@ -15,11 +15,10 @@ socket.on('event_name', () => { //function contains arguments passed by the serv
     console.log("client received the msg!!");
 });*/
 
-socket.on('message', ({message, sender}) => {
+socket.on('message', ({message, sender, image}) => {
     //console.log(rendermsg({message:message.text, createdAt: moment(message.createdAt).format('h:mm A')}));
     var p,s,q, r, t;
-    if(message.text.length > 0){
-        console.log(sender._id, pathnames[2]);
+    if(message != null && message.text.length > 0){
         if(sender._id == pathnames[2]){
             p = document.createElement("div");
             p.className = "incoming_msg";
@@ -51,8 +50,47 @@ socket.on('message', ({message, sender}) => {
             s.appendChild(r);
             t = document.createElement("span");
             t.className = "time_date";
-            
             t.innerText = moment(message.createdAt).format('D MMM h:mm a');
+            s.appendChild(t);
+            p.appendChild(s);
+        }
+        messages.append(p);
+        
+    }
+
+    else if(image != null && image.buffer.length > 0){
+        if(sender._id == pathnames[2]){
+            p = document.createElement("div");
+            p.className = "incoming_msg";
+            s = document.createElement("div");
+            s.className = "received_msg";
+            q = document.createElement("div");
+            q.className = "received_withd_msg";
+            z = document.createElement("img");
+            z.src = `data:${image.type};base64,${image.buffer}`;
+            z.setAttribute("height", "200px");
+            z.setAttribute("width", "200px");
+            t = document.createElement("span");
+            t.className = "time_date";
+            t.innerText = moment(image.createdAt).format('D MMM h:mm a');
+            q.appendChild(z);
+            s.appendChild(q);
+            s.appendChild(t);
+            p.appendChild(s);
+        }
+        else{
+            p = document.createElement("div");
+            p.className = "outgoing_msg";
+            s = document.createElement("div");
+            s.className = "sent_msg";
+            z = document.createElement("img");
+            z.setAttribute("height", "200px");
+            z.setAttribute("width", "200px");
+            z.src = `data:${image.type};base64,${image.buffer}`;
+            s.appendChild(z);
+            t = document.createElement("span");
+            t.className = "time_date";
+            t.innerText = moment(image.createdAt).format('D MMM h:mm a');
             s.appendChild(t);
             p.appendChild(s);
         }
@@ -68,15 +106,20 @@ document.querySelector('#chatform').addEventListener('submit', (e) => {
     const message = e.target.elements.msg.value;
     const username = e.target.elements.chat_curr_user.value;
     const other_username = e.target.elements.chat_other_user.value;
-    //console.log(message, username, other_username);
-    curr_username = username;
-    if(message){
-        socket.emit('sendMessage', message, username, other_username, (msg) => {
+    var image = document.getElementById('output_img').src;
+    if(image.length != 0){
+        var n = image.indexOf(",");
+        image = image.substring(n+1)
+    }
+    if(message || image.length){
+        socket.emit('sendMessage', message, image, username, other_username, (msg) => {
             console.log("Message was delivered!", msg);
             /*reset previous values once the msg is delivered*/
             form_button.removeAttribute('disabled');
             form_input.value = '';
             form_input.focus(); /*brings back the cursor in the input box*/
+            document.getElementById('output_img').src = "";
+            document.getElementById('output_img').style = "";
         });
     }
     

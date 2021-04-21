@@ -5,13 +5,14 @@ const generateMessage = (text) => {
     }
 }
 
-const generateImage = (buffer) => {
+const generateImage = (buffer, ext) => {
     return {
-        buffer, //convert this to a 64 base string
+        buffer, 
+        type:ext, 
         createdAt: new Date().getTime()
     }
 }
 
 module.exports = {
-    generateMessage
+    generateMessage, generateImage
 }

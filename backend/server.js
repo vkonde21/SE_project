@@ -11,13 +11,14 @@ mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTo
 const connection = mongoose.connection;
 connection.once('open', () => {
     console.log("Connection established successfully");
-})
+});
+let FileType = require('file-type');
 const app = express();
 const port = process.env.port || 5000;
 const socketio = require('socket.io');
 const server = http.createServer(app);
 const io = socketio(server);
-const {generateMessage} = require('./utils/messages/messages');
+const {generateMessage, generateImage} = require('./utils/messages/messages');
 let Connection = require('./models/connection.model');
 let User = require('./models/user.model');
 let Chat = require('./models/chat.model');
@@ -63,18 +64,32 @@ io.on('connection', (socket) => { /*specify the event and the function */
         socket.room = room;
     });
     
-    socket.on('sendMessage', async (message, username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
-        console.log(username, other_username);
+    socket.on('sendMessage', async (message, image,  username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
+        
+        var msg, ch, img;
         var x = await Connection.initiateChat(other_username, username); //username is current user i.e sender
-        var msg = generateMessage(message)
-        /* save the chat message */
-        const ch = new Chat({sender:username, receiver:other_username, chat_msg:msg.text, time:msg.createdAt});
+        if(message.length > 0){
+            msg = generateMessage(message)
+            ch = new Chat({sender:username, receiver:other_username, chat_msg:msg.text, time:msg.createdAt});
+        }
+        else{
+            var {ext, mime} = await FileType.fromBuffer(Buffer.from(image, 'base64'));
+            img = generateImage(image, ext);
+            ch = new Chat({sender:username, receiver:other_username, img_msg:img.buffer, type:ext,time:img.createdAt })
+        } 
         ch.save();
         const sender = await User.findOne({username:ch.sender});
-        /*change the ch.notified value on the receiver messsage*/
         console.log(x.message);
-        io.to(socket.room).emit('message', {message:msg, sender});
-        callback(msg);
+        if(msg != undefined && msg.length > 0){
+            io.to(socket.room).emit('message', {message:msg, sender, image:null});
+            callback(msg);
+        }
+            
+        else{
+            io.to(socket.room).emit('message', {message:null, sender, image:img});
+            callback(img);
+        }
+        
     });
     
     

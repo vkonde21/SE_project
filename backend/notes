@@ -1,0 +1,4 @@
+/*io.to.emit:->sends message to all the people in a specific room */
+    /*io.emit (event_name, f):->emits the events to every single connection */
+    /*socket.emit(event_name, f):->emits the events to only a specific connection */
+    /*socket.broadcast.emit(event_name, f):->emit event to all the connections on that particular socket */
