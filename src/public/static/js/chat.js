@@ -58,7 +58,7 @@ socket.on('message', ({message, sender, image}) => {
         
     }
 
-    else if(image != null && image.buffer.length > 0){
+  if(image != null && image.buffer.length > 0){
         if(sender._id == pathnames[2]){
             p = document.createElement("div");
             p.className = "incoming_msg";

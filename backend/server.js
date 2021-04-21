@@ -53,6 +53,7 @@ app.use('/users', farmerRouter);
 app.use('/users', buyerRouter);
 app.use('/', require("./routes/index"));
 app.use('/chat', require('./routes/chat'));
+app.use('/admin', require('./routes/admin'));
 hbs.registerPartials('../src/views/partials');
 server.listen(port , () => {
     console.log(`Server listening at port ${port}`);
@@ -69,26 +70,26 @@ io.on('connection', (socket) => { /*specify the event and the function */
         var msg, ch, img;
         var x = await Connection.initiateChat(other_username, username); //username is current user i.e sender
         if(message.length > 0){
-            msg = generateMessage(message)
+            msg = generateMessage(message);
             ch = new Chat({sender:username, receiver:other_username, chat_msg:msg.text, time:msg.createdAt});
         }
-        else{
-            var {ext, mime} = await FileType.fromBuffer(Buffer.from(image, 'base64'));
-            img = generateImage(image, ext);
-            ch = new Chat({sender:username, receiver:other_username, img_msg:img.buffer, type:ext,time:img.createdAt })
+        if(image.length > 0){
+            var d = await FileType.fromBuffer(Buffer.from(image, 'base64'));
+            img = generateImage(image, d.ext);
+            ch = new Chat({sender:username, receiver:other_username, img_msg:img.buffer, type:d.ext,time:img.createdAt })
         } 
         ch.save();
         const sender = await User.findOne({username:ch.sender});
-        console.log(x.message);
-        if(msg != undefined && msg.length > 0){
-            io.to(socket.room).emit('message', {message:msg, sender, image:null});
-            callback(msg);
+        //console.log(x.message);
+        if(msg == undefined ){
+            msg = null;
         }
             
-        else{
-            io.to(socket.room).emit('message', {message:null, sender, image:img});
-            callback(img);
+        if(img == undefined ){
+            img = null;
         }
+        io.to(socket.room).emit('message', {message:msg, sender, image:img});
+            callback(msg);
         
     });
     

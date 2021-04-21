@@ -8,6 +8,7 @@ let Crop = require('../models/crop.model');
 let Deal = require('../models/deal.model');
 let Chat = require('../models/chat.model');
 let Connection = require('../models/connection.model');
+let Admin = require('../models/admin.model');
 const bcrypt = require('bcrypt');
 const auth = require("../middleware/auth");
 const multer = require("multer");
@@ -289,10 +290,15 @@ router.route('/login').get((req, res) => {
 router.route('/login').post(async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
-        if(user.type != "admin" && user.is_verified == true){
+        const admin = await Admin.findByCredentials(req.body.username, req.body.password);
+        console.log(admin);
+        if(user != null && user != undefined && user.is_verified == true){
             const token = await user.generateAuthToken();
             res.cookie("jwt", token, { secure: true, httpOnly: true })
             res.redirect ('/users/dashboard');
+        }
+        else if(admin != null && admin != undefined){
+            res.redirect('/admin/dashboard');
         }
         else{
             
