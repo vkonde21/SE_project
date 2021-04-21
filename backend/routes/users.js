@@ -291,7 +291,7 @@ router.route('/login').post(async (req, res) => {
     try {
         const user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
         const admin = await Admin.findByCredentials(req.body.username, req.body.password);
-        console.log(admin);
+        
         if(user != null && user != undefined && user.is_verified == true){
             const token = await user.generateAuthToken();
             res.cookie("jwt", token, { secure: true, httpOnly: true })

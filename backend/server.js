@@ -60,13 +60,16 @@ server.listen(port , () => {
 });
 io.on('connection', (socket) => { /*specify the event and the function */
     console.log("New connection ");
-    socket.on('join', ({room}) => {
+    socket.on('join', ({room, username}) => {
         socket.join(room);
         socket.room = room;
+        if(socket.usernames == undefined){
+            socket.usernames = new Array(username);
+        }
+       
     });
     
     socket.on('sendMessage', async (message, image,  username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
-        
         var msg, ch, img;
         var x = await Connection.initiateChat(other_username, username); //username is current user i.e sender
         if(message.length > 0){

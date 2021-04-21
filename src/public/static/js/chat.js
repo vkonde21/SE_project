@@ -126,4 +126,4 @@ document.querySelector('#chatform').addEventListener('submit', (e) => {
     
 });
 
-socket.emit('join', {room:pathnames[3]})
+socket.emit('join', {room:pathnames[3], username:document.getElementById('chat_curr_user').value })
