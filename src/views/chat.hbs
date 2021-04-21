@@ -95,6 +95,10 @@ width: 33px;
 max-height: 60vh;
 overflow-y: auto;
 }
+
+input[type='file'] {
+  color: transparent;
+}
 {{/section}}
 
 <div class="cover">
@@ -193,11 +197,11 @@ overflow-y: auto;
                       </div>
                 <div class="type_msg">
                   <div class="input_msg_write">
-                    <form id="chatform" style="margin-bottom: 0;">
+                    <form id="chatform" style="margin-bottom: 0;" enctype="multipart/form-data">
                       <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
                       <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
                       <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
-                      <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg" required/>
+                      <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg"/>
                       <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton"><i
                           class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </form>
