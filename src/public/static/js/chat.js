@@ -117,6 +117,7 @@ document.querySelector('#chatform').addEventListener('submit', (e) => {
             /*reset previous values once the msg is delivered*/
             form_button.removeAttribute('disabled');
             form_input.value = '';
+            document.getElementById("file_name").innerHTML = "";
             form_input.focus(); /*brings back the cursor in the input box*/
             document.getElementById('output_img').src = "";
             document.getElementById('output_img').style = "";

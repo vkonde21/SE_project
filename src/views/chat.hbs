@@ -222,14 +222,14 @@ overflow-y: auto;
                       <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
                       <div>
                       <textarea rows="2" placeholder="Type a message" id="msg" name="msg" style="width: 75%; margin-top: 10px"></textarea>
-                      <img id="output_img" name="output_img" >
+                      <img id="output_img" name="output_img">
                       </div>
                       <label for="chatimage" style="cursor: pointer;">
                       <p style="font-size:24px; border:none; background: white; position: absolute; right: 45px; top: 18px;">
                         <i class="fa fa-camera circle-icon" style="padding: 5px; color: white">
                         </i>
                       </p>
-                      <span id="file-name" style="font-size: 13px; position: absolute; right: 20; top: 45;"></span>
+                      <span id="file_name" style="font-size: 13px; position: absolute; right: 20; top: 45;"></span>
                       </label>
                       <input type="file" name="chatimage" id="chatimage" onchange="uploadFile(this)"/>
                       <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton">
@@ -242,13 +242,12 @@ overflow-y: auto;
                       function uploadFile(target) {
                         const output_img = document.getElementById("output_img");
                         const chat_img = document.getElementById("chatimage");
-                          document.getElementById("file-name").innerHTML = target.files[0].name;
+                          document.getElementById("file_name").innerHTML = target.files[0].name;
                           const reader = new FileReader();
                           reader.onload = event => {output_img.src = event.target.result;
-                            output_img.style = "height:200px; width:200px";
+                            output_img.style = "width: 80%; padding: 10px; left: 10%; position: relative;";
                           };
-                         reader.readAsDataURL(target.files[0]);
-                         
+                         reader.readAsDataURL(target.files[0]);                         
                       }
                     </script>
                   </div>
