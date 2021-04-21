@@ -27,7 +27,8 @@ socket.on('message', ({message, sender}) => {
             s.className = "received_msg";
             q = document.createElement("div");
             q.className = "received_withd_msg";
-            r = document.createElement("p");
+            z = document.createElement("p");
+            r = document.createElement("span");
             r.innerText = message.text;
             r.setAttribute("style", "background: #ebebeb none repeat scroll 0 0;border-radius: 3px;color: #646464;font-size: 14px;margin: 0;padding: 5px 10px 5px 12px;width: 100%;")
             q.appendChild(r);
@@ -43,7 +44,8 @@ socket.on('message', ({message, sender}) => {
             p.className = "outgoing_msg";
             s = document.createElement("div");
             s.className = "sent_msg";
-            r = document.createElement("p");
+            z = document.createElement("p");
+            r = document.createElement("span");
             r.innerText = message.text;
             r.setAttribute("style","background: #05728f none repeat scroll 0 0;border-radius: 3px;font-size: 14px;margin: 0; color:#fff; padding: 5px 10px 5px 12px;width:100%;" );
             s.appendChild(r);

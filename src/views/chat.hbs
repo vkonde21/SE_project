@@ -95,6 +95,21 @@ width: 33px;
 max-height: 60vh;
 overflow-y: auto;
 }
+
+.circle-icon {
+    background: #117080;
+    width: 35px;
+    height: 35px;
+    border-radius: 50%;
+    text-align: center;
+    vertical-align: middle;
+}
+
+#chatimage {
+   opacity: 0;
+   position: absolute;
+   z-index: -1;
+}
 {{/section}}
 
 <div class="cover">
@@ -187,23 +202,44 @@ overflow-y: auto;
                         </div>
                       {{/ifeq}}
                       {{/each}}
-                  </div>
-                </div>
-                <div  id="messages">
+                      <div  id="messages">
                       </div>
+                  </div>
+                  
+                </div>
+                
                 <div class="type_msg">
                   <div class="input_msg_write">
-                    <form id="chatform" style="margin-bottom: 0;">
+                    <form id="chatform" style="margin-bottom: 12px;" enctype="multipart/form-data">
                       <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
                       <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
                       <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
-                      <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg" required/>
-                      <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton"><i
-                          class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
+                      <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg"/>
+                      {{!-- <p style="position: relative;border-bottom: 1px solid #c4c4c4"></p>
+                      <label for="pancard">Upload image of Pan Card:</label>
+                      <input type="file" class="form-control" placeholder="Pancard" name="pancard" id="pancard" /> --}}
+                      {{!-- <input type="file" name="pancard" id="pancard">
+                        <i class="fa fa-camera circle-icon"></i>
+                      </input> --}}
+                      <label for="chatimage" style="cursor: pointer;">
+                      <p style="font-size:24px; border:none; background: white; position: absolute; right: 45; top: 9;">
+                        <i class="fa fa-camera circle-icon" style="padding: 5px; color: white">
+                        </i>
+                      </p>
+                      <span id="file-name" style="font-size: 13px; position: absolute; right: 20; top: 45;"></span>
+                      </label>
+                      <input type="file" name="chatimage" id="chatimage" onchange='uploadFile(this)'/>
+                      <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton">
+                        <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </form>
                     <template id="message-template" >
                 
                     </template>
+                    <script>
+                      function uploadFile(target) {
+                          document.getElementById("file-name").innerHTML = target.files[0].name;
+                      }
+                    </script>
                   </div>
                 </div>
               </div>
