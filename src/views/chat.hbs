@@ -86,7 +86,7 @@ font-size: 17px;
 height: 33px;
 position: absolute;
 right: 0;
-top: 11px;
+top: 18px;
 width: 33px;
 }
 
@@ -210,19 +210,13 @@ overflow-y: auto;
                 
                 <div class="type_msg">
                   <div class="input_msg_write">
-                    <form id="chatform" style="margin-bottom: 12px;" enctype="multipart/form-data">
+                    <form id="chatform" style="margin-bottom: 2px;" enctype="multipart/form-data">
                       <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
                       <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
                       <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
-                      <input type="text" class="write_msg" placeholder="Type a message" name="msg" id="msg"/>
-                      {{!-- <p style="position: relative;border-bottom: 1px solid #c4c4c4"></p>
-                      <label for="pancard">Upload image of Pan Card:</label>
-                      <input type="file" class="form-control" placeholder="Pancard" name="pancard" id="pancard" /> --}}
-                      {{!-- <input type="file" name="pancard" id="pancard">
-                        <i class="fa fa-camera circle-icon"></i>
-                      </input> --}}
+                      <textarea rows="2" placeholder="Type a message" id="msg" name="msg" style="width: 75%; margin-top: 10px"></textarea>
                       <label for="chatimage" style="cursor: pointer;">
-                      <p style="font-size:24px; border:none; background: white; position: absolute; right: 45; top: 9;">
+                      <p style="font-size:24px; border:none; background: white; position: absolute; right: 45px; top: 18px;">
                         <i class="fa fa-camera circle-icon" style="padding: 5px; color: white">
                         </i>
                       </p>
