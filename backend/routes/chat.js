@@ -29,6 +29,8 @@ router.route('/:id/:room_id').get(auth, async(req, res) => {
     
     var msgs = await Chat.find({$or:[{sender:req.user.username, receiver:user.username}, {receiver:req.user.username, sender:user.username}]}).sort({time:1});
     for(var i=0; i<msgs.length; i++){
+        msgs[i].notified = true;
+        await msgs[i].save();
         if(msgs[i].sender == req.user.username){
             msgs[i].send = "y";
         }
