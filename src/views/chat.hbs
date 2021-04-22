@@ -49,7 +49,7 @@ margin: 8px 0 0;
 }
 .received_withd_msg { width: 80%;}
 .mesgs {
-padding: 30px 15px 15px 25px;
+padding: 0px 15px 15px 25px;
 }
 .sent_msg p span {
 background: #05728f none repeat scroll 0 0;
@@ -132,6 +132,11 @@ overflow-y: auto;
             <li class="nav-item">
               <a class="nav-link" href="/users/dashboard">Dashboard</a>
             </li>
+            {{#ifeq curr_user.type "farmer"}}
+            <li class="nav-item">
+              <a class="nav-link" href="/users/notifications">Notifications</a>
+            </li>
+            {{/ifeq}}
             {{#ifeq curr_user.type "investor"}}
             <li class="nav-item">
               <a class="nav-link" href="/users/viewfarmers">View Farmer's Profiles</a>
@@ -200,9 +205,13 @@ overflow-y: auto;
       </ul>
     </nav>
   </header>
-  <br><br><br><br>
+  <br><br><br>
+  <div style="text-align: right; position: sticky; padding-right: 50px">
+      <span style="background-color: #fff; font-size: 20px; color:#016168; padding: 4px; opacity: 80%;">Hello </span>
+    </div>
+    <br>
   <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s"
-    style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
+    style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s; margin-bottom: 0px">
     <span style="background-color: #fff; font-size: 40px; color:#016168; padding:15px; opacity: 90%;">Chat</span>
   </h1>
   <div class="container" style="position: relative; opacity: 90%">
@@ -211,7 +220,7 @@ overflow-y: auto;
         <div class="col-12 col-md-12 col-lg-8 log-style" style="padding: 0px;">
           <div class="messaging">
             <div class="inbox_msg">
-
+              <p style="font-size: 25px; padding-left: 30px; padding-top: 7px; padding-bottom:7px; background-color: #302d42; color: white">Enter name here</p>
               <div class="mesgs" style="background-color: white;">
                 <div class="msg_history" style="display: flex; flex-direction: column-reverse">
                   <div>

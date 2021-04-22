@@ -405,7 +405,7 @@ router.route('/login').post(async (req, res) => {
         }
         else{
             
-            res.redirect({ user },'/users/dashboard');
+            res.redirect('/users/dashboard');
         }
         
     }
