@@ -132,9 +132,21 @@ overflow-y: auto;
             <li class="nav-item">
               <a class="nav-link" href="/users/dashboard">Dashboard</a>
             </li>
+            {{#ifeq curr_user.type "investor"}}
             <li class="nav-item">
               <a class="nav-link" href="/users/viewfarmers">View Farmer's Profiles</a>
             </li>
+            {{/ifeq}}
+            {{#ifeq curr_user.type "institution"}}
+            <li class="nav-item">
+              <a class="nav-link" href="/users/viewfarmers">View Farmer's Profiles</a>
+            </li>
+            {{/ifeq}}
+            {{#ifeq curr_user.type "buyer"}}
+            <li class="nav-item">
+              <a class="nav-link" href="/users/viewfarmers">View Farmer's Profiles</a>
+            </li>
+            {{/ifeq}}
             <li class="nav-item">
               <a class="nav-link" href="/users/updateprofile">Update Profile</a>
             </li>
@@ -151,9 +163,21 @@ overflow-y: auto;
         <li>
           <a class="page-scroll" href="/users/dashboard">Dashboard</a>
         </li>
+        {{#ifeq curr_user.type "buyer"}}
         <li>
           <a class="page-scroll" href="/users/viewfarmers">View Farmer's Profiles</a>
         </li>
+        {{/ifeq}}
+        {{#ifeq curr_user.type "investor"}}
+        <li>
+          <a class="page-scroll" href="/users/viewfarmers">View Farmer's Profiles</a>
+        </li>
+        {{/ifeq}}
+        {{#ifeq curr_user.type "institution"}}
+        <li>
+          <a class="page-scroll" href="/users/viewfarmers">View Farmer's Profiles</a>
+        </li>
+        {{/ifeq}}
         <li>
           <a class="page-scroll" href="/users/updateprofile">Update Profile</a>
         </li>
