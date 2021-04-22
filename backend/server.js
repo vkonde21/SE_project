@@ -62,6 +62,7 @@ io.on('connection', (socket) => { /*specify the event and the function */
     console.log("New connection ");
     socket.on('join', ({room, username}) => {
         socket.join(room);
+        console.log(socket.id);
         socket.room = room;
         if(socket.usernames == undefined){
             socket.usernames = new Array(username);
