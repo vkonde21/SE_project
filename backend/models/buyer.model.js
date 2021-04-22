@@ -15,8 +15,11 @@ const buyerSchema = new Schema({
         required:true
     },
     pan_card:{
-        type:Buffer,
+        type:String,
         required:true
+    },
+    pan_card_type:{
+        type:String
     },
     requirements:{
         type:String,

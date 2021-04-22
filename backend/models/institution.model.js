@@ -22,7 +22,7 @@ const institutionSchema = new Schema({
     },
     
     business_proof:{
-        type:Buffer,
+        type:String,
         required:true,
     }, 
 

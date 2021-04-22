@@ -81,26 +81,72 @@
           <div class="row">
             <div class="col-12">
               <div class="col-12 col-md-12 col-lg-8 log-style">
-                <p style="font-size: 25px;">Name : </p>
+                {{#ifeq user.type "farmer"}}
+                <p style="font-size: 25px;">Name :{{profile.fullname}} </p>
                 <br>
-                <p style="font-size: 20px;">Email id : </p>
+                <p style="font-size: 20px;">Email id :{{user.email}} </p>
                 <br>
-                <p style="font-size: 20px;">Land area : </p>
+                <p style="font-size: 20px;">Land area : {{profile.land_area}} acres</p>
                 <br>
-                <p style="font-size: 20px;">Document 1 : </p>
+                <p style="font-size: 20px;">Land ownership proof : </p>
                 <br>
-                <img src="/img/potato.jpg" style="width: 100%;"/>
+                <img src="data:{{profile.land_doc_type}};base64,{{profile.land_doc}}" style="width: 100%;" />
                 <br><br>
-                <p style="font-size: 20px;">Document 2 : </p>
+                <p style="font-size: 20px;">Organic farming certificate : </p>
                 <br>
-                <img src="/img/sample.jpg" style="width: 100%;"/>
+                <img src="data:{{profile.certificate_type}};base64,{{profile.certificate}}" style="width: 100%;"/>
                 <br><br>
+                {{/ifeq}}
+              {{#ifeq user.type "investor"}}
+                <p style="font-size: 25px;">Name :{{profile.fullname}} </p>
+                <br>
+                <p style="font-size: 20px;">Email id :{{user.email}} </p>
+                <br>
+                <p style="font-size: 20px;">Range of Investment : {{profile.start}}-{{profile.end}} INR</p>
+                <br>
+                <p style="font-size: 20px;">Income statement : </p>
+                <br>
+                <img src="data:{{profile.income_statement_type}};base64,{{profile.income_statement}}" style="width: 100%;" onload="render_file(this)"/>
+                <br><br>
+                <p style="font-size: 20px;">Pan Number :{{profile.pan_number}} </p>
+                <br>
+                <br><br>
+                {{/ifeq}}
+
+                {{#ifeq user.type "buyer"}}
+                <p style="font-size: 25px;">Name :{{profile.fullname}} </p>
+                <br>
+                <p style="font-size: 20px;">Email id :{{user.email}} </p>
+                <br>
+                <p style="font-size: 20px;">Pan Number :{{profile.pan_number}}</p>
+                <br>
+                <p style="font-size: 20px;">Pan Card  </p>
+                <br>
+                <img src="data:{{profile.pan_card_type}};base64,{{profile.pan_card}}" style="width: 100%;"/>
+                <br><br>
+                
+                {{/ifeq}}
+
+                {{#ifeq user.type "institution"}}
+                <p style="font-size: 25px;">Name :{{profile.fullname}} </p>
+                <br>
+                <p style="font-size: 20px;">Email id :{{user.email}} </p>
+                <br>
+                <p style="font-size: 20px;">Range of Investment : {{profile.start}}-{{profile.end}} INR</p>
+                <br>
+                
+                <p style="font-size: 20px;">Business Proof : </p>
+                <br>
+                <img src="data:{{profile.business_proof_type}};base64,{{profile.business_proof}}" style="width: 100%;"/>
+                <br><br>
+                {{/ifeq}}
+
                 <div class="row">
                     <div class="col-6">
-                        <button class="btn btn-common btn-nv-sty" style="width: 100%;">Approve</button>
+                        <a href="/admin/accept/{{user._id}}"class="btn btn-common btn-nv-sty" style="width: 100%;">Approve</a>
                     </div>
                     <div class="col-6">
-                        <button class="btn btn-common btn-nv-sty" style="width: 100%;">Disapprove</button>
+                        <a href="/admin/reject/{{user._id}}"class="btn btn-common btn-nv-sty" style="width: 100%;">Disapprove</a>
                     </div>
                 </div>
               </div>
@@ -136,5 +182,6 @@
             });
         });
     </script>
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     </div>

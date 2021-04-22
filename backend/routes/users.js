@@ -74,14 +74,16 @@ router.route('/registerfarmer').post(upload.fields([{
         const orders = 0;
         const land_doc = req.files["landpaper"][0].buffer;
         const certificate = req.files["certificate"][0].buffer;
-        /*console.log("Info");
-        console.log(`username: ${username}, password: ${password}, fullname: ${fullname}, buyer_req:${buyer_req}`);
-        console.log(`investor_req:${investor_req}, landarea: ${land_area}, land_doc: ${land_file}`);
-        console.log(land_doc);*/
+        var f = await (FileType.fromBuffer(land_doc));
+        const filetype1 = f.mime;
+        f = await (FileType.fromBuffer(certificate));
+        const filetype2 = f.mime;
+        const bString1 = ab2str(land_doc.buffer, 'base64');
+        const bString2 = ab2str(certificate.buffer, 'base64');
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;
-        const farmer = new Farmer({ _id: user_id, fullname, deals, orders, buyer_req, investor_req, rating, land_area, land_doc, certificate });
+        const farmer = new Farmer({ _id: user_id, fullname, deals, orders, buyer_req, investor_req, rating, land_area, land_doc:bString1, certificate:bString2,land_doc_type:filetype1, certificate_type:filetype2 });
         farmer.save();
         res.redirect("login");
     }
@@ -215,11 +217,14 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         const is_verified = false;
         const deals = 0;
         const income_statement = req.file.buffer;
+        const {ext, mime} = await (FileType.fromBuffer(income_statement));
+        const filetype = mime;
+        const bString = ab2str(income_statement.buffer, 'base64');
         const profit_share = 0;
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;
-        const investor = new Investor({ _id: user_id, fullname, deals,  income_statement, start, end, pan_number, profit_share});
+        const investor = new Investor({ _id: user_id, fullname, deals,  income_statement:bString, income_statement_type:filetype,start, end, pan_number, profit_share});
         investor.save();
         res.redirect("login");
     }
@@ -243,10 +248,13 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const type = "institution";
         const is_verified = false;
         const deals = 0;
+        const {ext, mime} = await (FileType.fromBuffer(business_proof));
+        const filetype = mime;
+        const bString = ab2str(business_proof.buffer, 'base64');
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;
-        const institution = new Institution({ _id: user_id, fullname, deals, business_proof, start, end});
+        const institution = new Institution({ _id: user_id, fullname, deals, business_proof:bString, business_proof_type:filetype,start, end});
         institution.save();
         res.redirect("login");
     }
@@ -271,10 +279,13 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         const is_verified = false;
         const orders = 0;
         const pan_card = req.file.buffer;
+        const {ext, mime} = await (FileType.fromBuffer(pan_card));
+        const filetype = mime;
+        const bString = ab2str(pan_card.buffer, 'base64');
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;
-        const buyer = new Buyer({_id:user_id, fullname, pan_number, orders, pan_card, requirements });
+        const buyer = new Buyer({_id:user_id, fullname, pan_number, orders, pan_card:bString, pan_card_type:filetype, requirements });
         buyer.save();
         res.redirect("login");
     }
@@ -289,8 +300,9 @@ router.route('/login').get((req, res) => {
 
 router.route('/login').post(async (req, res) => {
     try {
-        const user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
-        const admin = await Admin.findByCredentials(req.body.username, req.body.password);
+        var user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
+        if(user == null || user == undefined)
+            var admin = await Admin.findByCredentials(req.body.username, req.body.password);
         
         if(user != null && user != undefined && user.is_verified == true){
             const token = await user.generateAuthToken();
@@ -298,6 +310,8 @@ router.route('/login').post(async (req, res) => {
             res.redirect ('/users/dashboard');
         }
         else if(admin != null && admin != undefined){
+            const token = await admin.generateAuthToken();
+            res.cookie("jwt", token, { secure: true, httpOnly: true })
             res.redirect('/admin/dashboard');
         }
         else{

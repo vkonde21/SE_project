@@ -28,12 +28,18 @@ const farmerSchema = new Schema({
         required:true,
     },
     land_doc:{
-        type:Buffer,
+        type:String,
         required:true,
     }, 
     certificate:{
-        type:Buffer,
+        type:String,
         required:true
+    },
+    land_doc_type:{
+        type:String
+    },
+    certificate_type:{
+        type:String
     }
 });
 

@@ -25,9 +25,12 @@ const investorSchema = new Schema({
         required:true
     },
     income_statement:{
-        type:Buffer,
+        type:String,
         required:true,
     }, 
+    income_statement_type:{
+        type:String
+    },
     profit_share:{
         type:Number
     }

@@ -88,36 +88,16 @@
                         <th>Type</th>
                         <th>Verify</th>
                     </tr>
+                    {{#if users}}
+                    {{#each users}}
                     <tr>
-                        <td>Vaishnavi</td>
-                        <td>vaishnavi@gmail.com</td>
-                        <td>Farmer</td>
-                        <td><a href="verify_profile" class="btn btn-common btn-nv-sty">Verify</a></td>
+                        <td>{{username}}</td>
+                        <td>{{email}}</td>
+                        <td>{{type}}</td>
+                        <td><a href="verify_profile/{{_id}}" class="btn btn-common btn-nv-sty">Verify</a></td>
                     </tr>
-                    <tr>
-                        <td>Arya</td>
-                        <td>arya@gmail.com</td>
-                        <td>Farmer</td>
-                        <td><a href="verify_profile" class="btn btn-common btn-nv-sty">Verify</a></td>
-                    </tr>
-                    <tr>
-                        <td>Buyer</td>
-                        <td>buyer@gmail.com</td>
-                        <td>Buyer</td>
-                        <td><a href="verify_profile" class="btn btn-common btn-nv-sty">Verify</a></td>
-                    </tr>
-                    <tr>
-                        <td>Investor</td>
-                        <td>investor@gmail.com</td>
-                        <td>Investor</td>
-                        <td><a href="verify_profile" class="btn btn-common btn-nv-sty">Verify</a></td>
-                    </tr>
-                    <tr>
-                        <td>Bhima</td>
-                        <td>bhima@gmail.com</td>
-                        <td>Farmer</td>
-                        <td><a href="verify_profile" class="btn btn-common btn-nv-sty">Verify</a></td>
-                    </tr>
+                    {{/each}}
+                    {{/if}}
             </table>
               </div>
             </div>
