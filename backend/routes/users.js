@@ -250,15 +250,17 @@ router.route('/viewfarmers').get(auth, async (req, res) => {
                 crops = await Crop.find({user_id:users[i]._id});
                 f1 = await Farmer.findOne({_id:users[i]._id});
                 for(var j=0; j < crops.length;  j++){
-                    c1 += crops[j].cropname + " ";
+                    c1 += crops[j].cropname + ", ";
                 }
+                c1 = c1.substring(0, c1.length - 2);
             
                 if(users[i+1] != undefined){
                     f2 = await Farmer.findOne({_id:users[i+1]._id});
                     crops = await Crop.find({user_id:users[i+1]._id});
                     for(var j=0; j < crops.length;  j++){
-                        c2 += crops[j].cropname + " ";
+                        c2 += crops[j].cropname + ", ";
                     }
+                    c2 = c2.substring(0, c2.length - 2);
                     
                     profiles.push({1:f1, 2:c1, 3:f2, 4:c2});
                 }
