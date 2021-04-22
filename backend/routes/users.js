@@ -275,6 +275,18 @@ router.route('/viewfarmers').get(auth, async (req, res) => {
 router.route('/help').get((req, res) => {
     res.render('help');
 });
+router.route('/help_farmer').get((req, res) => {
+    res.render('help_farmer');
+});
+router.route('/help_investor').get((req, res) => {
+    res.render('help_investor');
+});
+router.route('/help_institution').get((req, res) => {
+    res.render('help_institution');
+});
+router.route('/help_buyer').get((req, res) => {
+    res.render('help_buyer');
+});
 
 router.route('/registerinvestor').get((req, res) => {
     res.render('registerinvestor');

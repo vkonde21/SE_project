@@ -81,7 +81,7 @@ router.route('/reject/:id').get(auth, async (req,res) => {
     from: 'organiquefarm@gmail.com',
     to: user.email,
     subject: 'Profile verification',
-    text: 'Your profile verification was not successful.'
+    text: 'Your profile verification was not successful. Please register again with correct documents.'
   };
 
   transporter.sendMail(mailOptions, function(error, info){
