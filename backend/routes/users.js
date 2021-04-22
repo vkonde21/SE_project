@@ -103,7 +103,7 @@ router.route('/chat').get(auth, async(req, res) => {
     if(connections.length == 0){
         connections = await Connection.find({conn_user: req.user.username, started:true});
     }
-    var i =0, j= 0, room, orders, deals, chat, time;
+    var i =0, j= 0, room, orders, deals, chat, time, unread;
     var buyer = [];
     var investor = [];
     var farmer = [];
@@ -118,6 +118,8 @@ router.route('/chat').get(auth, async(req, res) => {
             if(u != null && u.type == "buyer"){
                 b = await Buyer.findById(u._id);
                 b.room_id = connections[i]._id;
+                unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
+                b.notifs = unread.length;
                 orders = await Order.find({farmer_id: req.user._id, buyer_username: u.username, farmer_locked:true});
                 if(orders == null){
                     chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
@@ -143,6 +145,8 @@ router.route('/chat').get(auth, async(req, res) => {
                 inv = await Investor.findById(u._id);
                 inv.room_id = connections[i]._id;
                 deals = await Deal.find({farmer_id: req.user._id, other_username: u.username, farmer_locked:true});
+                unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
+                inv.notifs = unread.length;
                 if(deals == null){
                     chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
                     if(chat != null){
@@ -167,6 +171,8 @@ router.route('/chat').get(auth, async(req, res) => {
                 ins = await Institution.findById(u._id);
                 ins.room_id = connections[i]._id;
                 deals = await Deal.find({farmer_id: req.user._id, other_username: u.username, farmer_locked:true});
+                unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
+                ins.notifs = unread.length;
                 if(deals == null){
                     chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
                     if(chat != null){
@@ -178,12 +184,12 @@ router.route('/chat').get(auth, async(req, res) => {
                             await connections[i].save();
                        }
                        else{
-                        investor.push(inv);
+                        institution.push(ins);
                        }
                     }
                 }
                 else{
-                    investor.push(inv);
+                    institution.push(ins);
                 }
             }
         }
@@ -199,6 +205,8 @@ router.route('/chat').get(auth, async(req, res) => {
             f.crops = c;
             deals = await Deal.find({farmer_id: u._id, other_username: req.user.username, farmer_locked:true});
             orders = await Order.find({farmer_id: u._id, buyer_username: req.user.username, farmer_locked:true});
+            unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
+            f.notifs = unread.length;
                 if(deals == null && orders == null){
                     chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
                     if(chat != null){
@@ -405,7 +413,7 @@ router.route('/login').post(async (req, res) => {
         }
         else{
             
-            res.redirect({ user },'/users/dashboard');
+            res.redirect('/');
         }
         
     }
