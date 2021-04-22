@@ -39,7 +39,7 @@ router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) 
         const filetype = mime;
         const bString = ab2str(cropimage.buffer, 'base64');
         const crop = new Crop({cropname, user_id, dev_stage, cropimage, filetype, bString})
-        crop.save();
+        await crop.save();
         res.redirect('dashboard');
     }
     catch(e){

@@ -98,9 +98,9 @@ router.route('/about').get((req, res) => {
     res.render('about');
 });
 router.route('/chat').get(auth, async(req, res) => {
-    var connections = await Connection.find({chat_initiator:req.user.username});
+    var connections = await Connection.find({chat_initiator:req.user.username, started:true});
     if(connections.length == 0){
-        connections = await Connection.find({conn_user: req.user.username});
+        connections = await Connection.find({conn_user: req.user.username, started:true});
     }
     var i =0, j= 0, room;
     var buyer = [];
