@@ -5,6 +5,7 @@ let Investor = require('../models/investor.model');
 let Buyer = require('../models/buyer.model');
 let Institution = require('../models/institution.model');
 let Crop = require('../models/crop.model');
+let Order = require('../models/order.model');
 let Deal = require('../models/deal.model');
 let Chat = require('../models/chat.model');
 let Connection = require('../models/connection.model');
@@ -102,7 +103,7 @@ router.route('/chat').get(auth, async(req, res) => {
     if(connections.length == 0){
         connections = await Connection.find({conn_user: req.user.username, started:true});
     }
-    var i =0, j= 0, room;
+    var i =0, j= 0, room, orders, deals, chat, time;
     var buyer = [];
     var investor = [];
     var farmer = [];
@@ -114,20 +115,76 @@ router.route('/chat').get(auth, async(req, res) => {
         x = connections[i];
         if(req.user.type == "farmer"){
             u = await User.findOne({username: x.chat_initiator});
-            if(u.type == "buyer"){
+            if(u != null && u.type == "buyer"){
                 b = await Buyer.findById(u._id);
                 b.room_id = connections[i]._id;
-                buyer.push(b);
+                orders = await Order.find({farmer_id: req.user._id, buyer_username: u.username, farmer_locked:true});
+                if(orders == null){
+                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
+                    if(chat != null){
+                       time = (Date.now() - chat[0].time)/60000;
+                       if(time > 60){  //for testing 60 minutes
+                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
+                            await Chat.save();
+                            connections[i].started = false;
+                            await connections[i].save();
+                       }
+                       else{
+                        buyer.push(b);
+                       }
+                    }
+                }
+                else{
+                    buyer.push(b);
+                }
+                
             }
-            else if(u.type == "investor"){
+            else if(u!= null && u.type == "investor"){
                 inv = await Investor.findById(u._id);
                 inv.room_id = connections[i]._id;
-                investor.push(inv);
+                deals = await Deal.find({farmer_id: req.user._id, other_username: u.username, farmer_locked:true});
+                if(deals == null){
+                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
+                    if(chat != null){
+                       time = (Date.now() - chat[0].time)/60000;
+                       if(time > 60){  //for testing 60 minutes
+                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
+                            await Chat.save();
+                            connections[i].started = false;
+                            await connections[i].save();
+                       }
+                       else{
+                        investor.push(inv);
+                       }
+                    }
+                }
+                else{
+                    investor.push(inv);
+                }
+                
             }
             else{
                 ins = await Institution.findById(u._id);
                 ins.room_id = connections[i]._id;
-                institution.push(ins)
+                deals = await Deal.find({farmer_id: req.user._id, other_username: u.username, farmer_locked:true});
+                if(deals == null){
+                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
+                    if(chat != null){
+                       time = (Date.now() - chat[0].time)/60000;
+                       if(time > 60){  //for testing 60 minutes
+                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
+                            await Chat.save();
+                            connections[i].started = false;
+                            await connections[i].save();
+                       }
+                       else{
+                        investor.push(inv);
+                       }
+                    }
+                }
+                else{
+                    investor.push(inv);
+                }
             }
         }
         else {
@@ -140,7 +197,27 @@ router.route('/chat').get(auth, async(req, res) => {
                 c += crops[j].cropname + " ";
             }
             f.crops = c;
-            farmer.push(f);
+            deals = await Deal.find({farmer_id: u._id, other_username: req.user.username, farmer_locked:true});
+            orders = await Order.find({farmer_id: u._id, buyer_username: req.user.username, farmer_locked:true});
+                if(deals == null && orders == null){
+                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
+                    if(chat != null){
+                       time = (Date.now() - chat[0].time)/60000;
+                       if(time > 60){  //for testing 60 minutes
+                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
+                            await Chat.save();
+                            connections[i].started = false;
+                            await connections[i].save();
+                       }
+                       else{
+                        farmer.push(f);
+                       }
+                    }
+                }
+                else{
+                    farmer.push(f);
+                }
+            
         }
     }
     if(req.user.type == "farmer")

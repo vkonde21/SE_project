@@ -8,7 +8,7 @@ const messageTemplate = document.getElementById('message-template').innerHTML;
 const rendermsg = Handlebars.compile(messageTemplate);
 var url = new URL(document.URL)
 var pathnames =url.pathname.split('/');
-console.log(pathnames[0], pathnames[1], pathnames[2], pathnames[3]);
+//console.log(pathnames[0], pathnames[1], pathnames[2], pathnames[3]);
 
 /*receive an event
 socket.on('event_name', () => { //function contains arguments passed by the server side
@@ -95,7 +95,6 @@ socket.on('message', ({message, sender, image}) => {
             p.appendChild(s);
         }
         messages.append(p);
-        console.log(messages);
     }
     
 })
@@ -106,24 +105,26 @@ document.querySelector('#chatform').addEventListener('submit', (e) => {
     const message = e.target.elements.msg.value;
     const username = e.target.elements.chat_curr_user.value;
     const other_username = e.target.elements.chat_other_user.value;
-    var image = document.getElementById('output_img').src;
-    if(image.length != 0){
+    var image = document.getElementById('output_img')
+    //console.log("Image", image, document.getElementById('output_img'));
+    if(image != undefined && image != null && image.length != 0){
+        image = image.src;
         var n = image.indexOf(",");
         image = image.substring(n+1)
     }
+    //console.log("Image", image);
     if(message || image.length){
         socket.emit('sendMessage', message, image, username, other_username, (msg) => {
             console.log("Message was delivered!", msg);
-            /*reset previous values once the msg is delivered*/
+            //reset previous values once the msg is delivered
             form_button.removeAttribute('disabled');
             form_input.value = '';
-            document.getElementById("file_name").innerHTML = "";
-            form_input.focus(); /*brings back the cursor in the input box*/
-            document.getElementById('output_img').src = "";
-            document.getElementById('output_img').style = "";
+            document.getElementById("file-name").innerHTML = "";
+            form_input.focus(); //brings back the cursor in the input box
+            document.getElementById('output_img').remove();
+            console.log(document.getElementById('output_img'));
         });
     }
-    
 });
 if(pathnames[3] != undefined)
     socket.emit('join', {room:pathnames[3], username:document.getElementById('chat_curr_user').value })

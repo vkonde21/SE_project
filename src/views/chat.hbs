@@ -254,18 +254,18 @@ overflow-y: auto;
                       <input type="hidden" id="chat_curr_user" name="chat_curr_user" value="{{curr_user.username}}">
                       <input type="hidden" id="chat_other_user" name="chat_other_user" value="{{other_user.username}}">
                       <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
-                      <div>
+                      <div id="preview_image">
                       <textarea rows="2" placeholder="Type a message" id="msg" name="msg" style="width: 75%; margin-top: 10px"></textarea>
-                      <img id="output_img" name="output_img">
+                      <!--img id="output_img" name="output_img" -->
                       </div>
                       <label for="chatimage" style="cursor: pointer;">
                       <p style="font-size:24px; border:none; background: white; position: absolute; right: 45px; top: 18px;">
                         <i class="fa fa-camera circle-icon" style="padding: 5px; color: white">
                         </i>
                       </p>
-                      <span id="file_name" style="font-size: 13px; position: absolute; right: 20; top: 45;"></span>
+                      <span id="file-name" style="font-size: 13px; position: absolute; right: 20; top: 45;"></span>
                       </label>
-                      <input type="file" name="chatimage" id="chatimage" onchange="uploadFile(this)" accept=".png, .jpg, .jpeg"/>
+                      <input type="file" name="chatimage" id="chatimage" onchange="uploadFile(this)"/>
                       <button class="msg_send_btn" type="submit" id="chatbutton" name="chatbutton">
                         <i class="fa fa-paper-plane-o" aria-hidden="true"></i></button>
                     </form>
@@ -274,14 +274,23 @@ overflow-y: auto;
                     </template>
                     <script>
                       function uploadFile(target) {
-                        const output_img = document.getElementById("output_img");
+                        var x = document.getElementById('output_img');
+                        if(x!= null){
+                          x.remove();
+                        }
+                        var div = document.getElementById("preview_image");
+                        var output_img = document.createElement("img");
+                        output_img.setAttribute("id", "output_img");
+                        output_img.setAttribute("name", "output_img");
+                        div.appendChild(output_img);
                         const chat_img = document.getElementById("chatimage");
-                          document.getElementById("file_name").innerHTML = target.files[0].name;
+                          document.getElementById("file-name").innerHTML = target.files[0].name;
                           const reader = new FileReader();
                           reader.onload = event => {output_img.src = event.target.result;
                             output_img.style = "width: 80%; padding: 10px; left: 10%; position: relative;";
                           };
-                         reader.readAsDataURL(target.files[0]);                         
+                         reader.readAsDataURL(target.files[0]);
+                         
                       }
                     </script>
                   </div>
