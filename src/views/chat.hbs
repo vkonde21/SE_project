@@ -150,6 +150,11 @@ overflow-y: auto;
             <li class="nav-item">
               <a class="nav-link" href="/users/updateprofile">Update Profile</a>
             </li>
+            {{#ifeq curr_user.type "buyer"}}
+            <li class="nav-item">
+              <a class="nav-link" href="/users/buyer_orders">Orders</a>
+            </li>
+            {{/ifeq}}
             <li class="nav-item">
               <a class="nav-link" href="/users/chat">Chat</a>
             </li>
@@ -181,6 +186,11 @@ overflow-y: auto;
         <li>
           <a class="page-scroll" href="/users/updateprofile">Update Profile</a>
         </li>
+        {{#ifeq curr_user.type "buyer"}}
+        <li>
+          <a class="page-scroll" href="/users/buyer_orders">Orders</a>
+        </li>
+        {{/ifeq}}
         <li>
           <a class="page-scroll" href="/users/chat">Chat</a>
         </li>
