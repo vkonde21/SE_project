@@ -8,6 +8,10 @@ const connectionSchema = new Schema({
     },
     conn_user:{
         type:String
+    },
+    started:{
+      type:Boolean,
+      default:false
     }
 }, 
 {
@@ -32,11 +36,14 @@ connectionSchema.statics.initiateChat = async function (
       const newRoom = await this.create({ conn_user, chat_initiator })
       return {
         isNew: true,
+        room:newRoom,
         message: 'creating new chat room',
       };
     }
+    
     return {
       isNew: false,
+      room:availableRoom,
       message: 'old chatroom'};
   } catch (error) {
     console.log('error on start chat method', error);

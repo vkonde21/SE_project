@@ -11,7 +11,7 @@ router.route('/order_lock').post(auth, async(req,res) => {
     try{
         const farmer_user = req.body.farmerusername;
         const farmer = await User.findOne({username:farmer_user});
-        if(farmer.length == 0){
+        if(farmer == null){
             res.status(400).send();
         }
         const farmer_id = farmer._id;

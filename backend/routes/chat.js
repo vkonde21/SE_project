@@ -4,7 +4,16 @@ const Chat = require('../models/chat.model');
 const Connection = require('../models/connection.model');
 const router = require('express').Router();
 
-
+router.route('/:id').get(auth, async(req, res) => {
+    var username = req.user.username;
+    var other_user = await User.findById(req.params.id);
+    if(other_user != null)
+        var x = await Connection.initiateChat(other_user.username, username);
+    else{
+        console.log("error in chat.js");
+    }
+    res.redirect('/chat/' + req.params.id +'/'+ x.room._id);
+});
 router.route('/:id/:room_id').get(auth, async(req, res) => {
     //generate a random objectId and send
     const user = await User.findById(req.params.id);
