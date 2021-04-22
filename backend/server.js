@@ -71,16 +71,17 @@ io.on('connection', (socket) => { /*specify the event and the function */
     
     socket.on('sendMessage', async (message, image,  username,other_username, callback) => { //callback is a parameter passed by the client side.It is executed once the msg is receibed on the server side
         var msg, ch, img;
+       
         var x = await Connection.initiateChat(other_username, username); //username is current user i.e sender
         if(x.room.started == false){
             x.room.started = true;
             x.room.save();
         }
-        if(message.length > 0){
+        if(message != null && message.length > 0){
             msg = generateMessage(message);
             ch = new Chat({sender:username, receiver:other_username, chat_msg:msg.text, time:msg.createdAt});
         }
-        if(image.length > 0){
+        if(image != null && image.length > 0){
             var d = await FileType.fromBuffer(Buffer.from(image, 'base64'));
             img = generateImage(image, d.ext);
             ch = new Chat({sender:username, receiver:other_username, img_msg:img.buffer, type:d.ext,time:img.createdAt })
