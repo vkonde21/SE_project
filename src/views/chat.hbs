@@ -207,7 +207,7 @@ overflow-y: auto;
   </header>
   <br><br><br>
   <div style="text-align: right; position: sticky; padding-right: 50px">
-      <span style="background-color: #fff; font-size: 20px; color:#016168; padding: 4px; opacity: 80%;">Hello </span>
+      <span style="background-color: #fff; font-size: 20px; color:#016168; padding: 4px; opacity: 80%;">Hello {{curr_user.username}}</span>
     </div>
     <br>
   <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s"
@@ -220,7 +220,7 @@ overflow-y: auto;
         <div class="col-12 col-md-12 col-lg-8 log-style" style="padding: 0px;">
           <div class="messaging">
             <div class="inbox_msg">
-              <p style="font-size: 25px; padding-left: 30px; padding-top: 7px; padding-bottom:7px; background-color: #302d42; color: white">Enter name here</p>
+              <p style="font-size: 25px; padding-left: 30px; padding-top: 7px; padding-bottom:7px; background-color: #302d42; color: white">{{other_user.username}}</p>
               <div class="mesgs" style="background-color: white;">
                 <div class="msg_history" style="display: flex; flex-direction: column-reverse">
                   <div>
@@ -265,7 +265,6 @@ overflow-y: auto;
                       <input type="hidden" id="room_id" name="room_id" value="{{room_id}}">
                       <div id="preview_image">
                       <textarea rows="2" placeholder="Type a message" id="msg" name="msg" style="width: 75%; margin-top: 10px"></textarea>
-                      <!--img id="output_img" name="output_img" -->
                       </div>
                       <label for="chatimage" style="cursor: pointer;">
                       <p style="font-size:24px; border:none; background: white; position: absolute; right: 45px; top: 18px;">

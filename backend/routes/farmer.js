@@ -26,7 +26,7 @@ const upload = multer({
     }
 })
 router.route('/addcrops').get(auth, async(req,res) => {
-    res.render('addcrops');
+    res.render('addcrops', {user:req.user});
 });
 
 router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) => {
@@ -54,7 +54,7 @@ router.route('/updatecrops/:id').get(auth, async(req, res) => {
         const crop = await Crop.findById(id);
         
         if(crop.user_id.equals(req.user._id)){
-            res.render('updatecrops', {crop});
+            res.render('updatecrops', {crop, user:req.user});
             
         }
         else
@@ -126,7 +126,7 @@ router.route('/notifications').get(auth, async (req, res) => {
             else
                 not_orders.push({1:orders[i]});
         }
-    res.render('notifications', {notifications, not_orders});
+    res.render('notifications', {notifications, not_orders, user:req.user});
 });
 
 router.route('/deal_decision').post(auth, async(req, res) => {

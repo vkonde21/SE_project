@@ -26,7 +26,6 @@ router.route('/:id/:room_id').get(auth, async(req, res) => {
     else{
         room = await Connection.find({chat_initiator: req.user.username, conn_user: user.username})
     }
-    
     var msgs = await Chat.find({$or:[{sender:req.user.username, receiver:user.username}, {receiver:req.user.username, sender:user.username}]}).sort({time:1});
     for(var i=0; i<msgs.length; i++){
         msgs[i].notified = true;

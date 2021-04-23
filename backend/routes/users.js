@@ -229,11 +229,11 @@ router.route('/chat').get(auth, async(req, res) => {
         }
     }
     if(req.user.type == "farmer")
-        res.render('chat_app_farmer', {buyer, investor, institution});
+        res.render('chat_app_farmer', {buyer, investor, institution, user:req.user});
     else if(req.user.type == "buyer")
-        res.render('chat_app_buyer', {farmer});
+        res.render('chat_app_buyer', {farmer, user:req.user});
     else
-        res.render('chat_app', {farmer});
+        res.render('chat_app', {farmer, user:req.user});
 });
 router.route('/viewfarmers').get(auth, async (req, res) => {
     try{
@@ -464,27 +464,27 @@ router.route('/dashboard').get(auth, async(req,res) => {
                 Crops.push({1:Cp[i]});
         }
         if(Crops[0]!= undefined){
-            res.render('farmer_dashboard', {Crops: Crops,farmer, });
+            res.render('farmer_dashboard', {Crops: Crops,farmer, user:req.user});
         }
             
         else{
-            res.render('farmer_dashboard', {farmer});
+            res.render('farmer_dashboard', {farmer, user:req.user});
         }
     }
 
     else if(req.user.type == "investor"){
         const investor = await Investor.findById(req.user._id);
-        res.render('investor_dashboard', {investor});
+        res.render('investor_dashboard', {investor, user:req.user});
     }
 
     else if(req.user.type == "institution"){
         const institution = await Institution.findById(req.user._id);
-        res.render('institution_dashboard', {institution});
+        res.render('institution_dashboard', {institution, user:req.user});
     }
 
     else if(req.user.type == "buyer"){
         const buyer = await Buyer.findById(req.user._id);
-        res.render('buyer_dashboard', {buyer});
+        res.render('buyer_dashboard', {buyer, user:req.user});
     }
 
 });

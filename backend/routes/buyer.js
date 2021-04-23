@@ -37,7 +37,7 @@ router.route('/buyer_orders').get(auth, async(req,res) => {
             else
                 rating.push({1:Cp[i]});
         }
-            res.render('buyer_orders', {rating});
+            res.render('buyer_orders', {rating, user:req.user});
         
     } catch(e){
         res.status(400).json('error: ' + e);
