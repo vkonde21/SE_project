@@ -24,13 +24,6 @@
   <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
   <div class="content">
-    <div style="color: red; position:absolute">
-  <h3>{{messageFailure}}</h3>
-</div>
-
-<div style="color: green; position:absolute">
-  {{messageSuccess}}
-</div>
     <br><br>
     <section id="form-dom" class="services">
       <div class="container" style="margin-bottom: 30px; opacity:90%">
@@ -50,6 +43,12 @@
                 >
                   Register as a Farmer
                 </h1>
+                <div style="color: red;">
+                  <p style="font-size: 15px; text-align: center">{{messageFailure}}</p>
+                </div>
+                <div style="color: green;">
+                  <p style="font-size: 15px; text-align: center">{{messageSuccess}}</p>
+                </div>
                 <div class="design">
                   <form id="register-form" action="/users/registerfarmer" method="POST" enctype="multipart/form-data">
                     <h3></h3>
@@ -114,10 +113,10 @@
                             Do you need an investor?
                         </div>
                         <div class="col-2">
-                            <input type="radio" name="investoryes" value="1">Yes</input>
+                            <input type="radio" name="investor" value="1" required>Yes</input>
                         </div>
                         <div class="col-2">   
-                            <input type="radio" name="investorno" value="0">No</input>
+                            <input type="radio" name="investor" value="0">No</input>
                         </div>
                     </div>
                     <br>
@@ -126,10 +125,10 @@
                             Do you need buyers for your organic produce?
                         </div>
                         <div class="col-2">
-                            <input type="radio" name="buyeryes" value="1">Yes</input>
+                            <input type="radio" name="buyer" value="1" required>Yes</input>
                         </div>
                         <div class="col-2">   
-                            <input type="radio" name="buyerno" value="0">No</input>
+                            <input type="radio" name="buyer" value="0">No</input>
                         </div>
                     </div>
                     <br>

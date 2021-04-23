@@ -450,11 +450,11 @@ router.route('/login').post(async (req, res) => {
             res.redirect('/admin/dashboard');
         }
         else if(user != null && user.is_verified == false){
-            req.flash('messageFailure', "Your account is not verified yet");
+            req.flash('messageFailure', "Your account has not been verified yet");
             throw new Error();
         }
         else{
-            req.flash('messageFailure', "Account does not exist");
+            req.flash('messageFailure', "Invalid login credentials! Please enter correct username and password.");
             throw new Error();
         }    
     }
