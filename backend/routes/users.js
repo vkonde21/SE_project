@@ -307,6 +307,10 @@ router.route('/registerinvestor').get((req, res) => {
     res.render('registerinvestor');
 });
 
+router.route('/viewfullprofile').get((req, res) => {
+    res.render('viewfullprofile');
+});
+
 router.route('/registerinvestor').post(upload.single('incomestatement'), async (req, res) => {
     try{
         const username = req.body.username;
