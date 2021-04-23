@@ -18,9 +18,7 @@ var ab2str = require('arraybuffer-to-string');
 
 /* to avoid saving the file on the local file system remove the dest parameter from multer*/
 const upload = multer({
-    limits: {
-        fileSize: 1000000
-    },
+    
     fileFilter(req, file, cb) {
         cb(undefined, true); 
     }
