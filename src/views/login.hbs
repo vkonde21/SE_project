@@ -29,10 +29,19 @@
       <h1> <span style="background-color: #fff; font-size: 50px; color:#016168; padding: 15px; opacity: 80%;">Organique</span> </h1>
     </div>
     <br>
+    <div class="container" style="margin-bottom: 30px; opacity: 90%;">
+          <div style="color: red; position:absolute">
+  <h3>{{messageFailure}}</h3>
+</div>
+
+<div style="color: green; position:absolute">
+  {{messageSuccess}}
+</div>
     <!-- form -->
     <form method="POST" action="/users/login">
+    
       <section id="form-dom">
-        <div class="container" style="margin-bottom: 30px; opacity: 90%;">
+        
           <div class="row">
             <div class="col-12">
               <div class="col-12 col-md-8 col-lg-6 log-style">
@@ -150,18 +159,6 @@
             document.getElementById("myForm").style.display = "none";
         }
     </script>
-    <script>
-        $(document).ready(function() {
-            $(".fancybox").fancybox({
-                openEffect: "none",
-                closeEffect: "none"
-            });
-            $(".zoom").hover(function() {
-                $(this).addClass('transition');
-            }, function() {
-                $(this).removeClass('transition');
-            });
-        });
-    </script>
+    
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     </div>

@@ -5,6 +5,8 @@ const cookieParser = require('cookie-parser')
 const hbs = require('hbs');
 const multer = require('multer');
 const http = require('http');
+const flash = require('connect-flash');
+const session = require('express-session');
 require('dotenv').config();
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology:true});
@@ -18,16 +20,39 @@ const port = process.env.port || 5000;
 const socketio = require('socket.io');
 const server = http.createServer(app);
 const io = socketio(server);
+
 const {generateMessage, generateImage} = require('./utils/messages/messages');
 let Connection = require('./models/connection.model');
 let User = require('./models/user.model');
 let Chat = require('./models/chat.model');
+
+
+// session and flash views
+app.use(session({
+  secret: 'ilikecats',
+  cookie: {},
+  resave: false,
+  saveUninitialized: true
+}));
+app.use(flash())
+
+// store three flash variables as global variables in views
+app.use((req, res, next) => {
+  res.locals.messageSuccess = req.flash('messageSuccess')
+  res.locals.messageFailure = req.flash('messageFailure')
+  res.locals.validationFailure = req.flash('validationFailure')
+  next();
+})
 app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json()); //to parse json data
+
+
+
 app.set('view engine', 'hbs');
 app.set('views', "../src/views");
 app.set('view options', { layout: 'layouts/layout.hbs' });
+
 hbs.registerHelper("section", function(name, options){
     if(!this._sections) this._sections = {};
     this._sections[name] = options.fn(this);
@@ -42,10 +67,8 @@ hbs.registerHelper('ifeq', function (a, b, options) {
 hbs.registerHelper("multiply", function(a,b) {
     return a*b;
   });
-function logMapElements(value, key, map) {
-    console.log(`m[${key}] = ${value}`);
-}
-app.use(cookieParser());
+
+app.use(cookieParser('hello'));
 app.use(express.static("../src/public"));
 const userRouter = require('./routes/users');
 const farmerRouter = require('./routes/farmer');
@@ -100,17 +123,14 @@ io.on('connection', (socket) => { /*specify the event and the function */
         }
         for (const [key, value] of io.sockets.adapter.rooms.entries()) {
             if(key == socket.room){
-                //console.log(key, value);
-                //console.log(value.size);
                 if(value.size == 2){
                    ch.notified = true;
                    await ch.save();
                 }
-                value.forEach(v => console.log(v));
+                //value.forEach(v => console.log(v));
             }
                 
         }
-        //io.sockets.adapter.rooms.forEach(logMapElements);
         
         io.to(socket.room).emit('message', {message:msg, sender, image:img});
             callback(msg);

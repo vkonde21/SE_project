@@ -15,6 +15,7 @@ const auth = require("../middleware/auth");
 const multer = require("multer");
 const FileType = require('file-type');
 var ab2str = require('arraybuffer-to-string');
+
 /* to avoid saving the file on the local file system remove the dest parameter from multer*/
 const upload = multer({
     limits: {
@@ -403,7 +404,7 @@ router.route('/login').get((req, res) => {
 });
 
 router.route('/login').post(async (req, res) => {
-    try {
+   try {
         var user = await User.findByCredentials(req.body.username, req.body.password); /*user defined method; check user.model.js*/
         if(user == null || user == undefined)
             var admin = await Admin.findByCredentials(req.body.username, req.body.password);
@@ -418,14 +419,20 @@ router.route('/login').post(async (req, res) => {
             res.cookie("jwt", token, { secure: true, httpOnly: true })
             res.redirect('/admin/dashboard');
         }
+        else if(user != null && user.is_verified == false){
+            req.flash('messageFailure', "Your account is not verified yet")
+            throw new Error();
+        }
         else{
-            
-            res.redirect('/');
+            req.flash('messageFailure', "Account does not exist")
+            throw new Error();
         }
         
     }
     catch (e) {
-        res.status(400).send();
+        
+        
+        res.redirect('/');
     }
 });
 
