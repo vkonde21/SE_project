@@ -895,7 +895,7 @@ a.nav-link.btn {
   display: none;
 }
 
-@media screen and (max-width: 768px) {
+@media screen and (max-width: 990px) {
   .navbar-header {
     width: 100%;
   }

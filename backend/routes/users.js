@@ -69,6 +69,7 @@ router.route('/registerfarmer').post(upload.fields([{
             investor_req = true;
         }
         const land_area = req.body.landarea;
+        const location = req.body.location;
         const is_verified = false;
         const rating = 0;
         const deals = 0;
@@ -84,15 +85,19 @@ router.route('/registerfarmer').post(upload.fields([{
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
         newUser.save();
         const user_id = newUser._id;
-        const farmer = new Farmer({ _id: user_id, fullname, deals, orders, buyer_req, investor_req, rating, land_area, land_doc:bString1, certificate:bString2,land_doc_type:filetype1, certificate_type:filetype2 });
+        const farmer = new Farmer({ _id: user_id, fullname, deals, orders, buyer_req, investor_req, rating, land_area, location, land_doc:bString1, certificate:bString2,land_doc_type:filetype1, certificate_type:filetype2 });
         farmer.save();
-        res.redirect("login");
+        res.redirect("success");
     }
     catch (err) {
         res.status(400).json('error: ' + err);
     }
 
 
+});
+
+router.route('/success').get((req, res) => {
+    res.render('success');
 });
 
 router.route('/about').get((req, res) => {
@@ -325,7 +330,7 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         const user_id = newUser._id;
         const investor = new Investor({ _id: user_id, fullname, deals,  income_statement:bString, income_statement_type:filetype,start, end, pan_number, profit_share});
         investor.save();
-        res.redirect("login");
+        res.redirect("success");
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -355,7 +360,7 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const user_id = newUser._id;
         const institution = new Institution({ _id: user_id, fullname, deals, business_proof:bString, business_proof_type:filetype,start, end});
         institution.save();
-        res.redirect("login");
+        res.redirect("success");
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -386,7 +391,7 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         const user_id = newUser._id;
         const buyer = new Buyer({_id:user_id, fullname, pan_number, orders, pan_card:bString, pan_card_type:filetype, requirements });
         buyer.save();
-        res.redirect("login");
+        res.redirect("success");
     }
     catch(err){
         res.status(400).json('error: ' + err);
@@ -415,7 +420,7 @@ router.route('/login').post(async (req, res) => {
         }
         else{
             
-            res.redirect('/?error=user_not_found');
+            res.redirect('/');
         }
         
     }

@@ -27,6 +27,10 @@ const farmerSchema = new Schema({
         type:Number,
         required:true,
     },
+    location:{
+        type:String,
+        required:true,
+    },
     land_doc:{
         type:String,
         required:true,

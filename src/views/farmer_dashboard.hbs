@@ -174,54 +174,17 @@
       </div>
       <div class="col-lg-2"></div>
     </div>
-    {{#if Crops}}
-    {{#each Crops}}
-    
-    <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-4 col-12" style="margin-top: 30px;">
-        <div class="card" style="opacity: 90%; height: 400px">
-          <img class="card-img-top" src="data:{{this.1.filetype}};base64,{{this.1.bString}}" alt="Card image cap" style="height: 250px; padding: 10px">
-          <div class="card-body">
-            <h5 class="card-title">Crop name : {{this.1.cropname}}</h5>
-            <p class="card-text">Stage of growth :{{this.1.dev_stage}} </p>
-            <div class="row">
-              <div class="col-6">
-                <a href="updatecrops/{{this.1._id}}" class="btn btn-common btn-nv-sty">Update crop details</a>
-              </div>
-              <div class="col-6">
-                <a href="deletecrops/{{this.1._id}}" class="btn btn-common btn-nv-sty">Delete crop details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>      
-      <div class="col-lg-4 col-12" style="margin-top: 30px;">
-        {{#if this.2.filetype}}
-        <div class="card" style="opacity: 90%; height: 400px">
-          <img class="card-img-top" src="data:{{this.2.filetype}};base64,{{this.2.bString}}" alt="Card image cap" style="height: 250px; padding: 10px">
-          <div class="card-body">
-            <h5 class="card-title">Crop name : {{this.2.cropname}}</h5>
-            <p class="card-text">Stage of growth :{{this.2.dev_stage}} </p>
-            <div class="row">
-              <div class="col-6">
-                <a href="updatecrops/{{this.2._id}}" class="btn btn-common btn-nv-sty">Update crop details</a>
-              </div>
-              <div class="col-6">
-                <a href="deletecrops/{{this.2._id}}" class="btn btn-common btn-nv-sty">Delete crop details</a>
-              </div>
-            </div>
-          </div>
-        </div>
-        {{/if}}
-      </div>      
-      <div class="col-lg-2"></div>      
-    </div>
-    {{/each}}
-    {{/if}}
     <br>
     <div class="row">
-      <div class="col-lg-4"></div>
+      <div class="col-lg-2"></div>
+      <div class="col">
+        <div class="card" style="opacity: 90%; height: 130px">
+          <div class="card-body">
+            <h5 class="card-title">Land area (in acres) : {{farmer.land_area}}</h5>
+            <h5 class="card-title">Location : {{farmer.location}}</h5>
+          </div>
+        </div>
+      </div>
       <div class="col">
         <div class="card" style="opacity: 90%; height: 130px">
           <div class="card-body">
@@ -235,8 +198,54 @@
           </div>
         </div>
       </div>
-      <div class="col-lg-4"></div>
+      <div class="col-lg-2"></div>
     </div>
+    {{#if Crops}}
+    {{#each Crops}}
+    
+    <div class="row">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-5 col-12" style="margin-top: 30px;">
+        <div class="card" style="opacity: 90%; height: 400px">
+          <img class="card-img-top" src="data:{{this.1.filetype}};base64,{{this.1.bString}}" alt="Card image cap" style="height: 250px; padding: 10px">
+          <div class="card-body">
+            <h5 class="card-title">Crop name : {{this.1.cropname}}</h5>
+            <p class="card-text">Stage of growth :{{this.1.dev_stage}} </p>
+            <div class="row">
+              <div class="col-6">
+                <a href="updatecrops/{{this.1._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Update crop details</a>
+              </div>
+              <div class="col-6">
+                <a href="deletecrops/{{this.1._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Delete crop details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>      
+      <div class="col-lg-5 col-12" style="margin-top: 30px;">
+        {{#if this.2.filetype}}
+        <div class="card" style="opacity: 90%; height: 400px">
+          <img class="card-img-top" src="data:{{this.2.filetype}};base64,{{this.2.bString}}" alt="Card image cap" style="height: 250px; padding: 10px">
+          <div class="card-body">
+            <h5 class="card-title">Crop name : {{this.2.cropname}}</h5>
+            <p class="card-text">Stage of growth :{{this.2.dev_stage}} </p>
+            <div class="row">
+              <div class="col-6">
+                <a href="updatecrops/{{this.2._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Update crop details</a>
+              </div>
+              <div class="col-6">
+                <a href="deletecrops/{{this.2._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Delete crop details</a>
+              </div>
+            </div>
+          </div>
+        </div>
+        {{/if}}
+      </div>      
+      <div class="col-lg-1"></div>      
+    </div>
+    {{/each}}
+    {{/if}}
+    <br>
   </div>
   
     {{!-- <div class="container">

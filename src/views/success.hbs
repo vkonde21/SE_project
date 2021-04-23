@@ -1,0 +1,103 @@
+{{#section 'style'}}
+    .cover {
+      display: flex;
+      flex-direction: column;
+      height: 100%;
+    }
+    .content {
+      flex: 1 0 auto;
+    }
+    #contact {
+      flex-shrink: 0;
+    }
+    #mygif {
+      position: fixed;
+      right: 0;
+      bottom: 0;
+      min-width: 100%;
+      min-height: 100%;
+    }
+    {{/section}}
+  
+    
+  
+  <div class="cover">
+  <img src="/img/crops.gif" id="mygif" alt="...">
+  <div class="content">
+    <br>
+    <br>
+    <!-- form -->
+    <form method="POST" action="/users/login">
+      <section id="form-dom">
+        <div class="container" style="margin-bottom: 30px; opacity: 90%;">
+          <div class="row">
+            <div class="col-12">
+              <div class="col-12 col-md-8 col-lg-6 log-style">
+                <div id="form-main" style="text-align: center;">
+                    <p style="font-size: 20px; color: #016168">Your profile has been registered successfully!</p>
+                    <br>
+                    <p style="font-size: 20px; color: #016168">
+                    You will receive an email shortly mentioning the status of your profile(approved/ dissaproved). 
+                    You can login to the website any time after your profile has been verified and approved.</p>
+                </div>
+              </div>
+              <div class="col-6"></div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </form>
+    </div>
+      <footer id="contact" class="footer-area section-padding" style="opacity: 80%; color:white">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-6 col-8 wow fadeInUp" data-wow-delay="0.4s">
+                    <h3>QUICK LINKS</h3>
+                    <ul>
+                        <li><a href="/users/login">LOGIN</a></li>
+                        <li><a href="/users/register">REGISTER</a></li>
+                        <li><a href="/users/about">ABOUT ORGANIQUE</a></li>
+                        <li><a href="/users/help">HELP</a></li>
+                    </ul>
+                </div>
+                <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
+                    <h3>CONTACT US</h3>
+                    <p style="font-size:15px;">Reach out to us at :</p>
+                    <br>
+                    <ul>
+                        <li>&emsp;Email id&emsp;:&emsp;gandhias18.comp@coep.ac.in</li>
+                        <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;kondevp10.comp@coep.ac.in</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </footer>
+    
+    <!-- Go to Top Link -->
+    <a href="#" class="back-to-top">
+        <i class="lni-chevron-up"></i>
+    </a>
+    
+    <script>
+        function openForm() {
+            document.getElementById("myForm").style.display = "block";
+        }
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+    </script>
+    <script>
+        $(document).ready(function() {
+            $(".fancybox").fancybox({
+                openEffect: "none",
+                closeEffect: "none"
+            });
+            $(".zoom").hover(function() {
+                $(this).addClass('transition');
+            }, function() {
+                $(this).removeClass('transition');
+            });
+        });
+    </script>
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    </div>
