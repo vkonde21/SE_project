@@ -86,7 +86,7 @@
                 <a class="nav-link" href="dashboard">Dashboard</a>
               </li>
               <li class="nav-item active">
-                <a class="nav-link" href="viewfarmers">View Farmer's Profiles</a>
+                <a class="nav-link" href="viewfarmers">View Farmers' Profiles</a>
               </li>
               <li class="nav-item">
                 <a class="nav-link" href="updateprofile">Update Profile</a>
@@ -110,7 +110,7 @@
             <a class="page-scroll" href="dashboard">Dashboard</a>
           </li>
           <li>
-            <a class="page-scroll" href="viewfarmers">View Farmer's Profiles</a>
+            <a class="page-scroll" href="viewfarmers">View Farmers' Profiles</a>
           </li>
           <li>
             <a class="page-scroll" href="updateprofile">Update Profile</a>
@@ -140,8 +140,8 @@
     {{#if profiles}}
     {{#each profiles}}
     <div class="row">
-      <div class="col-lg-2"></div>
-      <div class="col-lg-4 col-12">
+      <div class="col-lg-1"></div>
+      <div class="col-lg-5 col-12">
         <div class="card" style="opacity: 90%; height: 300px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
             <h5 class="card-title">Name : {{this.1.fullname}}</h5>
@@ -157,17 +157,18 @@
             <p class="card-text">Area of land : {{this.1.land_area}} acres</p>
             <p class="card-text">Location : {{this.1.location}}</p>
             <div class="row">
-                <div class="col-lg-3 col-2"></div>
-                <div class="col-lg-6 col-8">
-                  <a href="/chat/{{this.1._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Chat</a>
+                <div class="col-lg-6 col-6">
+                  <a href="/chat/{{this.1._id}}" class="btn btn-common btn-nv-sty" style="width: 100%; margin: 2px 0px">Chat</a>
                 </div>
-                <div class="col-lg-3 col-2"></div>
-              </div>
+                <div class="col-lg-6 col-6">
+                  <a href="/viewfullprofile/{{this.1._id}}" class="btn btn-common btn-nv-sty" style="width: 100%; margin: 2px 0px">View full Profile</a>
+                </div>
+            </div>
           </div>
         </div>
       </div>
       {{#if this.3.fullname}}
-      <div class="col-lg-4 col-12">
+      <div class="col-lg-5 col-12">
         <div class="card" style="opacity: 90%; height: 300px; margin-bottom: 20px; text-align:center">
           <div class="card-body">
             <h5 class="card-title">Name : {{this.3.fullname}} </h5>
@@ -183,17 +184,18 @@
             <p class="card-text">Area of land : {{this.3.land_area}} acres</p>
             <p class="card-text">Location : {{this.3.location}}</p>
             <div class="row">
-                <div class="col-lg-3 col-2"></div>
-                <div class="col-lg-6 col-8">
-                  <a href="/chat/{{this.3._id}}" class="btn btn-common btn-nv-sty" style="width: 100%;">Chat</a>
+                <div class="col-lg-6 col-6">
+                  <a href="/chat/{{this.3._id}}" class="btn btn-common btn-nv-sty" style="width: 100%; margin: 2px 0px">Chat</a>
                 </div>
-                <div class="col-lg-3 col-2"></div>
-              </div>
+                <div class="col-lg-6 col-6">
+                  <a href="/viewfullprofile/{{this.3._id}}" class="btn btn-common btn-nv-sty" style="width: 100%; margin: 2px 0px">View full Profile</a>
+                </div>
+            </div>
           </div>
         </div>
       </div>
       {{/if}}
-      <div class="col-lg-2"></div>
+      <div class="col-lg-1"></div>
     </div>
     <br>
     {{/each}}
