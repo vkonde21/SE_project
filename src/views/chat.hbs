@@ -208,7 +208,7 @@ overflow-y: auto;
   <br><br><br>
   <div style="text-align: right; position: sticky; padding-right: 50px">
       <span style="background-color: #fff; font-size: 20px; color:#016168; padding: 4px; opacity: 80%;">Hello {{curr_user.username}}</span>
-    </div>
+  </div>
     <br>
     <div style="color: red; position:absolute">
   <h3>{{messageFailure}}</h3>
@@ -227,7 +227,19 @@ overflow-y: auto;
         <div class="col-12 col-md-12 col-lg-8 log-style" style="padding: 0px;">
           <div class="messaging">
             <div class="inbox_msg">
-              <p style="font-size: 25px; padding-left: 30px; padding-top: 7px; padding-bottom:7px; background-color: #302d42; color: white">{{other_user.username}}</p>
+              <div class="row" style=" background-color: #302d42; margin: 0px; padding: 5px">
+                <div class="col">
+                  <p style="padding-left: 25px; padding-top: 7px; padding-bottom:7px; color: white; font-size: 25px;">{{other_user.username}}</p>
+                </div>
+                <div class="col" style="text-align: right;">
+                  <a href="" class="btn btn-common btn-nv-sty" style="margin: 0px; padding: 8px; color:black; background:white">Block user</a>
+                </div>
+              </div>
+              {{!-- <p style="font-size: 25px; padding-left: 30px; padding-top: 7px; padding-bottom:7px; background-color: #302d42; color: white">{{other_user.username}}
+                <div style="text-align: right;">
+                  <a href="" class="btn btn-common btn-nv-sty">Block</a>
+                </div>
+              </p> --}}
               <div class="mesgs" style="background-color: white;">
                 <div class="msg_history" style="display: flex; flex-direction: column-reverse">
                   <div>

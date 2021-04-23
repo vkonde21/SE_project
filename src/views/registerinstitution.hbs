@@ -24,13 +24,6 @@
   <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
   <div class="content">
-    <div style="color: red; position:absolute">
-  <h3>{{messageFailure}}</h3>
-</div>
-
-<div style="color: green; position:absolute">
-  {{messageSuccess}}
-</div>
     <br><br>
     <section id="form-dom" class="services">
       <div class="container" style="margin-bottom: 30px; opacity:90%">
@@ -50,6 +43,12 @@
                 >
                   Register as a food-making institution
                 </h1>
+                <div style="color: red;">
+                  <p style="font-size: 15px; text-align: center">{{messageFailure}}</p>
+                </div>
+                <div style="color: green;">
+                  <p style="font-size: 15px; text-align: center">{{messageSuccess}}</p>
+                </div>
                 <div class="design">
                   <form id="register-form" method="POST" action="registerinstitution" enctype="multipart/form-data">
                     <h3></h3>
@@ -147,9 +146,8 @@
                         />
                       </div>
                     </div>
-                    <div class="row">
-                       <div class="col-lg-3 col-md-4 col-3"></div> 
-                       <div class="col">
+                    <div class="row"> 
+                       <div class="col" style="text-align: center;">
                       <button
                         type="submit"
                         href=""
@@ -162,16 +160,8 @@
                     </div>
 
                     <div class="row">
-                      <div class="col-md-3 col-1 col-lg-3"></div>
-                      <div class="col">
+                      <div class="col" style="text-align: center;">
                         <a href="login" style="font-size: 20px">Already registered? Login here!</a>
-                      </div>
-                    </div>
-
-                    <div class="row">
-                      <div class="col">
-                        <p class="error text-danger" align="center"></p>
-                        <p class="success text-success" align="center"></p>
                       </div>
                     </div>
                   </form>
@@ -184,30 +174,6 @@
       </div>
     </section>
     </div>
-      {{!-- <footer id="contact" class="footer-area section-padding" style="opacity: 80%; color:white">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-6 col-8 wow fadeInUp" data-wow-delay="0.4s">
-                    <h3>QUICK LINKS</h3>
-                    <ul>
-                        <li><a href="/users/login">LOGIN</a></li>
-                        <li><a href="/users/register">REGISTER</a></li>
-                        <li><a href="/users/about">ABOUT ORGANIQUE</a></li>
-                        <li><a href="/users/help">HELP</a></li>
-                    </ul>
-                </div>
-                <div class="col-lg-6 col-12 wow fadeInUp" data-wow-delay="0.4s">
-                    <h3>CONTACT US</h3>
-                    <p style="font-size:15px;">Reach out to us at :</p>
-                    <br>
-                    <ul>
-                        <li>&emsp;Email id&emsp;:&emsp;gandhias18.comp@coep.ac.in</li>
-                        <li>&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;kondevp10.comp@coep.ac.in</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-    </footer> --}}
     
     <!-- Go to Top Link -->
     <a href="#" class="back-to-top">
