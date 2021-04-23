@@ -5,7 +5,7 @@ const auth = async(req, res, next) => {
     try{
         const token = req.cookies.jwt ;
         const decoded = jwt.verify(token, "hello");
-        var user = await User.findOne({_id: decoded._id, "tokens.token":token});
+        var user = await User.findOne({_id: decoded._id, "tokens.token":token, is_verified:true});
         if(user == null || user == undefined){
             user = await Admin.findOne({_id: decoded._id, "tokens.token":token});
         }
@@ -17,7 +17,9 @@ const auth = async(req, res, next) => {
         next(); /* run route handler */
     }
     catch(e){
-        res.status(401).send({error: "You are not authenticated!!"});
+        //res.status(401).send({error: "You are not authenticated!!"});
+        req.flash('messageFailure', "You are not authenticated");
+        res.redirect('/');
     }
 }
 

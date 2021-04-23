@@ -14,15 +14,9 @@ let FileType = require('file-type');
 var ab2str = require('arraybuffer-to-string');
 
 const upload = multer({
-    limits: {
-        fileSize: 1000000
-    },
+    
     fileFilter(req, file, cb) {
-        
-            if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-                return cb(new Error('Please upload an image'))
-            }
-            cb(undefined, true)
+        cb(undefined, true); 
     }
 })
 router.route('/addcrops').get(auth, async(req,res) => {
@@ -36,14 +30,20 @@ router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) 
         const cropimage = req.file.buffer;
         const user_id = req.user._id;
         const {ext, mime} = await (FileType.fromBuffer(cropimage));
+        console.log(req.file);
+        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
+            throw new Error();
+        }
         const filetype = mime;
         const bString = ab2str(cropimage.buffer, 'base64');
         const crop = new Crop({cropname, user_id, dev_stage, cropimage, filetype, bString})
         await crop.save();
+        req.flash('messageSucess', "Crop details saved successfully");
         res.redirect('dashboard');
     }
     catch(e){
-        res.status(400).json('error: ' + e);
+        res.redirect('addcrops');
     }
     
 });
