@@ -24,14 +24,6 @@
         
   <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
-  <div class="content">
-      <div style="color: red; position:absolute">
-  <h3>{{messageFailure}}</h3>
-</div>
-
-<div style="color: green; position:absolute">
-  {{messageSuccess}}
-</div>
     <br><br>
     
     <section id="form-dom" class="services">
@@ -52,6 +44,12 @@
                 >
                   Register
                 </h1>
+                <div style="color: red;">
+                    <p style="font-size: 15px; text-align: center">{{messageFailure}}</p>
+                  </div>
+                  <div style="color: green;">
+                    <p style="font-size: 15px; text-align: center">{{messageSuccess}}</p>
+                  </div>
                 <div class="design">
                   <form id="register-form">
                     <h3></h3>

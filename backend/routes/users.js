@@ -708,7 +708,7 @@ router.route('/updateprofile').post(auth, async(req, res) => {
         res.redirect('dashboard');
     }
     catch(err){
-        req.flash('messageFailure', 'Profile Updation failed.Please enter correct email ID');
+        req.flash('messageFailure', 'Profile updation failed. Please enter correct email ID');
         res.redirect('dashboard');
     }
 });

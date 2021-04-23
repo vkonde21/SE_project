@@ -91,14 +91,6 @@
       </nav>
     </header>
 <br><br>
-
-<div style="color: red; position:absolute">
-  <h3>{{messageFailure}}</h3>
-</div>
-
-<div style="color: green; position:absolute">
-  {{messageSuccess}}
-</div>
   <div class="content">
     <br><br>
       <div style="text-align: right; position: sticky; padding-right: 50px">
@@ -119,6 +111,12 @@
                   ">
                     Update your profile
                   </h1>
+                  <div style="color: red;">
+                    <p style="font-size: 15px; text-align: center">{{messageFailure}}</p>
+                  </div>
+                  <div style="color: green;">
+                    <p style="font-size: 15px; text-align: center">{{messageSuccess}}</p>
+                  </div>
                   <div class="design">
                     <form id="register-form"  method="POST" action="updateprofile">
                       <h3></h3>

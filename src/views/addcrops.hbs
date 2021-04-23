@@ -90,14 +90,6 @@
       </nav>
     </header>
     <br><br><br>
-  <div class="content">
-    <div style="color: red; position:absolute">
-  <h3>{{messageFailure}}</h3>
-</div>
-
-<div style="color: green; position:absolute">
-  {{messageSuccess}}
-</div>
     <br>
     <div style="text-align: right; position: sticky; padding-right: 50px">
       <span style="background-color: #fff; font-size: 20px; color:#016168; padding: 10px; opacity: 80%;">Hello {{user.username}}</span>
@@ -121,6 +113,12 @@
                 >
                   Add new crop
                 </h1>
+                <div style="color: red;">
+                    <p style="font-size: 15px; text-align: center">{{messageFailure}}</p>
+                  </div>
+                  <div style="color: green;">
+                    <p style="font-size: 15px; text-align: center">{{messageSuccess}}</p>
+                  </div>
                 <div class="design">
                   <form id="addcrop-form" action="/users/addcrops" method="POST" enctype="multipart/form-data">
                     <h3></h3>

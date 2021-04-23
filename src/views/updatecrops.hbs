@@ -111,6 +111,12 @@
                 >
                   Update crop details
                 </h1>
+                <div style="color: red;">
+                  <p style="font-size: 15px; text-align: center"> <span style="background-color: white; padding: 5px;">{{messageFailure}}</span> </p>
+                </div>
+                <div style="color: green;">
+                  <p style="font-size: 15px; text-align: center"> <span style="background-color: white; padding: 5px;">{{messageSuccess}}</span> </p>
+                </div>
                 <div class="design">
                   <form id="updatecrop-form" action="/users/updatecrops/{{crop._id}}" method="POST" enctype="multipart/form-data">
                     <h3></h3>
