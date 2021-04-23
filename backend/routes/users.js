@@ -18,9 +18,7 @@ var ab2str = require('arraybuffer-to-string');
 
 /* to avoid saving the file on the local file system remove the dest parameter from multer*/
 const upload = multer({
-    limits: {
-        fileSize: 1000000
-    },
+    
     fileFilter(req, file, cb) {
         cb(undefined, true); 
     }
@@ -88,10 +86,10 @@ router.route('/registerfarmer').post(upload.fields([{
         const bString1 = ab2str(land_doc.buffer, 'base64');
         const bString2 = ab2str(certificate.buffer, 'base64');
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
-        newUser.save();
+        await newUser.save();
         const user_id = newUser._id;
         const farmer = new Farmer({ _id: user_id, fullname, deals, orders, buyer_req, investor_req, rating, land_area, location, land_doc:bString1, certificate:bString2,land_doc_type:filetype1, certificate_type:filetype2 });
-        farmer.save();
+        await farmer.save();
         res.redirect("success");
     }
     catch (err) {
@@ -423,9 +421,8 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
     }
     catch(err){
         if(err.code == 11000)
-        req.flash('messageFailure', "Username or email ID already exists");
+            req.flash('messageFailure', "Username or email ID already exists");
         res.redirect('/users/registerbuyer');
-
     }
 });
 
@@ -472,7 +469,8 @@ router.route('/logout').get(auth, async (req, res) => {
         res.redirect("/");
     }
     catch (e) {
-        res.status(500).send({ error: "Logout failed!" });
+        req.flash('messageFailure', "Logout failed");
+        res.redirect("/");
     }
 
 });
@@ -484,61 +482,77 @@ router.route('/logoutall').get(auth, async (req, res) => {
         res.redirect("/");
     }
     catch (e) {
-        res.status(500).send({ error: "Logout failed!" });
+        req.flash('messageFailure', "Logout failed");
+        res.redirect("/");
     }
 
 });
 
 router.route('/dashboard').get(auth, async(req,res) => {
-    if(req.user.type == "farmer"){
-        /*get all the crop names, deals etc and send it in the json format*/
-        const Cp = await Crop.find({user_id:req.user._id});
-        const farmer = await Farmer.findById(req.user._id);
-        var Crops = [];
-        var i;
-        for(i=0; i<Cp.length;i+=2){
-            if(Cp[i+1] != undefined)
-                Crops.push({1:Cp[i], 2:Cp[i+1]});
-            else
-                Crops.push({1:Cp[i]});
+    try{
+        if(req.user.type == "farmer"){
+            /*get all the crop names, deals etc and send it in the json format*/
+            const Cp = await Crop.find({user_id:req.user._id});
+            const farmer = await Farmer.findById(req.user._id);
+            var Crops = [];
+            var i;
+            for(i=0; i<Cp.length;i+=2){
+                if(Cp[i+1] != undefined)
+                    Crops.push({1:Cp[i], 2:Cp[i+1]});
+                else
+                    Crops.push({1:Cp[i]});
+            }
+            if(Crops[0]!= undefined){
+                res.render('farmer_dashboard', {Crops: Crops,farmer, user:req.user});
+            }
+                
+            else{
+                res.render('farmer_dashboard', {farmer, user:req.user});
+            }
         }
-        if(Crops[0]!= undefined){
-            res.render('farmer_dashboard', {Crops: Crops,farmer, user:req.user});
+
+        else if(req.user.type == "investor"){
+            const investor = await Investor.findById(req.user._id);
+            res.render('investor_dashboard', {investor, user:req.user});
         }
-            
+    
+        else if(req.user.type == "institution"){
+            const institution = await Institution.findById(req.user._id);
+            res.render('institution_dashboard', {institution, user:req.user});
+        }
+    
+        else if(req.user.type == "buyer"){
+            const buyer = await Buyer.findById(req.user._id);
+            res.render('buyer_dashboard', {buyer, user:req.user});
+        }
         else{
-            res.render('farmer_dashboard', {farmer, user:req.user});
+            throw new Error();
         }
     }
-
-    else if(req.user.type == "investor"){
-        const investor = await Investor.findById(req.user._id);
-        res.render('investor_dashboard', {investor, user:req.user});
+    catch(e){
+        req.flash('messageFailure', "User dashboard not available");
+        res.redirect("/");
     }
-
-    else if(req.user.type == "institution"){
-        const institution = await Institution.findById(req.user._id);
-        res.render('institution_dashboard', {institution, user:req.user});
-    }
-
-    else if(req.user.type == "buyer"){
-        const buyer = await Buyer.findById(req.user._id);
-        res.render('buyer_dashboard', {buyer, user:req.user});
-    }
-
 });
 router.route('/deal_lock').post(auth, async(req,res) => {
-    const farmer_user = req.body.farmerusername;
-    const farmer = await User.findOne({username:farmer_user});
-    if(farmer.length == 0){
-        res.status(400).send();
+    try{
+        const farmer_user = req.body.farmerusername;
+        const farmer = await User.findOne({username:farmer_user});
+        if(farmer.length == 0){
+            req.flash('messageFailure', "Farmer with this username does not exist");
+            throw new Error();
+        }
+        const farmer_id = farmer._id;
+        const other_username = req.user.username;
+        const farmer_locked = false;
+        const newdeal = new Deal({farmer_id, other_username, farmer_locked});
+        await newdeal.save();
+        req.flash('messageSuccess', 'Deal request sent successfully');
+        res.redirect("dashboard");
     }
-    const farmer_id = farmer._id;
-    const other_username = req.user.username;
-    const farmer_locked = false;
-    const newdeal = new Deal({farmer_id, other_username, farmer_locked});
-    newdeal.save();
-    res.redirect("dashboard");
+    catch(e){
+        res.redirect("dashboard");
+    }
 
 });
 
@@ -548,17 +562,22 @@ router.route('/crop_requirements').post(auth, async(req, res) => {
         if(req.user.type == "buyer"){
             const buyer = await Buyer.findById(req.user._id);
             buyer.requirements = req.body.croprequirements;
-            buyer.save();
+            await buyer.save();
         }
         else if(req.user.type == "institution"){
             const institution = await Institution.findById(req.user._id);
             institution.requirements = req.body.croprequirements;
-            institution.save();
+            await institution.save();
         }
+        else{
+            req.flash('messageFailure', 'Crop requirements can be updated only by buyers and institutions')
+        }
+        req.flash('messageSuccess', 'Crop requirements updated successfully');
         res.redirect('dashboard');
     }
     catch(err){
-        res.status(400).json('error: ' + err);
+        req.flash('messageFailure', 'Error occured while updating crop requirememts');
+        res.redirect('dashboard');
     }
 });
 
@@ -588,7 +607,8 @@ router.route('/updateprofile').get(auth, async(req, res) => {
         }
     }
     catch(err){
-        res.status(400).json('error: ' + err);
+        req.flash('messageFailure', 'Profile cannot be updated');
+        res.redirect('dashboard');
     }
 });
 
@@ -605,8 +625,8 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             investor.start = start;
             investor.end = end;
             user.email = email;
-            investor.save();
-            user.save();
+            await user.save();
+            await investor.save();
         }
     
         else if(req.user.type == "institution"){
@@ -620,8 +640,8 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             institution.start = start;
             institution.end = end;
             user.email = email;
-            institution.save();
-            user.save();
+            await user.save();
+            await institution.save();
         }
     
         else if(req.user.type == "buyer"){
@@ -633,8 +653,8 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             buyer.fullname = fullname;
             buyer.requirements = requirements;
             user.email = email;
-            buyer.save();
-            user.save();
+            await user.save();
+            await buyer.save();
         }
 
         else if(req.user.type == "farmer"){
@@ -662,16 +682,18 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             farmer.investor_req = investor_req;
             farmer.land_area = land_area;
             user.email = email
-            farmer.save();
-            user.save();
+            await user.save();
+            await farmer.save();
         }
         else{
             throw new Error();
         }
+        req.flash('messageSuccess', 'Profile updated successfully');
         res.redirect('dashboard');
     }
     catch(err){
-        res.status(400).json('error: ' + err);
+        req.flash('messageFailure', 'Profile Updation failed.Please enter correct email ID');
+        res.redirect('dashboard');
     }
 });
 module.exports = router;

@@ -125,13 +125,13 @@
                       <div class="row">
                           
                         <div class="col">
-                          <h3>Full Name</h3><input type="text" class="form-control" placeholder="Full Name" name="registername" value="{{buyer.fullname}}" />
+                          <h3>Full Name</h3><input type="text" class="form-control" placeholder="Full Name" name="registername" value="{{buyer.fullname}}" required/>
                         </div>
                       </div>
                       
                       <div class="row">
                         <div class="col">
-                          <h3>Email</h3><input type="email" class="form-control" placeholder="Email Id" name="email" value="{{user.email}}" />
+                          <h3>Email</h3><input type="email" class="form-control" placeholder="Email Id" name="email" value="{{user.email}}" required/>
                         </div>
                       </div>
                       
@@ -141,7 +141,7 @@
                             <h3>Requirements</h3>
                           <input type="text" class="form-control"
                             placeholder="Requirements(specify the names of crops you would usually prefer to buy)"
-                            name="requirements" value="{{buyer.requirements}}"/>
+                            name="requirements" value="{{buyer.requirements}}" required/>
                         </div>
                       </div>                    
                       <div class="row">
