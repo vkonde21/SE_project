@@ -7,21 +7,24 @@ var ab2str = require('arraybuffer-to-string');
 const User = require('../models/user.model');
 const Order = require('../models/order.model');
 const Rating = require('../models/rating.model');
+const { Error } = require('mongoose');
 router.route('/order_lock').post(auth, async(req,res) => {
     try{
         const farmer_user = req.body.farmerusername;
         const farmer = await User.findOne({username:farmer_user});
         if(farmer == null){
-            res.status(400).send();
+            req.flash('messageFailure', 'Farmer with this username does not exist');
+            throw new Error();
         }
         const farmer_id = farmer._id;
         const buyer_username = req.user.username;
         const newo = new Order({farmer_id, buyer_username});
-        newo.save();
+        await newo.save();
+        req.flash('messageSuccess', 'Order request sent successfully');
         res.redirect('dashboard');
     }
     catch(e){
-        res.status(400).json('error: ' + e);
+        res.redirect('dashboard');
     }
     
 });
@@ -40,7 +43,8 @@ router.route('/buyer_orders').get(auth, async(req,res) => {
             res.render('buyer_orders', {rating, user:req.user});
         
     } catch(e){
-        res.status(400).json('error: ' + e);
+        req.flash('messageFailure', 'Failed to fetch orders');
+        res.redirect('dashboard');
     }
 });
 
@@ -52,15 +56,17 @@ router.route('/save_rating/:id').post(auth, async(req,res) => {
         const farmer = await Farmer.findById(user._id);
         rating.rating = r;
         rating.given = true;
-        rating.save();
+        await rating.save();
         if(farmer.rating != 0)
             farmer.rating = (farmer.rating + r)/2.0;
         else
             farmer.rating = r;
-        farmer.save();
+        await farmer.save();
+        req.flash('messageSuccess', 'Rating saved successfully');
         res.redirect('/users/buyer_orders');
     }catch(e){
-        res.status(400).json('error: ' + e);
+        req.flash('messageSuccess', 'Rating could not be saved');
+        res.redirect('/users/buyer_orders');
     }
 });
 

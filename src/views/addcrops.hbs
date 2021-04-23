@@ -23,13 +23,7 @@
   <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
   <div class="container" style="margin-bottom: 30px; opacity: 90%;">
-          <div style="color: red; position:absolute">
-  <h3>{{messageFailure}}</h3>
-</div>
-
-<div style="color: green; position:absolute">
-  {{messageSuccess}}
-</div>
+          
   <header id="header-wrap">
       <!-- Navbar Start -->
       <nav
@@ -97,6 +91,13 @@
     </header>
     <br><br><br>
   <div class="content">
+    <div style="color: red; position:absolute">
+  <h3>{{messageFailure}}</h3>
+</div>
+
+<div style="color: green; position:absolute">
+  {{messageSuccess}}
+</div>
     <br>
     <div style="text-align: right; position: sticky; padding-right: 50px">
       <span style="background-color: #fff; font-size: 20px; color:#016168; padding: 10px; opacity: 80%;">Hello {{user.username}}</span>
@@ -130,6 +131,7 @@
                           class="form-control"
                           placeholder="Name of the crop"
                           name="cropname"
+                          required
                         />
                       </div>
                     </div>
@@ -140,6 +142,7 @@
                           class="form-control"
                           placeholder="Stage of growth of the crop"
                           name="dev_stage"
+                          required
                         />
                       </div>
                     </div>
@@ -152,6 +155,7 @@
                           placeholder="Image of the crop"
                           name="cropimage"
                           id="cropimage"
+                          required
                         />
                       </div>
                     </div>

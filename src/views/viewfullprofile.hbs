@@ -112,30 +112,29 @@
           <div class="row">
             <div class="col-12">
               <div class="col-12 col-md-12 col-lg-8 log-style">
-                <p style="font-size: 25px;">Name : Bhima</p>
+                <p style="font-size: 25px;">Name : {{farmer.fullname}}</p>
                 <br>
-                <p style="font-size: 20px;">Number of deals : 2</p>
+                <p style="font-size: 20px;">Number of deals : {{farmer.deals}}</p>
                 <br>
-                <p style="font-size: 20px;">Number of orders : 1</p>
+                <p style="font-size: 20px;">Number of orders : {{farmer.orders}}</p>
                 <br>
-                <p style="font-size: 20px;">Ratings : 4
+                <p style="font-size: 20px;">Ratings : {{farmer.rating}}
                     <div class="stars-outer" id="stars-outer{{this.1._id}}">
                         <div class="stars-inner" id="stars-inner{{this.1._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.1.rating}}">
                         </div>
                     </div>
                 </p>
                 <br>
-                <p style="font-size: 20px;">Land area : 10 acres</p>
+                <p style="font-size: 20px;">Land area : {{farmer.land_area}} acres</p>
                 <br>
-                <p style="font-size: 20px;">Location : Pune</p>
+                <p style="font-size: 20px;">Location : {{farmer.location}}</p>
                 <br>
-                <p style="font-size: 20px;">Crop : Potato</p>
+                {{#each crops}}
+                <p style="font-size: 20px;">Crop : {{cropname}}</p>
                 <br>
-                <img src="/img/sample.jpg" style="width: 100%;" />
+                <img src="data:{{this.filetype}};base64,{{this.bString}}" style="width: 100%;" />
                 <br><br>
-                <p style="font-size: 20px;">Crop : Tomato</p>
-                <br>
-                <img src="/img/sample.jpg" style="width: 100%;"/>
+                {{/each}}
               </div>
             </div>
           </div>

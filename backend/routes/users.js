@@ -28,8 +28,24 @@ const upload = multer({
 router.route('/me').get(auth, (req, res) => {
     res.send(req.user);
 });
-
+router.route('/viewfullprofile/:id').get(auth, async (req, res) => {
+    try{
+        const user = req.user;
+        const farmer = await Farmer.findById(req.params.id);
+        
+        if(farmer == null){
+            req.flash('messageFailure', "No such farmer");
+            throw new Error();
+        }
+        const crops = await Crop.find({user_id:farmer._id});
+        res.render('viewfullprofile', {farmer, user, crops});
+    }
+    catch(e){
+        res.redirect('viewfarmers');
+    }
+});
 router.get('/register', (req, res) => res.render('register'));
+
 router.route('/registerfarmer').get((req, res) => {
     res.render('registerfarmer');
 });
@@ -71,11 +87,11 @@ router.route('/registerfarmer').post(upload.fields([{
         const orders = 0;
         const land_doc = req.files["landpaper"][0].buffer;
         const certificate = req.files["certificate"][0].buffer;
-        if (!req.files["landpaper"][0].originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!req.files["landpaper"][0].originalname.match(/\.(jpg|jpeg|png)$/) || !req.files["landpaper"][0].size > 1000000) {
             req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
             throw new Error();
         }
-        if (!req.files["certificate"][0].originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!req.files["certificate"][0].originalname.match(/\.(jpg|jpeg|png)$/) || !req.files["certificate"][0].size > 1000000) {
             req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
             throw new Error();
         }
@@ -364,7 +380,7 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const start = req.body.startingrange;
         const end = req.body.endingrange;
         const business_proof = req.file.buffer;
-        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || !req.file.size > 1000000) {
             req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
             throw new Error();
         }
@@ -405,7 +421,7 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         const is_verified = false;
         const orders = 0;
         const pan_card = req.file.buffer;
-        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || !req.file.size > 1000000) {
             req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
             throw new Error();
         }
@@ -538,7 +554,7 @@ router.route('/deal_lock').post(auth, async(req,res) => {
     try{
         const farmer_user = req.body.farmerusername;
         const farmer = await User.findOne({username:farmer_user});
-        if(farmer.length == 0){
+        if(farmer == null || farmer.length == 0){
             req.flash('messageFailure', "Farmer with this username does not exist");
             throw new Error();
         }

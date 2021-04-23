@@ -31,7 +31,7 @@ router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) 
         const user_id = req.user._id;
         const {ext, mime} = await (FileType.fromBuffer(cropimage));
         console.log(req.file);
-        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || req.file.size > 1000000) {
             req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
             throw new Error();
         }
@@ -39,7 +39,7 @@ router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) 
         const bString = ab2str(cropimage.buffer, 'base64');
         const crop = new Crop({cropname, user_id, dev_stage, cropimage, filetype, bString})
         await crop.save();
-        req.flash('messageSucess', "Crop details saved successfully");
+        req.flash('messageSuccess', "Crop details saved successfully");
         res.redirect('dashboard');
     }
     catch(e){
@@ -54,14 +54,13 @@ router.route('/updatecrops/:id').get(auth, async(req, res) => {
         const crop = await Crop.findById(id);
         
         if(crop.user_id.equals(req.user._id)){
-            res.render('updatecrops', {crop, user:req.user});
-            
+            res.render('updatecrops', {crop, user:req.user});  
         }
         else
             throw new Error();
         
     }catch(e){
-        res.status(400).json('error: ' + e);
+        req.flash('messageSuccess', "Crop details cannot be updated");
     } 
 });
 
@@ -73,6 +72,10 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req
             const cropname = req.body.cropname;
             const dev_stage = req.body.dev_stage;
             const cropimage = req.file.buffer;
+            if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || req.file.size > 1000000) {
+                req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
+                throw new Error();
+            }
             const {ext, mime} = await (FileType.fromBuffer(cropimage));
             const filetype = mime;
             const bString = ab2str(cropimage, 'base64');
@@ -82,6 +85,7 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req
             crop.dev_stage = dev_stage;
             crop.cropimage = cropimage;
             await crop.save();
+            req.flash('messageSuccess', "Crop details updated successfully");
             res.redirect('/users/dashboard');
         }
         else{
@@ -89,7 +93,8 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req
         }
         
     }catch(e){
-        res.status(400).json('error: ' + e);
+        req.flash('messageFailure', "Error occurred.Crop details updation failed!!");
+        res.redirect('/users/dashboard');
     } 
 });
 
@@ -102,10 +107,11 @@ router.route('/deletecrops/:id').get(auth,async(req, res) => {
             res.redirect('/users/dashboard');
         }
         else{
+            req.flash('messageFailure', "Cannot delete this crop");
             throw new Error();
         }
     }catch(e){
-        res.status(400).json('error: ' + e);
+        res.redirect('/users/dashboard');
     }
 });
 router.route('/notifications').get(auth, async (req, res) => {
@@ -143,10 +149,10 @@ router.route('/deal_decision').post(auth, async(req, res) => {
             const deal = await Deal.findById(deal_id);
             deal.notified = true;
             deal.farmer_locked = true;
-            deal.save();
+            await deal.save();
             const farmer = await Farmer.findOne({_id:req.user._id});
             farmer.deals += 1;
-            farmer.save();
+            await farmer.save();
             o = await User.findOne({username:deal.other_username});
             if(o.type == "investor"){
                 other = await Investor.findOne({_id:o._id});
@@ -155,8 +161,8 @@ router.route('/deal_decision').post(auth, async(req, res) => {
                 other = await Institution.findOne({_id:o._id});
             }
             other.deals += 1;
-            other.save();
-
+            await other.save();
+            req.flash('messageSuccess', "Deal locked successfully");
         }
         else if(req.body.accept == undefined){
             if(req.body.dealid1 != undefined){
@@ -167,12 +173,15 @@ router.route('/deal_decision').post(auth, async(req, res) => {
             }
             const deal = await Deal.findById(deal_id);
             deal.notified = true;
-            deal.save();
+            await deal.save();
+            req.flash('messageSuccess', "Deal rejected");
         }
+        
         res.redirect('notifications');
     }
     catch(e){
-        res.status(400).json('error: ' + e);
+        req.flash('messageError', "Deal locking failed");
+        res.redirect('notifications');
     }
     
 });
@@ -191,19 +200,20 @@ router.route('/order_decision').post(auth, async(req, res) => {
             const order = await Order.findById(order_id);
             order.notified = true;
             order.farmer_locked = true;
-            order.save();
+            await order.save();
             const farmer = await Farmer.findOne({_id:req.user._id});
             farmer.orders += 1;
-            farmer.save();
+            await farmer.save();
             o = await User.findOne({username:order.buyer_username}); 
             other = await Buyer.findOne({_id:o._id});
             other.orders += 1;
-            other.save();
+            await other.save();
             const r = await Rating.findOne({farmer_username:req.user.username, buyer_id: other._id});
             if(r == null){
                 const rating = new Rating({farmer_username:req.user.username, buyer_id:other._id});
-                rating.save();
+                await rating.save();
             }
+            req.flash('messageSuccess', "Order accepted!!");
         }
         else if(req.body.accept == undefined){
             if(req.body.orderid1 != undefined){
@@ -214,12 +224,14 @@ router.route('/order_decision').post(auth, async(req, res) => {
             }
             const order = await Order.findById(order_id);
             order.notified = true;
-            order.save();
+            await order.save();
+            req.flash('messageSuccess', "Order rejected!!");
         }
         res.redirect('notifications');
     }
     catch(e){
-        res.status(400).json('error: ' + e);
+        req.flash('messageError', "Order confirmation failed");
+        res.redirect('dashboard')
     }
     
 });

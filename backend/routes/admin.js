@@ -23,7 +23,8 @@ router.route('/logout').get(auth, async (req, res) => {
       res.redirect("/");
   }
   catch (e) {
-      res.status(500).send({ error: "Logout failed!" });
+    req.flash('messageFailure', "Logout failed");
+    res.redirect("/");
   }
 
 });
@@ -55,23 +56,29 @@ router.route('/verify_profile/:id').get(async (req, res) => {
 
 router.route('/accept/:id').get(auth, async (req,res) => {
   var user = await User.findOne({_id:req.params.id});
-  console.log(user.email);
   var mailOptions = {
     from: 'organiquefarm@gmail.com',
     to: user.email,
     subject: 'Profile verification',
     text: 'Your profile has been verified. Head over to the website to login and complete/ update your profile and avail the benefits of our portal.'
   };
-  
-  transporter.sendMail(mailOptions, function(error, info){
-    if (error) {
-      console.log(error);
-    } else {
-      console.log('Email sent: ' + info.response);
-    }
-  });
-  user.is_verified = true;
-  await user.save();
+  try{
+    transporter.sendMail(mailOptions, function(error, info){
+    
+      if (error) {
+        console.log(error);
+        throw new Error(error);
+      } else {
+        console.log('Email sent: ' + info.response);
+      }
+    });
+    user.is_verified = true;
+    await user.save();
+    req.flash('messageSuccess', 'Profile verified successfully and email sent!');
+  }
+  catch(e){
+    req.flash('messageFailure', 'Error in profile verification!');
+  }
   res.redirect('/admin/dashboard');
 });
 
@@ -83,10 +90,11 @@ router.route('/reject/:id').get(auth, async (req,res) => {
     subject: 'Profile verification',
     text: 'Your profile verification was not successful. Please register again with correct documents.'
   };
-
+try{
   transporter.sendMail(mailOptions, function(error, info){
     if (error) {
       console.log(error);
+      throw new Error(error);
     } else {
       console.log('Email sent: ' + info.response);
     }
@@ -104,6 +112,11 @@ router.route('/reject/:id').get(auth, async (req,res) => {
     await Institution.deleteOne({_id:req.params.id});
   }
   await User.deleteOne({_id:req.params.id});
+  req.flash('messageSuccess', 'Profile rejected !' );
+}
+  catch(e){
+    req.flash('messageFailure', 'Error in Profile verification !' );
+  }
   
   res.redirect('/admin/dashboard');
 });
