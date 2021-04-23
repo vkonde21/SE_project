@@ -24,6 +24,13 @@
   <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
   <div class="content">
+    <div style="color: red; position:absolute">
+  <h3>{{messageFailure}}</h3>
+</div>
+
+<div style="color: green; position:absolute">
+  {{messageSuccess}}
+</div>
     <br><br>
     <section id="form-dom" class="services">
       <div class="container" style="margin-bottom: 30px; opacity:90%">
@@ -122,6 +129,7 @@
                           class="form-control"
                           placeholder="Starting amount(in INR)"
                           name="startingrange"
+                          required
                         />
                       </div>
                     </div>
@@ -132,6 +140,7 @@
                           class="form-control"
                           placeholder="Ending amount(in INR)"
                           name="endingrange"
+                          required
                         />
                       </div>
                     </div>
@@ -144,6 +153,7 @@
                           placeholder="Land ownership proof"
                           name="incomestatement"
                           id="incomestatement"
+                          required
                         />
                       </div>
                     </div>

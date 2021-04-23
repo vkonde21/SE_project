@@ -24,6 +24,13 @@
 <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
   <div class="content">
+    <div style="color: red; position:absolute">
+  <h3>{{messageFailure}}</h3>
+</div>
+
+<div style="color: green; position:absolute">
+  {{messageSuccess}}
+</div>
     <br><br>
     
       <section id="form-dom" class="services">
@@ -50,40 +57,40 @@
                       </div>
                       <div class="row">
                         <div class="col">
-                          <input type="text" class="form-control" placeholder="Username" name="username" />
+                          <input type="text" class="form-control" placeholder="Username" name="username" required/>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">
-                          <input type="email" class="form-control" placeholder="Email Id" name="email" />
+                          <input type="email" class="form-control" placeholder="Email Id" name="email"required/>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">
-                          <input type="Password" class="form-control" placeholder="Password" name="password" />
+                          <input type="Password" class="form-control" placeholder="Password" name="password" required/>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">
-                          <input type="Password" class="form-control" placeholder="Confirm Password" name="password2" />
+                          <input type="Password" class="form-control" placeholder="Confirm Password" name="password2" required/>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">
-                          <input type="text" class="form-control" placeholder="Pan number" name="pannumber" />
+                          <input type="text" class="form-control" placeholder="Pan number" name="pannumber" required/>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">
                           <input type="text" class="form-control"
                             placeholder="Requirements(specify the names of crops you would usually prefer to buy)"
-                            name="requirements" />
+                            name="requirements" required/>
                         </div>
                       </div>
                       <div class="row">
                         <div class="col">
                           <label for="pancard">Upload image of Pan Card:</label>
-                          <input type="file" class="form-control" placeholder="Pancard" name="pancard" id="pancard" />
+                          <input type="file" class="form-control" placeholder="Pancard" name="pancard" id="pancard" required/>
                         </div>
                       </div>
                       <div class="row">

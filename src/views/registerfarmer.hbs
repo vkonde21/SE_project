@@ -24,6 +24,13 @@
   <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
   <div class="content">
+    <div style="color: red; position:absolute">
+  <h3>{{messageFailure}}</h3>
+</div>
+
+<div style="color: green; position:absolute">
+  {{messageSuccess}}
+</div>
     <br><br>
     <section id="form-dom" class="services">
       <div class="container" style="margin-bottom: 30px; opacity:90%">
@@ -53,6 +60,7 @@
                           class="form-control"
                           placeholder="Full Name"
                           name="registername"
+                          required
                         />
                       </div>
                     </div>
@@ -63,6 +71,7 @@
                           class="form-control"
                           placeholder="Username"
                           name="username"
+                          required
                         />
                       </div>
                     </div>
@@ -73,6 +82,7 @@
                           class="form-control"
                           placeholder="Email Id"
                           name="email"
+                          required
                         />
                       </div>
                     </div>
@@ -83,6 +93,7 @@
                           class="form-control"
                           placeholder="Password"
                           name="password"
+                          required
                         />
                       </div>
                     </div>
@@ -93,6 +104,7 @@
                           class="form-control"
                           placeholder="Confirm Password"
                           name="password2"
+                          required
                         />
                       </div>
                     </div>
@@ -129,6 +141,7 @@
                           class="form-control"
                           placeholder="Area of land(in acres)"
                           name="landarea"
+                          required
                         />
                       </div>
                     </div>
@@ -139,6 +152,7 @@
                           class="form-control"
                           placeholder="Location"
                           name="location"
+                          required
                         />
                       </div>
                     </div>
@@ -151,6 +165,7 @@
                           placeholder="Land ownership proof"
                           name="landpaper"
                           id="landpaper"
+                          required
                         />
                       </div>
                     </div>
@@ -164,6 +179,7 @@
                           placeholder="Orgaanic farm certificate"
                           name="certificate"
                           id="certificate"
+                          required
                         />
                       </div>
                     </div>

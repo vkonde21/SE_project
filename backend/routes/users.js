@@ -22,11 +22,7 @@ const upload = multer({
         fileSize: 1000000
     },
     fileFilter(req, file, cb) {
-        
-            if (!file.originalname.match(/\.(jpg|jpeg|png)$/)) {
-                return cb(new Error('Please upload an image'))
-            }
-            cb(undefined, true)
+        cb(undefined, true); 
     }
 })
 
@@ -77,6 +73,14 @@ router.route('/registerfarmer').post(upload.fields([{
         const orders = 0;
         const land_doc = req.files["landpaper"][0].buffer;
         const certificate = req.files["certificate"][0].buffer;
+        if (!req.files["landpaper"][0].originalname.match(/\.(jpg|jpeg|png)$/)) {
+            req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
+            throw new Error();
+        }
+        if (!req.files["certificate"][0].originalname.match(/\.(jpg|jpeg|png)$/)) {
+            req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
+            throw new Error();
+        }
         var f = await (FileType.fromBuffer(land_doc));
         const filetype1 = f.mime;
         f = await (FileType.fromBuffer(certificate));
@@ -91,7 +95,9 @@ router.route('/registerfarmer').post(upload.fields([{
         res.redirect("success");
     }
     catch (err) {
-        res.status(400).json('error: ' + err);
+        if(err.code == 11000)
+        req.flash('messageFailure', "Username or email ID already exists");
+        res.redirect('/users/registerfarmer');
     }
 
 
@@ -326,19 +332,25 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         const is_verified = false;
         const deals = 0;
         const income_statement = req.file.buffer;
+        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
+            throw new Error();
+        }
         const {ext, mime} = await (FileType.fromBuffer(income_statement));
         const filetype = mime;
         const bString = ab2str(income_statement.buffer, 'base64');
         const profit_share = 0;
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
-        newUser.save();
+        await newUser.save();
         const user_id = newUser._id;
         const investor = new Investor({ _id: user_id, fullname, deals,  income_statement:bString, income_statement_type:filetype,start, end, pan_number, profit_share});
-        investor.save();
+        await investor.save();
         res.redirect("success");
     }
     catch(err){
-        res.status(400).json('error: ' + err);
+        if(err.code == 11000)
+            req.flash('messageFailure', "Username or email ID already exists");
+        res.redirect('/users/registerinvestor');
     }
 });
 router.route('/registerinstitution').get((req, res) => {
@@ -354,6 +366,10 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const start = req.body.startingrange;
         const end = req.body.endingrange;
         const business_proof = req.file.buffer;
+        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
+            throw new Error();
+        }
         const type = "institution";
         const is_verified = false;
         const deals = 0;
@@ -361,14 +377,17 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const filetype = mime;
         const bString = ab2str(business_proof.buffer, 'base64');
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
-        newUser.save();
+        await newUser.save();
         const user_id = newUser._id;
         const institution = new Institution({ _id: user_id, fullname, deals, business_proof:bString, business_proof_type:filetype,start, end});
-        institution.save();
+        await institution.save();
         res.redirect("success");
     }
     catch(err){
-        res.status(400).json('error: ' + err);
+        console.log(err.message, err.code);
+        if(err.code == 11000)
+            req.flash('messageFailure', "Username or email ID already exists");
+        res.redirect('/users/registerinstitution');
     }
 });
 router.route('/registerbuyer').get((req, res) => {
@@ -388,18 +407,25 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         const is_verified = false;
         const orders = 0;
         const pan_card = req.file.buffer;
+        if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/)) {
+            req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
+            throw new Error();
+        }
         const {ext, mime} = await (FileType.fromBuffer(pan_card));
         const filetype = mime;
         const bString = ab2str(pan_card.buffer, 'base64');
         const newUser = new User({ username, password: hashedPassword, email, type, is_verified });
-        newUser.save();
+        await newUser.save();
         const user_id = newUser._id;
         const buyer = new Buyer({_id:user_id, fullname, pan_number, orders, pan_card:bString, pan_card_type:filetype, requirements });
-        buyer.save();
+        await buyer.save();
         res.redirect("success");
     }
     catch(err){
-        res.status(400).json('error: ' + err);
+        if(err.code == 11000)
+        req.flash('messageFailure', "Username or email ID already exists");
+        res.redirect('/users/registerbuyer');
+
     }
 });
 
@@ -424,18 +450,15 @@ router.route('/login').post(async (req, res) => {
             res.redirect('/admin/dashboard');
         }
         else if(user != null && user.is_verified == false){
-            req.flash('messageFailure', "Your account is not verified yet")
+            req.flash('messageFailure', "Your account is not verified yet");
             throw new Error();
         }
         else{
-            req.flash('messageFailure', "Account does not exist")
+            req.flash('messageFailure', "Account does not exist");
             throw new Error();
-        }
-        
+        }    
     }
     catch (e) {
-        
-        
         res.redirect('/');
     }
 });
