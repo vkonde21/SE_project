@@ -43,6 +43,23 @@
                     style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
                     Log In
                   </h1>
+                  <script>
+                    $(document).ready ( function(){
+                      var url = window.location.search;
+                      var queryStr = url.split("?")[1];
+
+                      if(queryStr) {
+                          let hash = queryStr.split('&);
+                          for (var i = 0; i < hash.length; i++) {
+                              params=hash[i].split("=");
+                              if(params[0] == 'error' && params[1] == 'user_not_found') {
+                                  document.getElementById("errormessage").innerHTML = "Invalid login credentials";
+                              }
+                          }
+                      }
+                    });​
+                  </script>
+                  <p id="errormessage" style="color: red; font-size: 15px"></p>
                   <div class="design">
                     <form id="login-form">
                       <h3></h3>

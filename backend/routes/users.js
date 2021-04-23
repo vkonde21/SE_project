@@ -415,7 +415,7 @@ router.route('/login').post(async (req, res) => {
         }
         else{
             
-            res.redirect('/');
+            res.redirect('/?error=user_not_found');
         }
         
     }
