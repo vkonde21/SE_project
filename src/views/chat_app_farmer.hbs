@@ -188,10 +188,10 @@
         </div>
     </div>
     {{/each}}
-  <br>
+  <br><br>
     {{#if blocked}}
     <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
-       <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Blocked chats</span> 
+       <span style="background-color: #fff; font-size: 35px; color:#016168; padding: 15px; opacity: 90%;">Blocked chats</span> 
     </h1>
     {{#each blocked}}
     <div class="row">
@@ -205,7 +205,7 @@
                             <h5 class="card-title" style="margin-bottom: 2px;">{{this.fullname}}</h5>
                         </div>
                         <div class="col" style="text-align: right;">
-                  <a href="/users/chat/unblock/{{this._id}}" class="btn btn-common btn-nv-sty" style="margin: 0px; padding: 8px; color:black; background:white">Unblock</a>
+                  <a href="/users/chat/unblock/{{this._id}}" class="btn btn-common btn-nv-sty" style="margin-top: 5px;">Unblock</a>
                 </div>
                     </div>
                 </div>
