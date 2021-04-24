@@ -31,7 +31,7 @@ cron.schedule('0 0 */23 * * * ', async () => {
     var mailOptions;
     const users = await User.find({is_verified:true});
     for(var i = 0; i < users.length;i++){
-        const chat = await Chat.find({receiver:users[i].username, notified:false})
+        const chat = await Chat.find({receiver:users[i].username, notified:false, blocked:false})
         if(chat.length > 0){
             mailOptions = {
                 from: 'organiquefarm@gmail.com',
