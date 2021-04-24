@@ -279,34 +279,41 @@ router.route('/chat/unblock/:id').get(auth, async(req, res) => {
 router.route('/viewfarmers').get(auth, async (req, res) => {
     try{
         if(req.user.type == "investor" || req.user.type == "buyer" || req.user.type == "institution"){
-            const users = await User.find({is_verified:true, type:"farmer"});
-            var profiles = [];
+            var users, farmers;
+            farmers = await User.find({is_verified:true, type:"farmer"});
+            var profiles = [], users = [];
             var crops, f1, f2;
             var c1 = "";
             var c2 = "";
             var i;
+            for(i=0; i<farmers.length; i++){
+                if(req.user.type == "investor" || req.user.type == "institution")
+                    f1 = await Farmer.findOne({_id:farmers[i]._id, investor_req:true});
+                else
+                    f1 = await Farmer.findOne({_id:farmers[i]._id, buyer_req:true});
+                if(f1 != null)
+                    users.push(f1);
+            }
+            
             for(i=0; i<users.length;i+=2){
                 c1="";
                 c2="";
                 crops = await Crop.find({user_id:users[i]._id});
-                f1 = await Farmer.findOne({_id:users[i]._id});
                 for(var j=0; j < crops.length;  j++){
                     c1 += crops[j].cropname + ", ";
                 }
                 c1 = c1.substring(0, c1.length - 2);
-            
                 if(users[i+1] != undefined){
-                    f2 = await Farmer.findOne({_id:users[i+1]._id});
                     crops = await Crop.find({user_id:users[i+1]._id});
                     for(var j=0; j < crops.length;  j++){
                         c2 += crops[j].cropname + ", ";
                     }
                     c2 = c2.substring(0, c2.length - 2);
                     
-                    profiles.push({1:f1, 2:c1, 3:f2, 4:c2});
+                    profiles.push({1:users[i], 2:c1, 3:users[i+1], 4:c2});
                 }
                 else
-                    profiles.push({1:f1, 2:c1});
+                    profiles.push({1:users[i], 2:c1});
             }
                 res.render('viewfarmers', {profiles, user:req.user});
         }
@@ -319,7 +326,137 @@ router.route('/viewfarmers').get(auth, async (req, res) => {
     } 
 });
 
+router.route('/filter').post(auth, async (req, res) => {
+    var users, farmers=[], profiles = [], hashmap = new Object();;
+    try{
+        var criteria = req.body.sortby;
+        if(criteria == "username"){
+            var username = req.body.search;
+            
+            users = await User.findOne({username, type:"farmer"});
+            if(users == null){
+                req.flash('messageFailure', 'No such user found');
+                throw new Error();
+            }
+            farmers = await Farmer.find({_id:users._id});
+            if(users == null){
+                req.flash('messageFailure', 'No match found');
+                throw new Error();
+            }
+        }
+        else if(criteria == "location"){
+            var location = req.body.search;
+            farmers = await Farmer.find({location});
+            if(farmers == null){
+                req.flash('messageFailure', 'No match found');
+                throw new Error();
+            }
+            
+             
+        }
+        else if(criteria == "rating"){
+            var rating = req.body.search;
+            
+                farmers = await Farmer.find({rating:{$gte:rating}});
+                if(farmers == null){
+                    req.flash('messageFailure', 'No match found');
+                    throw new Error();
+                }
+            
+            
+        }
+        else if(criteria == "area"){
+            var land_area = req.body.search;
+            
+                farmers = await Farmer.find({land_area:{$gte:land_area}});
+                if(farmers == null){
+                    req.flash('messageFailure', 'No match found');
+                    throw new Error();
+                }
+            
+          
+               
+               
+        }
+        else if(criteria == "crops"){
+            var crop = req.body.search;
+            var crops = crop.split(' ');
+            if(crops.length == 1){
+                crops = crop.split(',');
+            }
+            for(var i=0; i< crops.length; i++){
+                crops_array = await Crop.find({cropname: { $regex: new RegExp(crops[i].replace(/(?:es|[sx])$/, '') + '(?:es|[sx])?'), $options: 'i' }});/*for singular and plural values*/
+                for(var j=0; j < crops_array.length;j++){
+                    users = await Farmer.findById(crops_array[j].user_id);
+                    
+                    if(users != undefined && users != null){
+                        hashmap[users._id] = users;
+                    }
+                        
+                }
+            }
+            for(var i in hashmap){
+                farmers.push(hashmap[i]);
+            }
+        }
 
+        else if(criteria == "deals"){
+            var deals = req.body.search;
+            
+                farmers = await Farmer.find({deals:{$gte:deals}});
+                if(farmers == null){
+                    req.flash('messageFailure', 'No match found');
+                    throw new Error();
+                }
+            
+                
+        }
+        else if(criteria == "orders"){
+            var orders = req.body.search;
+            
+                farmers = await Farmer.find({orders:{$gte:orders}});
+                if(farmers == null){
+                    req.flash('messageFailure', 'No match found');
+                    throw new Error();
+                }
+            
+        }
+        if(req.user.type == "investor" || req.user.type == "institution"){
+            farmers = farmers.filter( (f) => {
+                 return f.investor_req == true;
+             })
+         }
+         else{
+             farmers = farmers.filter( (f) => {
+                 return f.buyer_req == true;
+             })
+         }
+        for(var i=0; i<farmers.length;i+=2){
+            c1="";
+            c2="";
+            crops = await Crop.find({user_id:farmers[i]._id});
+            for(var j=0; j < crops.length;  j++){
+                c1 += crops[j].cropname + ", ";
+            }
+            c1 = c1.substring(0, c1.length - 2);
+            if(farmers[i+1] != undefined){
+                crops = await Crop.find({user_id:farmers[i+1]._id});
+                for(var j=0; j < crops.length;  j++){
+                    c2 += crops[j].cropname + ", ";
+                }
+                c2 = c2.substring(0, c2.length - 2);
+                
+                profiles.push({1:farmers[i], 2:c1, 3:farmers[i+1], 4:c2});
+            }
+            else
+                profiles.push({1:farmers[i], 2:c1});
+        }
+        res.render('viewfarmers', {profiles, user:req.user});
+    }
+    catch(e){
+        res.redirect('/users/viewfarmers');
+    }
+});
 router.route('/viewfullprofile').get((req, res) => {
     res.render('viewfullprofile');
 });

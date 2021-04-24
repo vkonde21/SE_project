@@ -142,29 +142,36 @@
       <p style="font-size: 20px; color: green">{{messageSuccess}}</p>
     </div>
     <br>
+    <form action="filter" method="POST">
     <div class="row" style="position: sticky; background-color: #302d42; margin: 0 20px 20px 20px;">
       <div class="col-lg-1 col-2"></div>
       <div class="col-lg-1 col-4">
         <label style="font-size: 20px; color: white; margin-top: 12px; margin-bottom: 7px">Sort by:</label>
       </div>
+      
       <div class="col-lg-4 col-6">
+        
         <select name="sortby" class="custom-select" style="margin-top: 7px; margin-bottom: 7px;">
           <option value="username">Username</option>
           <option value="location">Location</option>
           <option value="rating">Rating</option>
           <option value="crops">Crops Grown</option>
           <option value="area">Land area</option>
+          <option value="deals">Number of deals</option>
+          <option value="orders">Number of orders</option>
         </select>
       </div>
       <div class="col-lg-4 col-6">
         <input type="text" class="form-control" placeholder="Search" name="search" style="margin-top: 7px; margin-bottom: 7px" required/>
       </div>
       <div class="col-lg-2 col-2">
-        <button type="submit" href="" class="btn btn-common btn-nv-sty" style="margin-top: 7px; margin-bottom: 7px">
+        <button type="submit"  class="btn btn-common btn-nv-sty" style="margin-top: 7px; margin-bottom: 7px">
           Search
         </button>
       </div>
+      
     </div>
+  </form>
     {{#if profiles}}
     {{#each profiles}}
     <div class="row">
