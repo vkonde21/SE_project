@@ -18,39 +18,16 @@ var ab2str = require('arraybuffer-to-string');
 
 /* to avoid saving the file on the local file system remove the dest parameter from multer*/
 const upload = multer({
-    
     fileFilter(req, file, cb) {
         cb(undefined, true); 
     }
 })
 
-
-router.route('/me').get(auth, (req, res) => {
-    res.send(req.user);
-});
-router.route('/viewfullprofile/:id').get(auth, async (req, res) => {
-    try{
-        const user = req.user;
-        const farmer = await Farmer.findById(req.params.id);
-        
-        if(farmer == null){
-            req.flash('messageFailure', "No such farmer");
-            throw new Error();
-        }
-        const crops = await Crop.find({user_id:farmer._id});
-        res.render('viewfullprofile', {farmer, user, crops});
-    }
-    catch(e){
-        res.redirect('viewfarmers');
-    }
-});
 router.get('/register', (req, res) => res.render('register'));
 
 router.route('/registerfarmer').get((req, res) => {
     res.render('registerfarmer');
 });
-
-
 
 router.route('/registerfarmer').post(upload.fields([{
     name: 'landpaper', maxCount: 1
@@ -58,9 +35,17 @@ router.route('/registerfarmer').post(upload.fields([{
     name: 'certificate', maxCount: 1
 }]), async (req, res) => {
     try {
-       
         const username = req.body.username;
         const password = req.body.password;
+        const password2 = req.body.password2;
+        if(password != password2){
+            req.flash('messageFailure', 'Please enter same password in both fields');
+            throw new Error();
+        }
+        if(password.length < 6){
+            req.flash('messageFailure', 'Please enter a password with atleast 6 characters');
+            throw new Error();
+        }
         const fullname = req.body.registername;
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
@@ -332,11 +317,29 @@ router.route('/viewfarmers').get(auth, async (req, res) => {
     catch(err) {
         res.status(400).json('error: ' + err);
     } 
-    
-    
 });
 
 
+router.route('/viewfullprofile').get((req, res) => {
+    res.render('viewfullprofile');
+});
+
+router.route('/viewfullprofile/:id').get(auth, async (req, res) => {
+    try{
+        const user = req.user;
+        const farmer = await Farmer.findById(req.params.id);
+        
+        if(farmer == null){
+            req.flash('messageFailure', "No such farmer");
+            throw new Error();
+        }
+        const crops = await Crop.find({user_id:farmer._id});
+        res.render('viewfullprofile', {farmer, user, crops});
+    }
+    catch(e){
+        res.redirect('viewfarmers');
+    }
+});
 
 router.route('/help').get((req, res) => {
     res.render('help');
@@ -358,20 +361,30 @@ router.route('/registerinvestor').get((req, res) => {
     res.render('registerinvestor');
 });
 
-router.route('/viewfullprofile').get((req, res) => {
-    res.render('viewfullprofile');
-});
-
 router.route('/registerinvestor').post(upload.single('incomestatement'), async (req, res) => {
     try{
         const username = req.body.username;
         const password = req.body.password;
+        const password2 = req.body.password2;
+        if(password != password2){
+            req.flash('messageFailure', 'Please enter same password in both fields');
+            throw new Error();
+        }
+        if(password.length < 6){
+            req.flash('messageFailure', 'Please enter a password with atleast 6 characters');
+            throw new Error();
+        }
         const fullname = req.body.registername;
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const start = req.body.startingrange;
         const end = req.body.endingrange;
         const pan_number = req.body.pannumber;
+        var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+        if(!regpan.test(pan_number)){
+            req.flash('messageFailure', "Please enter valid pancard number");
+            throw new Error();
+        }
         const type = "investor";
         const is_verified = false;
         const deals = 0;
@@ -397,13 +410,25 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         res.redirect('/users/registerinvestor');
     }
 });
+
+
 router.route('/registerinstitution').get((req, res) => {
     res.render('registerinstitution');
 });
+
 router.route('/registerinstitution').post(upload.single('businessproof'), async (req, res) => {
     try{
         const username = req.body.username;
         const password = req.body.password;
+        const password2 = req.body.password2;
+        if(password != password2){
+            req.flash('messageFailure', 'Please enter same password in both fields');
+            throw new Error();
+        }
+        if(password.length < 6){
+            req.flash('messageFailure', 'Please enter a password with atleast 6 characters');
+            throw new Error();
+        }
         const fullname = req.body.registername;
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
@@ -428,12 +453,13 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         res.redirect("success");
     }
     catch(err){
-        console.log(err.message, err.code);
         if(err.code == 11000)
             req.flash('messageFailure', "Username or email ID already exists");
         res.redirect('/users/registerinstitution');
     }
 });
+
+
 router.route('/registerbuyer').get((req, res) => {
     res.render('registerbuyer');
 });
@@ -442,10 +468,24 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
     try{
         const username = req.body.username;
         const password = req.body.password;
+        const password2 = req.body.password2;
+        if(password != password2){
+            req.flash('messageFailure', 'Please enter same password in both fields');
+            throw new Error();
+        }
+        if(password.length < 6){
+            req.flash('messageFailure', 'Please enter a password with atleast 6 characters');
+            throw new Error();
+        }
         const fullname = req.body.registername;
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const pan_number = req.body.pannumber;
+        var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+        if(!regpan.test(pan_number)){
+            req.flash('messageFailure', "Please enter valid pancard number");
+            throw new Error();
+        }
         const requirements = req.body.requirements;
         const type = "buyer";
         const is_verified = false;
