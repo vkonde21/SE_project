@@ -22,8 +22,6 @@
   
   <div class="cover">
   <img src="/img/crops.gif" id="mygif" alt="...">
-  <div class="container" style="margin-bottom: 30px; opacity: 90%;">
-          
   <header id="header-wrap">
       <!-- Navbar Start -->
       <nav
@@ -89,39 +87,31 @@
         </ul>
       </nav>
     </header>
-    <br><br><br>
-    <br>
+    <br><br><br><br>
     <div style="text-align: right; position: sticky; padding-right: 50px">
       <span style="background-color: #fff; font-size: 20px; color:#016168; padding: 10px; opacity: 80%;">Hello {{user.username}}</span>
     </div>
     <br>
-    <section id="form-dom" class="services">
-      <div class="container" style="margin-bottom: 30px; opacity:90%">
-        <div class="row">
-          <div class="col-12">
-            <div class="col-12 col-md-10 col-lg-8 log-style">
-              <div id="form-main">
-                <h1
-                  class="section-title wow fadeInUp animated"
-                  data-wow-delay="0.2s"
-                  style="
-                    visibility: visible;
-                    -webkit-animation-delay: 0.2s;
-                    -moz-animation-delay: 0.2s;
-                    animation-delay: 0.2s;
-                  "
-                >
-                  Add new crop
-                </h1>
-                <div style="color: red;">
+    <section id="form-dom"> 
+      <div class="container" style="margin-bottom: 30px; opacity: 90%;">
+          <div class="row">
+            <div class="col-12">
+              <div class="col-12 col-md-10 col-lg-8 log-style">
+                <div id="form-main">
+                  <h1
+                    class="section-title wow fadeInUp animated"
+                    data-wow-delay="0.2s"
+                    style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
+                    Add new crop
+                  </h1>
+                  <div style="color: red;">
                     <p style="font-size: 15px; text-align: center">{{messageFailure}}</p>
                   </div>
                   <div style="color: green;">
                     <p style="font-size: 15px; text-align: center">{{messageSuccess}}</p>
                   </div>
-                <div class="design">
+                  <div class="design">
                   <form id="addcrop-form" action="/users/addcrops" method="POST" enctype="multipart/form-data">
-                    <h3></h3>
                     <div class="row">
                       <div class="col">
                         <input
@@ -160,32 +150,25 @@
                     <div class="row">
                        <div class="col-lg-4 col-md-4 col-3"></div> 
                        <div class="col">
-                      <button
-                        type="submit"
-                        href=""
-                        class="btn btn-common btn-nv-sty"
-                        style="width: 50%;"
-                      >
-                        Add
-                      </button>
-                    </div>
-                    </div>
-                    <div class="row">
-                      <div class="col">
-                        <p class="error text-danger" align="center"></p>
-                        <p class="success text-success" align="center"></p>
-                      </div>
+                        <button
+                          type="submit"
+                          href=""
+                          class="btn btn-common btn-nv-sty"
+                          style="width: 50%;"
+                        >
+                          Add
+                        </button>
+                       </div>
                     </div>
                   </form>
                 </div>
+                </div>
               </div>
+              <div class="col-6"></div>
             </div>
-            <div class="col-6"></div>
           </div>
         </div>
-      </div>
-    </section>
-    </div>
+      </section>
     
     <!-- Go to Top Link -->
     <a href="#" class="back-to-top">
