@@ -7,6 +7,7 @@ const multer = require('multer');
 const http = require('http');
 const flash = require('connect-flash');
 const session = require('express-session');
+const cron = require('node-cron');
 require('dotenv').config();
 const uri = process.env.ATLAS_URI;
 mongoose.connect(uri, {useNewUrlParser: true, useCreateIndex: true, useUnifiedTopology:true});
@@ -20,12 +21,37 @@ const port = process.env.port || 5000;
 const socketio = require('socket.io');
 const server = http.createServer(app);
 const io = socketio(server);
-
+const {transporter} = require('./utils/messages/mails');
 const {generateMessage, generateImage} = require('./utils/messages/messages');
 let Connection = require('./models/connection.model');
 let User = require('./models/user.model');
 let Chat = require('./models/chat.model');
-
+//testing:          */5 *  * * *
+cron.schedule('0 0 */23 * * * ', async () => {
+    var mailOptions;
+    const users = await User.find({is_verified:true});
+    for(var i = 0; i < users.length;i++){
+        const chat = await Chat.find({receiver:users[i].username, notified:false})
+        if(chat.length > 0){
+            mailOptions = {
+                from: 'organiquefarm@gmail.com',
+                to: users[i].email,
+                subject: 'Chat notifications',
+                text: 'You have some pending messages in your chat. Check them out'
+            };
+            transporter.sendMail(mailOptions, function(error, info){
+                if (error) {
+                  console.log(error);
+                  throw new Error(error);
+                } else {
+                  console.log('Email sent: ' + info.response);
+                }
+              });
+            }
+        }
+        
+    
+});
 
 // session and flash views
 app.use(session({
