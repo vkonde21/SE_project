@@ -12,6 +12,13 @@ const connectionSchema = new Schema({
     started:{
       type:Boolean,
       default:false
+    },
+    blocked:{
+      type:Boolean,
+      default:false
+    },
+    blocked_by:{
+      type:String //username of user who blocked the chat
     }
 }, 
 {

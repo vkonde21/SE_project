@@ -5,16 +5,28 @@ const Connection = require('../models/connection.model');
 const router = require('express').Router();
 
 router.route('/:id').get(auth, async(req, res) => {
-    var username = req.user.username;
-    var other_user = await User.findById(req.params.id);
-    if(other_user != null)
-        var x = await Connection.initiateChat(other_user.username, username);
-    else{
-        console.log("error in chat.js");
-        req.flash('messageFailure', 'Error in loading chat');
-        res.redirect('/users/dashboard');
+    try{
+        var username = req.user.username;
+        var other_user = await User.findById(req.params.id);
+        if(other_user != null){
+            var x = await Connection.initiateChat(other_user.username, username);
+            var conn = await Connection.findOne({chat_initiator: req.user.username, conn_user: other_user.username, blocked:false});
+            if(conn == null){
+                req.flash('messageFailure', 'You have blocked this user or have been blocked by this user');
+                throw new Error();
+            }
+        }
+            
+        else{
+            
+            req.flash('messageFailure', 'Error in loading chat');
+            throw new Error();
+        }
+        res.redirect('/chat/' + req.params.id +'/'+ x.room._id);
+    }catch(e){
+        res.redirect('/users/viewfarmers');
     }
-    res.redirect('/chat/' + req.params.id +'/'+ x.room._id);
+    
 });
 router.route('/:id/:room_id').get(auth, async(req, res) => {
     try{
@@ -26,9 +38,9 @@ router.route('/:id/:room_id').get(auth, async(req, res) => {
     }
     //send all the previous messages
     if(req.user.type == "farmer")
-        room = await Connection.find({chat_initiator: user.username, conn_user: req.user.username})
+        room = await Connection.findOne({chat_initiator: user.username, conn_user: req.user.username, blocked:false})
     else{
-        room = await Connection.find({chat_initiator: req.user.username, conn_user: user.username})
+        room = await Connection.findOne({chat_initiator: req.user.username, conn_user: user.username, blocked:false})
     }
     if(room == null){
         req.flash('messageFailure', 'Invalid room id!!');
@@ -53,5 +65,8 @@ router.route('/:id/:room_id').get(auth, async(req, res) => {
     
 
 });
+
+
+
 
 module.exports = router;

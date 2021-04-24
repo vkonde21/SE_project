@@ -125,9 +125,9 @@ router.route('/about').get((req, res) => {
     res.render('about');
 });
 router.route('/chat').get(auth, async(req, res) => {
-    var connections = await Connection.find({chat_initiator:req.user.username, started:true});
+    var connections = await Connection.find({chat_initiator:req.user.username, started:true, blocked:false});
     if(connections.length == 0){
-        connections = await Connection.find({conn_user: req.user.username, started:true});
+        connections = await Connection.find({conn_user: req.user.username, started:true, blocked:false});
     }
     var i =0, j= 0, room, orders, deals, chat, time, unread;
     var buyer = [];
@@ -136,7 +136,51 @@ router.route('/chat').get(auth, async(req, res) => {
     var institution = [];
     var crops = [];
     var c="";
-    var x, u, b, inv, ins;
+    var x, u, b, inv, ins, block;
+    var blocked = [];
+    var blocked_chats = [];
+    blocked_chats = await Connection.find({chat_initiator:req.user.username, started:true, blocked:true, blocked_by: req.user.username});
+    blocked_chats = blocked_chats.concat(await Connection.find({conn_user:req.user.username, started:true, blocked:true, blocked_by: req.user.username}));
+    
+    for(i=0; i<blocked_chats.length;i++){
+        x = blocked_chats[i];
+
+        if(x.chat_initiator == req.user.username )
+            u = await User.findOne({username: x.conn_user});
+        else{
+            u = await User.findOne({username: x.chat_initiator});
+        }
+        
+        if(req.user.type == "farmer"){
+            if(u != null && u.type == "buyer"){
+                block = await Buyer.findById(u._id);
+                
+            }
+            else if(u != null && u.type == "investor"){
+                block = await Investor.findById(u._id);
+            }
+            else if(u != null && u.type == "institution"){
+                block = await Institution.findById(u._id);
+            }
+        
+            if(block != undefined)
+                block.room_id = blocked_chats[i]._id;
+        }
+
+        else {
+            block = await Farmer.findById(u._id);
+            crops = await Crop.find({user_id:u._id});
+            block.room_id = blocked_chats[i]._id;
+            c ="";
+            for(j = 0; j<crops.length;j++){
+                c += crops[j].cropname + " ";
+            }
+            block.crops = c;
+        }
+        
+        if(block != null)
+            blocked.push(block);
+    }
     for(i=0; i< connections.length; i++){
         x = connections[i];
         if(req.user.type == "farmer"){
@@ -146,26 +190,7 @@ router.route('/chat').get(auth, async(req, res) => {
                 b.room_id = connections[i]._id;
                 unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
                 b.notifs = unread.length;
-                orders = await Order.find({farmer_id: req.user._id, buyer_username: u.username, farmer_locked:true});
-                if(orders == null){
-                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
-                    if(chat != null){
-                       time = (Date.now() - chat[0].time)/60000;
-                       if(time > 60){  //for testing 60 minutes
-                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
-                            await Chat.save();
-                            connections[i].started = false;
-                            await connections[i].save();
-                       }
-                       else{
-                        buyer.push(b);
-                       }
-                    }
-                }
-                else{
-                    buyer.push(b);
-                }
-                
+                buyer.push(b);
             }
             else if(u!= null && u.type == "investor"){
                 inv = await Investor.findById(u._id);
@@ -173,25 +198,7 @@ router.route('/chat').get(auth, async(req, res) => {
                 deals = await Deal.find({farmer_id: req.user._id, other_username: u.username, farmer_locked:true});
                 unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
                 inv.notifs = unread.length;
-                if(deals == null){
-                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
-                    if(chat != null){
-                       time = (Date.now() - chat[0].time)/60000;
-                       if(time > 60){  //for testing 60 minutes
-                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
-                            await Chat.save();
-                            connections[i].started = false;
-                            await connections[i].save();
-                       }
-                       else{
-                        investor.push(inv);
-                       }
-                    }
-                }
-                else{
-                    investor.push(inv);
-                }
-                
+                investor.push(inv);  
             }
             else{
                 ins = await Institution.findById(u._id);
@@ -199,24 +206,7 @@ router.route('/chat').get(auth, async(req, res) => {
                 deals = await Deal.find({farmer_id: req.user._id, other_username: u.username, farmer_locked:true});
                 unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
                 ins.notifs = unread.length;
-                if(deals == null){
-                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
-                    if(chat != null){
-                       time = (Date.now() - chat[0].time)/60000;
-                       if(time > 60){  //for testing 60 minutes
-                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
-                            await Chat.save();
-                            connections[i].started = false;
-                            await connections[i].save();
-                       }
-                       else{
-                        institution.push(ins);
-                       }
-                    }
-                }
-                else{
-                    institution.push(ins);
-                }
+                institution.push(ins);
             }
         }
         else {
@@ -233,34 +223,74 @@ router.route('/chat').get(auth, async(req, res) => {
             orders = await Order.find({farmer_id: u._id, buyer_username: req.user.username, farmer_locked:true});
             unread = await Chat.find({sender:u.username, receiver:req.user.username, notified:false});
             f.notifs = unread.length;
-                if(deals == null && orders == null){
-                    chat = await Chat.find({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]}).sort({time:1});
-                    if(chat != null){
-                       time = (Date.now() - chat[0].time)/60000;
-                       if(time > 60){  //for testing 60 minutes
-                            await Chat.delete({$or:[{sender:req.user.username, receiver:u.username}, {receiver:req.user.username, sender:u.username}]});
-                            await Chat.save();
-                            connections[i].started = false;
-                            await connections[i].save();
-                       }
-                       else{
-                        farmer.push(f);
-                       }
-                    }
-                }
-                else{
-                    farmer.push(f);
-                }
-            
+            farmer.push(f);   
         }
     }
+
     if(req.user.type == "farmer")
-        res.render('chat_app_farmer', {buyer, investor, institution, user:req.user});
+        res.render('chat_app_farmer', {buyer, investor, institution, user:req.user, blocked});
     else if(req.user.type == "buyer")
-        res.render('chat_app_buyer', {farmer, user:req.user});
+        res.render('chat_app_buyer', {farmer, user:req.user, blocked});
     else
-        res.render('chat_app', {farmer, user:req.user});
+        res.render('chat_app', {farmer, user:req.user, blocked});
 });
+
+router.route('/chat/block/:id').get(auth, async(req, res) => {
+    try{
+       
+        const user = req.user;
+        const other_user = await User.findById(req.params.id);
+        if(other_user == null){
+            req.flash('messageFailure', 'No such user');
+            throw new Error();
+        }
+        var conn = await Connection.findOne({chat_initiator:user.username, conn_user: other_user.username, started:true, blocked:false});
+        
+        if(conn == null){
+            conn = await Connection.findOne({chat_initiator:other_user.username, conn_user: user.username, started:true, blocked:false});
+        }
+        
+        if(conn == null){
+            req.flash('messageFailure', 'Cannot block this user');
+            throw new Error();
+        }
+        conn.blocked = true;
+        conn.blocked_by = req.user.username;
+        await conn.save();
+        req.flash('messageSuccess', 'User blocked');
+        res.redirect('/users/chat');
+    }catch(e){
+        res.redirect('/users/chat');
+    }
+});
+
+router.route('/chat/unblock/:id').get(auth, async(req, res) => {
+    
+    try{
+        var other_user = await User.findById(req.params.id);
+        if(other_user == null){
+            req.flash('messageFailure', 'This user does not exists');
+            throw new Error();
+        }
+        var conn = await Connection.findOne({chat_initiator:req.user.username, conn_user: other_user.username,started:true, blocked:true, blocked_by:req.user.username });
+        if(conn == null){
+            conn = await Connection.findOne({chat_initiator:other_user.username, conn_user: req.user.username,started:true, blocked:true, blocked_by:req.user.username });
+        }
+        if(conn == null){
+            req.flash('messageFailure', 'This chat cannot be unblocked');
+            throw new Error();
+        }
+        conn.blocked = false;
+        conn.blocked_by = "";
+        await conn.save();
+        req.flash('messageSuccess', 'Chat unblocked!');
+        res.redirect('/users/chat/');
+    }
+    catch(e){
+        res.redirect('/users/chat');
+    }
+});
+
 router.route('/viewfarmers').get(auth, async (req, res) => {
     try{
         if(req.user.type == "investor" || req.user.type == "buyer" || req.user.type == "institution"){
@@ -712,4 +742,7 @@ router.route('/updateprofile').post(auth, async(req, res) => {
         res.redirect('dashboard');
     }
 });
+
+
+
 module.exports = router;

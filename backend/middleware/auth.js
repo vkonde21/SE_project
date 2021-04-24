@@ -2,6 +2,7 @@ const jwt = require('jsonwebtoken');
 const User = require('../models/user.model');
 const Admin = require('../models/admin.model');
 const auth = async(req, res, next) => {
+    
     try{
         const token = req.cookies.jwt ;
         const decoded = jwt.verify(token, "hello");
@@ -12,6 +13,7 @@ const auth = async(req, res, next) => {
         if(!user){
             throw new Error();
         }
+        
         req.token = token;
         req.user = user;
         next(); /* run route handler */

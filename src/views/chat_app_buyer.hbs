@@ -181,4 +181,40 @@
         </div>
     </div>
     {{/each}}
+<br><br>
+    {{#if blocked}}
+    <h1 class="section-title wow fadeInUp animated" data-wow-delay="0.2s" style="visibility: visible; -webkit-animation-delay: 0.2s; -moz-animation-delay: 0.2s; animation-delay: 0.2s;">
+       <span style="background-color: #fff; font-size: 40px; color:#016168; padding: 15px; opacity: 90%;">Blocked chats</span> 
+    </h1>
+    {{#each blocked}}
+    <div class="row">
+        <div class="col-lg-3"></div>
+        <div class="col-lg-6 col-12">
+            <a href="/chat/{{this._id}}/{{this.room_id}}" style="color: black;">
+            <div class="card" style="opacity: 90%; height: 80px;">
+                <div class="card-body" style="padding: 10px;">
+                    <div class="row">
+                        <div class="col-7">
+                            <h5 class="card-title" style="margin-bottom: 2px;">{{this.fullname}}</h5>
+                            <p class="card-text">Crops grown : {{this.crops}}</p>
+                        </div>
+                        <div class="col-3">
+                            <p class="card-text">Rating : {{this.rating}}
+                                <div class="stars-outer" id="stars-outer{{this._id}}">
+                                    <div class="stars-inner" id="stars-inner{{this._id}}" style="color:#f8ce0b; --r:20%; --a:{{this.rating}}">
+                                    </div>
+                                </div>
+                            </p>
+                        </div>
+                        <div class="col-1" style="text-align: right;">
+                  <a href="/users/chat/unblock/{{this._id}}" class="btn btn-common btn-nv-sty" style="margin: 0px; padding: 8px; color:black; background:white">Unblock</a>
+                </div>
+                    </div>
+                </div>
+            </div>
+            </a>
+        </div>
+    </div>
+    {{/each}}
+    {{/if}}
 </div>
