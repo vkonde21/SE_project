@@ -347,7 +347,7 @@ router.route('/filter').post(auth, async (req, res) => {
         else if(criteria == "location"){
             var location = req.body.search;
             farmers = await Farmer.find({location});
-            if(farmers == null){
+            if(farmers.length == 0){
                 req.flash('messageFailure', 'No match found');
                 throw new Error();
             }
@@ -358,7 +358,7 @@ router.route('/filter').post(auth, async (req, res) => {
             var rating = req.body.search;
             
                 farmers = await Farmer.find({rating:{$gte:rating}});
-                if(farmers == null){
+                if(farmers.length == 0){
                     req.flash('messageFailure', 'No match found');
                     throw new Error();
                 }
@@ -369,14 +369,10 @@ router.route('/filter').post(auth, async (req, res) => {
             var land_area = req.body.search;
             
                 farmers = await Farmer.find({land_area:{$gte:land_area}});
-                if(farmers == null){
+                if(farmers.length == 0){
                     req.flash('messageFailure', 'No match found');
                     throw new Error();
-                }
-            
-          
-               
-               
+                } 
         }
         else if(criteria == "crops"){
             var crop = req.body.search;
@@ -388,7 +384,6 @@ router.route('/filter').post(auth, async (req, res) => {
                 crops_array = await Crop.find({cropname: { $regex: new RegExp(crops[i].replace(/(?:es|[sx])$/, '') + '(?:es|[sx])?'), $options: 'i' }});/*for singular and plural values*/
                 for(var j=0; j < crops_array.length;j++){
                     users = await Farmer.findById(crops_array[j].user_id);
-                    
                     if(users != undefined && users != null){
                         hashmap[users._id] = users;
                     }
@@ -402,9 +397,8 @@ router.route('/filter').post(auth, async (req, res) => {
 
         else if(criteria == "deals"){
             var deals = req.body.search;
-            
                 farmers = await Farmer.find({deals:{$gte:deals}});
-                if(farmers == null){
+                if(farmers.length == 0){
                     req.flash('messageFailure', 'No match found');
                     throw new Error();
                 }
@@ -413,9 +407,8 @@ router.route('/filter').post(auth, async (req, res) => {
         }
         else if(criteria == "orders"){
             var orders = req.body.search;
-            
                 farmers = await Farmer.find({orders:{$gte:orders}});
-                if(farmers == null){
+                if(farmers.length == 0){
                     req.flash('messageFailure', 'No match found');
                     throw new Error();
                 }
