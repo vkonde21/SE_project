@@ -27,10 +27,13 @@ router.route('/addcrops').post(auth, upload.single('cropimage'), async(req,res) 
     try{
         const cropname = req.body.cropname;
         const dev_stage = req.body.dev_stage;
+        if(cropname.match('^[\.a-zA-Z]*$') == null || dev_stage.match('^[\.a-zA-Z]*$') == null){
+            req.flash('messageFailure', 'Crop name and development stage should contain only letters');
+            throw new Error();
+        }
         const cropimage = req.file.buffer;
         const user_id = req.user._id;
         const {ext, mime} = await (FileType.fromBuffer(cropimage));
-        console.log(req.file);
         if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || req.file.size > 1000000) {
             req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
             throw new Error();
@@ -71,6 +74,10 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'),async(req
         if(crop.user_id.equals(req.user._id)){
             const cropname = req.body.cropname;
             const dev_stage = req.body.dev_stage;
+            if(cropname.match('^[\.a-zA-Z]*$') == null || dev_stage.match('^[\.a-zA-Z]*$') == null){
+                req.flash('messageFailure', 'Crop name and development stage should contain only letters');
+                throw new Error();
+            }
             const cropimage = req.file.buffer;
             if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || req.file.size > 1000000) {
                 req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");

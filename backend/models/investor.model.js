@@ -22,7 +22,7 @@ const investorSchema = new Schema({
     },
     pan_number:{
         type:String,
-        required:true
+        required:true,
     },
     income_statement:{
         type:String,

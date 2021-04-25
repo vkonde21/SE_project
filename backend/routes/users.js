@@ -36,6 +36,11 @@ router.route('/registerfarmer').post(upload.fields([{
 }]), async (req, res) => {
     try {
         const username = req.body.username;
+        const username_regex = /^[A-Za-z0-9_]*$/;
+        if(username.match(username_regex) == null || username.length < 3){
+            req.flash('messageFailure', 'Username length should be atleast 3 and it should contain only alphanumeric and _ characters');
+            throw new Error();
+        }
         const password = req.body.password;
         const password2 = req.body.password2;
         if(password != password2){
@@ -47,6 +52,10 @@ router.route('/registerfarmer').post(upload.fields([{
             throw new Error();
         }
         const fullname = req.body.registername;
+        if(fullname.match('^[\.a-zA-Z ]*$') == null){
+            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            throw new Error();
+        }
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const type = "farmer";
@@ -66,6 +75,10 @@ router.route('/registerfarmer').post(upload.fields([{
         }
         const land_area = req.body.landarea;
         const location = req.body.location;
+        if(location.match('^[\.a-zA-Z]*$') == null){
+            req.flash('messageFailure', 'Location should contain only alphabets');
+            throw new Error();
+        }
         const is_verified = false;
         const rating = 0;
         const deals = 0;
@@ -95,7 +108,7 @@ router.route('/registerfarmer').post(upload.fields([{
     }
     catch (err) {
         if(err.code == 11000)
-        req.flash('messageFailure', "Username or email ID already exists");
+            req.flash('messageFailure', "Username or email ID already exists");
         res.redirect('/users/registerfarmer');
     }
 
@@ -346,7 +359,7 @@ router.route('/filter').post(auth, async (req, res) => {
         }
         else if(criteria == "location"){
             var location = req.body.search;
-            farmers = await Farmer.find({location});
+            farmers = await Farmer.find({location:{$regex:location, $options:'i'}});
             if(farmers.length == 0){
                 req.flash('messageFailure', 'No match found');
                 throw new Error();
@@ -494,6 +507,11 @@ router.route('/registerinvestor').get((req, res) => {
 router.route('/registerinvestor').post(upload.single('incomestatement'), async (req, res) => {
     try{
         const username = req.body.username;
+        const username_regex = /^[A-Za-z0-9_]*$/;
+        if(username.match(username_regex) == null){
+            req.flash('messageFailure', 'Username should contain only alphanumeric and _ characters');
+            throw new Error();
+        }
         const password = req.body.password;
         const password2 = req.body.password2;
         if(password != password2){
@@ -505,10 +523,18 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
             throw new Error();
         }
         const fullname = req.body.registername;
+        if(fullname.match('^[\.a-zA-Z ]*$') == null){
+            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            throw new Error();
+        }
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const start = req.body.startingrange;
         const end = req.body.endingrange;
+        if(start > end){
+            req.flash('messageFailure', "Please enter valid starting and ending amount");
+            throw new Error();
+        }
         const pan_number = req.body.pannumber;
         var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
         if(!regpan.test(pan_number)){
@@ -549,6 +575,11 @@ router.route('/registerinstitution').get((req, res) => {
 router.route('/registerinstitution').post(upload.single('businessproof'), async (req, res) => {
     try{
         const username = req.body.username;
+        const username_regex = /^[A-Za-z0-9_]*$/;;
+        if(username.match(username_regex) == null || username.length < 3){
+            req.flash('messageFailure', 'Username should contain only alphanumeric and _ characters');
+            throw new Error();
+        }
         const password = req.body.password;
         const password2 = req.body.password2;
         if(password != password2){
@@ -560,10 +591,18 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
             throw new Error();
         }
         const fullname = req.body.registername;
+        if(fullname.match('^[\.a-zA-Z ]*$') == null || username.length < 3){
+            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            throw new Error();
+        }
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const start = req.body.startingrange;
         const end = req.body.endingrange;
+        if(start > end){
+            req.flash('messageFailure', "Please enter valid starting and ending amount");
+            throw new Error();
+        }
         const business_proof = req.file.buffer;
         if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || !req.file.size > 1000000) {
             req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
@@ -597,6 +636,11 @@ router.route('/registerbuyer').get((req, res) => {
 router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) => {
     try{
         const username = req.body.username;
+        const username_regex = /^[A-Za-z0-9_]*$/;
+        if(username.match(username_regex) == null || username.length < 3){
+            req.flash('messageFailure', 'Username should contain only alphanumeric and @,#,$ characters');
+            throw new Error();
+        }
         const password = req.body.password;
         const password2 = req.body.password2;
         if(password != password2){
@@ -608,6 +652,10 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
             throw new Error();
         }
         const fullname = req.body.registername;
+        if(fullname.match('^[\.a-zA-Z ]*$') == null){
+            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            throw new Error();
+        }
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const pan_number = req.body.pannumber;
@@ -775,6 +823,10 @@ router.route('/deal_lock').post(auth, async(req,res) => {
 
 router.route('/crop_requirements').post(auth, async(req, res) => {
     try{
+        if(req.body.croprequirements.match('^[\.a-zA-Z, ]*$') == null){
+            req.flash('messageFailure', 'Crop names should contain only alphabets, commas and spaces');
+            throw new Error();
+        }
         if(req.user.type == "buyer"){
             const buyer = await Buyer.findById(req.user._id);
             buyer.requirements = req.body.croprequirements;
@@ -786,13 +838,14 @@ router.route('/crop_requirements').post(auth, async(req, res) => {
             await institution.save();
         }
         else{
-            req.flash('messageFailure', 'Crop requirements can be updated only by buyers and institutions')
+            req.flash('messageFailure', 'Crop requirements can be updated only by buyers and institutions');
+            throw new Error();
         }
         req.flash('messageSuccess', 'Crop requirements updated successfully');
         res.redirect('dashboard');
     }
     catch(err){
-        req.flash('messageFailure', 'Error occured while updating crop requirememts');
+        //req.flash('messageFailure', 'Error occured while updating crop requirememts');
         res.redirect('dashboard');
     }
 });
@@ -834,9 +887,17 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const investor = await Investor.findById(req.user._id);
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
+            if(fullname.match('^[\.a-zA-Z ]*$') == null){
+                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                throw new Error();
+            }
             const email = req.body.email;
             const start = req.body.startingrange;
             const end = req.body.endingrange;
+            if(start > end){
+                req.flash('messageFailure', "Please enter valid starting and ending amount");
+                throw new Error();
+            }
             investor.fullname = fullname;
             investor.start = start;
             investor.end = end;
@@ -849,9 +910,17 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const institution = await Institution.findById(req.user._id);
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
+            if(fullname.match('^[\.a-zA-Z ]*$') == null){
+                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                throw new Error();
+            }
             const email = req.body.email;
             const start = req.body.startingrange;
             const end = req.body.endingrange;
+            if(start > end){
+                req.flash('messageFailure', "Please enter valid starting and ending amount");
+                throw new Error();
+            }
             institution.fullname = fullname;
             institution.start = start;
             institution.end = end;
@@ -864,8 +933,16 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const buyer = await Buyer.findById(req.user._id);
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
+            if(fullname.match('^[\.a-zA-Z ]*$') == null){
+                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                throw new Error();
+            }
             const email = req.body.email;
-            const requirements = req.body.requirements
+            const requirements = req.body.croprequirements;
+            if(req.body.croprequirements.match('^[\.a-zA-Z, ]*$') == null){
+                req.flash('messageFailure', 'Crop names should contain only alphabets, commas and spaces');
+                throw new Error();
+            }
             buyer.fullname = fullname;
             buyer.requirements = requirements;
             user.email = email;
@@ -877,6 +954,10 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const farmer = await Farmer.findById(req.user._id);
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
+            if(fullname.match('^[\.a-zA-Z ]*$') == null){
+                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                throw new Error();
+            }
             const email = req.body.email;
             var buyer_req = req.body.buyeryes;
             if (buyer_req == undefined) {
@@ -908,7 +989,7 @@ router.route('/updateprofile').post(auth, async(req, res) => {
         res.redirect('dashboard');
     }
     catch(err){
-        req.flash('messageFailure', 'Profile updation failed. Please enter correct email ID');
+        req.flash('messageFailure', 'Profile updation failed.');
         res.redirect('dashboard');
     }
 });

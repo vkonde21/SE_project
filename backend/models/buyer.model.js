@@ -12,7 +12,7 @@ const buyerSchema = new Schema({
     
     pan_number:{
         type:String,
-        required:true
+        required:true,
     },
     pan_card:{
         type:String,
