@@ -167,8 +167,4 @@ io.on('connection', (socket) => { /*specify the event and the function */
         
     });
     
-    
-    /*socket.on('disconnect', () => {
-        io.emit('message', "User left");
-    });   //when a user disconnects*/
 });

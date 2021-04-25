@@ -363,20 +363,15 @@ router.route('/filter').post(auth, async (req, res) => {
             if(farmers.length == 0){
                 req.flash('messageFailure', 'No match found');
                 throw new Error();
-            }
-            
-             
+            }   
         }
         else if(criteria == "rating"){
             var rating = req.body.search;
-            
                 farmers = await Farmer.find({rating:{$gte:rating}});
                 if(farmers.length == 0){
                     req.flash('messageFailure', 'No match found');
                     throw new Error();
-                }
-            
-            
+                }   
         }
         else if(criteria == "area"){
             var land_area = req.body.search;
@@ -407,7 +402,6 @@ router.route('/filter').post(auth, async (req, res) => {
                 farmers.push(hashmap[i]);
             }
         }
-
         else if(criteria == "deals"){
             var deals = req.body.search;
                 farmers = await Farmer.find({deals:{$gte:deals}});
