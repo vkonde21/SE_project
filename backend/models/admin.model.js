@@ -34,7 +34,7 @@ adminSchema.methods.generateAuthToken = async function() {
     return token;
 }
 adminSchema.statics.findByCredentials = async(username, password) => {
-    const user = await Admin.findOne({username: username});
+    var user = await Admin.findOne({username: username});
     
     var isMatch;
     if(user != null){
