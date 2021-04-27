@@ -52,6 +52,10 @@ router.route('/save_rating/:id').post(auth, async(req,res) => {
     try{
         var rating = await Rating.findOne({_id:req.params.id});
         const r = req.body.farmerrating;
+        if(r < 0 || r > 5){
+            req.flash('messageFailure', 'Enter a rating between 0 and 5');
+            throw new Error();
+        }
         const user = await User.findOne({username: rating.farmer_username})
         const farmer = await Farmer.findById(user._id);
         rating.rating = r;
@@ -65,7 +69,7 @@ router.route('/save_rating/:id').post(auth, async(req,res) => {
         req.flash('messageSuccess', 'Rating saved successfully');
         res.redirect('/users/buyer_orders');
     }catch(e){
-        req.flash('messageSuccess', 'Rating could not be saved');
+        req.flash('messageFailure', 'Rating could not be saved');
         res.redirect('/users/buyer_orders');
     }
 });

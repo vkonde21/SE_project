@@ -74,6 +74,10 @@ router.route('/registerfarmer').post(upload.fields([{
             investor_req = true;
         }
         const land_area = req.body.landarea;
+        if(land_area < 0){
+            req.flash('messageFailure', "Enter a valid number for land_area");
+            throw new Error();
+        }
         const location = req.body.location;
         if(location.match('^[\.a-zA-Z]*$') == null){
             req.flash('messageFailure', 'Location should contain only alphabets');
@@ -967,12 +971,10 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             else {
                 investor_req = true;
             }
-            const land_area = req.body.landarea;
             farmer.fullname = fullname;
             farmer.buyer_req = buyer_req;
             farmer.investor_req = investor_req;
-            farmer.land_area = land_area;
-            user.email = email
+            user.email = email;
             await user.save();
             await farmer.save();
         }
