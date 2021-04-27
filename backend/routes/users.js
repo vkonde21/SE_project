@@ -285,7 +285,7 @@ router.route('/chat/unblock/:id').get(auth, async(req, res) => {
         conn.blocked = false;
         conn.blocked_by = "";
         await conn.save();
-        req.flash('messageSuccess', 'Chat unblocked!');
+        req.flash('messageSuccess', 'User unblocked!');
         res.redirect('/users/chat/');
     }
     catch(e){
