@@ -122,24 +122,33 @@ router.route('/deletecrops/:id').get(auth, async (req, res) => {
     }
 });
 router.route('/notifications').get(auth, async (req, res) => {
-    const deals = await Deal.find({ farmer_id: req.user._id, notified: false });
-    const orders = await Order.find({ farmer_id: req.user._id, notified: false });
-    var notifications = [];
-    var not_orders = [];
-    var i;
-    for (i = 0; i < deals.length; i += 2) {
-        if (deals[i + 1] != undefined)
-            notifications.push({ 1: deals[i], 2: deals[i + 1] });
-        else
-            notifications.push({ 1: deals[i] });
+    try{
+        if(req.user.type != "farmer"){
+            req.flash('messageFailure', 'You cannot access the notifications page');
+            throw new Error();
+        }
+        const deals = await Deal.find({ farmer_id: req.user._id, notified: false });
+        const orders = await Order.find({ farmer_id: req.user._id, notified: false });
+        var notifications = [];
+        var not_orders = [];
+        var i;
+        for (i = 0; i < deals.length; i += 2) {
+            if (deals[i + 1] != undefined)
+                notifications.push({ 1: deals[i], 2: deals[i + 1] });
+            else
+                notifications.push({ 1: deals[i] });
+        }
+        for (i = 0; i < orders.length; i += 2) {
+            if (orders[i + 1] != undefined)
+                not_orders.push({ 1: orders[i], 2: orders[i + 1] });
+            else
+                not_orders.push({ 1: orders[i] });
+        }
+        res.render('notifications', { notifications, not_orders, user: req.user });
     }
-    for (i = 0; i < orders.length; i += 2) {
-        if (orders[i + 1] != undefined)
-            not_orders.push({ 1: orders[i], 2: orders[i + 1] });
-        else
-            not_orders.push({ 1: orders[i] });
+    catch(e){
+        res.redirect('/users/dashboard');
     }
-    res.render('notifications', { notifications, not_orders, user: req.user });
 });
 
 router.route('/deal_decision').post(auth, async (req, res) => {
