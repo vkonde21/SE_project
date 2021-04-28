@@ -79,8 +79,8 @@ router.route('/registerfarmer').post(upload.fields([{
             throw new Error();
         }
         const location = req.body.location;
-        if(location.match('^[\.a-zA-Z]*$') == null){
-            req.flash('messageFailure', 'Location should contain only alphabets');
+        if(location.match('^[\.a-zA-Z ]*$') == null){
+            req.flash('messageFailure', 'District name should contain only alphabets and spaces');
             throw new Error();
         }
         const is_verified = false;
@@ -506,8 +506,8 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
     try{
         const username = req.body.username;
         const username_regex = /^[A-Za-z0-9_]*$/;
-        if(username.match(username_regex) == null){
-            req.flash('messageFailure', 'Username should contain only alphanumeric and _ characters');
+        if(username.match(username_regex) == null || username.length < 3){
+            req.flash('messageFailure', 'Username length should be atleast 3 and it should contain only alphanumeric and _ characters');
             throw new Error();
         }
         const password = req.body.password;
@@ -534,9 +534,9 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
             throw new Error();
         }
         const pan_number = req.body.pannumber;
-        var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+        var regpan = /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/;
         if(!regpan.test(pan_number)){
-            req.flash('messageFailure', "Please enter valid pancard number");
+            req.flash('messageFailure', "Please enter valid PAN number");
             throw new Error();
         }
         const type = "investor";
@@ -575,7 +575,7 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         const username = req.body.username;
         const username_regex = /^[A-Za-z0-9_]*$/;;
         if(username.match(username_regex) == null || username.length < 3){
-            req.flash('messageFailure', 'Username should contain only alphanumeric and _ characters');
+            req.flash('messageFailure', 'Username length should be atleast 3 and it should contain only alphanumeric and _ characterss');
             throw new Error();
         }
         const password = req.body.password;
@@ -636,7 +636,7 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         const username = req.body.username;
         const username_regex = /^[A-Za-z0-9_]*$/;
         if(username.match(username_regex) == null || username.length < 3){
-            req.flash('messageFailure', 'Username should contain only alphanumeric and @,#,$ characters');
+            req.flash('messageFailure', 'Username length should be atleast 3 and it should contain only alphanumeric and _ characters');
             throw new Error();
         }
         const password = req.body.password;
@@ -657,9 +657,9 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const pan_number = req.body.pannumber;
-        var regpan = /^([a-zA-Z]){5}([0-9]){4}([a-zA-Z]){1}?$/;
+        var regpan = /^([A-Z]){5}([0-9]){4}([A-Z]){1}?$/;
         if(!regpan.test(pan_number)){
-            req.flash('messageFailure', "Please enter valid pancard number");
+            req.flash('messageFailure', "Please enter valid PAN number");
             throw new Error();
         }
         const requirements = req.body.requirements;
