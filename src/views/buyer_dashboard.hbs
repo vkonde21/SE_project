@@ -154,7 +154,7 @@
             <p class="card-text">All the previous crop requirements will be overwritten by the ones entered here so if you want to retain the previous requirements, enter them here along with the new ones.</p>
             <br>
             <form id="requirements" action="crop_requirements" method="POST">
-              <input type="text" class="form-control" placeholder="New crop requirements" name="croprequirements" value="{{buyer.requirements}}"/>
+              <input type="text" class="form-control" placeholder="New crop requirements" name="croprequirements" value="{{buyer.requirements}}" required/>
               <div class="row">
                 <div class="col-4"></div>
                 <div class="col">
@@ -172,7 +172,7 @@
             <h5 class="card-title">New order confirmation</h5>
             <p class="card-text">Enter the username of the farmer you bought produce from (It will reflect on your account after the farmer has confirmed the order)</p>
             <br>
-            <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" />
+            <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" required/>
             <div class="row">
                 <div class="col-4"></div>
                 <div class="col-5">

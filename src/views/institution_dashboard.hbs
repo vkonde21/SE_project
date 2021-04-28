@@ -152,7 +152,7 @@
             <form id="requirements" action="crop_requirements" method="POST">
             <h5 class="card-title">Add/update crop requirements</h5>
             <p class="card-text">All the previous crop requirements will be overwritten by the ones entered here so if you want to retain the previous requirements, enter them here along with the new ones.</p>
-            <input type="text" class="form-control" placeholder="New crop requirements" name="croprequirements" value="{{institution.requirements}}"/>
+            <input type="text" class="form-control" placeholder="New crop requirements" name="croprequirements" value="{{institution.requirements}}" required/>
             <div class="row">
               <div class="col-4"></div>
               <div class="col">
@@ -169,7 +169,7 @@
             <form action="deal_lock" method="POST">
             <h5 class="card-title">New deal confirmation</h5>
             <p class="card-text">Enter the username of the farmer who you signed a deal with (It will reflect on your account after the farmer has confirmed the deal):</p>
-            <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" />
+            <input type="text" class="form-control" placeholder="Username of farmer" name="farmerusername" required/>
             <div class="row">
                 <div class="col-4"></div>
                 <div class="col-4">
