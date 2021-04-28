@@ -27,8 +27,8 @@ router.route('/addcrops').post(auth, upload.single('cropimage'), async (req, res
     try {
         const cropname = req.body.cropname;
         const dev_stage = req.body.dev_stage;
-        if (cropname.match('^[\.a-zA-Z]*$') == null || dev_stage.match('^[\.a-zA-Z]*$') == null) {
-            req.flash('messageFailure', 'Crop name and development stage should contain only letters');
+        if (cropname.match('^[\.a-zA-Z ]*$') == null || dev_stage.match('^[\.a-zA-Z]*$') == null) {
+            req.flash('messageFailure', 'Crop name and stage of growth should contain only letters and spaces');
             throw new Error();
         }
         const cropimage = req.file.buffer;
@@ -74,8 +74,8 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'), async (r
         if (crop.user_id.equals(req.user._id)) {
             const cropname = req.body.cropname;
             const dev_stage = req.body.dev_stage;
-            if (cropname.match('^[\.a-zA-Z]*$') == null || dev_stage.match('^[\.a-zA-Z]*$') == null) {
-                req.flash('messageFailure', 'Crop name and development stage should contain only letters');
+            if (cropname.match('^[\.a-zA-Z ]*$') == null || dev_stage.match('^[\.a-zA-Z]*$') == null) {
+                req.flash('messageFailure', 'Crop name and stage of growth should contain only letters and spaces');
                 throw new Error();
             }
             const cropimage = req.file.buffer;
