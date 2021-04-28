@@ -72,12 +72,9 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'), async (r
         const id = req.params.id;
         const crop = await Crop.findById(id);
         if (crop.user_id.equals(req.user._id)) {
-            const cropname = req.body.cropname;
+            
             const dev_stage = req.body.dev_stage;
-            if (cropname.match('^[\.a-zA-Z ]*$') == null || dev_stage.match('^[\.a-zA-Z]*$') == null) {
-                req.flash('messageFailure', 'Crop name and stage of growth should contain only letters and spaces');
-                throw new Error();
-            }
+            
             const cropimage = req.file.buffer;
             if (!req.file.originalname.match(/\.(jpg|jpeg|png)$/) || req.file.size > 1000000) {
                 req.flash('messageFailure', "Please upload a jpg/jpeg/png image with max size 1MB");
@@ -88,7 +85,7 @@ router.route('/updatecrops/:id').post(auth, upload.single('cropimage'), async (r
             const bString = ab2str(cropimage, 'base64');
             crop.filetype = filetype;
             crop.bString = bString;
-            crop.cropname = cropname;
+            
             crop.dev_stage = dev_stage;
             crop.cropimage = cropimage;
             await crop.save();
