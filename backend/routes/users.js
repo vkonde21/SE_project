@@ -362,7 +362,7 @@ router.route('/filter').post(auth, async (req, res) => {
             }
             farmers = await Farmer.find({_id:users._id});
             if(users == null){
-                req.flash('messageFailure', 'No match found');
+                req.flash('messageFailure', 'No matches found');
                 throw new Error();
             }
         }
@@ -370,7 +370,7 @@ router.route('/filter').post(auth, async (req, res) => {
             var location = req.body.search;
             farmers = await Farmer.find({location:{$regex:location, $options:'i'}});
             if(farmers.length == 0){
-                req.flash('messageFailure', 'No match found');
+                req.flash('messageFailure', 'No matches found');
                 throw new Error();
             }   
         }
@@ -378,7 +378,7 @@ router.route('/filter').post(auth, async (req, res) => {
             var rating = req.body.search;
                 farmers = await Farmer.find({rating:{$gte:rating}});
                 if(farmers.length == 0){
-                    req.flash('messageFailure', 'No match found');
+                    req.flash('messageFailure', 'No matches found');
                     throw new Error();
                 }   
         }
@@ -387,7 +387,7 @@ router.route('/filter').post(auth, async (req, res) => {
             
                 farmers = await Farmer.find({land_area:{$gte:land_area}});
                 if(farmers.length == 0){
-                    req.flash('messageFailure', 'No match found');
+                    req.flash('messageFailure', 'No matches found');
                     throw new Error();
                 } 
         }
