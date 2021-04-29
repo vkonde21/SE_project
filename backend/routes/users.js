@@ -311,7 +311,12 @@ router.route('/viewfarmers').get(auth, async (req, res) => {
                 if(f1 != null)
                     users.push(f1);
             }
-            
+            users.sort((a,b) => {
+                if(a.rating > b.rating)
+                    return -1;
+                else
+                    return 1;
+            })
             for(i=0; i<users.length;i+=2){
                 c1="";
                 c2="";

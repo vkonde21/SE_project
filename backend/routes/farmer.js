@@ -108,6 +108,7 @@ router.route('/deletecrops/:id').get(auth, async (req, res) => {
         const crop = await Crop.findById(id);
         if (crop.user_id.equals(req.user._id)) {
             await Crop.deleteOne({ _id: id });
+            req.flash('messageSuccess', "Crop details deleted successfully");
             res.redirect('/users/dashboard');
         }
         else {
