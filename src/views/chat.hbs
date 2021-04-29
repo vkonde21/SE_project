@@ -173,6 +173,11 @@ overflow-y: auto;
         <li>
           <a class="page-scroll" href="/users/dashboard">Dashboard</a>
         </li>
+        {{#ifeq curr_user.type "farmer"}}
+            <li class="nav-item">
+              <a class="nav-link" href="/users/notifications">Notifications</a>
+            </li>
+            {{/ifeq}}
         {{#ifeq curr_user.type "buyer"}}
         <li>
           <a class="page-scroll" href="/users/viewfarmers">View Farmers' Profiles</a>

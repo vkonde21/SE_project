@@ -60,11 +60,13 @@ router.route('/save_rating/:id').post(auth, async(req,res) => {
         const farmer = await Farmer.findById(user._id);
         rating.rating = r;
         rating.given = true;
+        console.log(rating.rating, farmer.rating);
         await rating.save();
         if(farmer.rating != 0)
-            farmer.rating = (farmer.rating + r)/2.0;
+            farmer.rating = (farmer.rating + rating.rating)/2.0;
         else
             farmer.rating = r;
+        console.log(farmer.rating);
         await farmer.save();
         req.flash('messageSuccess', 'Rating saved successfully');
         res.redirect('/users/buyer_orders');

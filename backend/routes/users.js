@@ -59,15 +59,15 @@ router.route('/registerfarmer').post(upload.fields([{
         const hashedPassword = await bcrypt.hash(password, 8);
         const email = req.body.email;
         const type = "farmer";
-        var buyer_req = req.body.buyeryes;
-        if (buyer_req == undefined) {
+        var buyer_req = req.body.buyer;
+        if (buyer_req == 0) {
             buyer_req = false;
         }
         else {
             buyer_req = true;
         }
-        var investor_req = req.body.investoryes;
-        if (investor_req == undefined) {
+        var investor_req = req.body.investor;
+        if (investor_req == 0) {
             investor_req = false;
         }
         else {
@@ -962,15 +962,15 @@ router.route('/updateprofile').post(auth, async(req, res) => {
                 throw new Error();
             }
             const email = req.body.email;
-            var buyer_req = req.body.buyeryes;
-            if (buyer_req == undefined) {
+            var buyer_req = req.body.buyer;
+            if (buyer_req == 0) {
                 buyer_req = false;
             }
             else {
                 buyer_req = true;
             }
-            var investor_req = req.body.investoryes;
-            if (investor_req == undefined) {
+            var investor_req = req.body.investor;
+            if (investor_req == 0) {
                 investor_req = false;
             }
             else {
