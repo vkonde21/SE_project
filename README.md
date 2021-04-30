@@ -2,8 +2,6 @@
 
 ## Team Members
 ```
-Division 2
-Group 221
 Arya Gandhi 111803151
 Vaishnavi Konde 111803185
 ```
