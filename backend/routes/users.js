@@ -53,7 +53,7 @@ router.route('/registerfarmer').post(upload.fields([{
         }
         const fullname = req.body.registername;
         if(fullname.match('^[\.a-zA-Z ]*$') == null){
-            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
             throw new Error();
         }
         const hashedPassword = await bcrypt.hash(password, 8);
@@ -527,7 +527,7 @@ router.route('/registerinvestor').post(upload.single('incomestatement'), async (
         }
         const fullname = req.body.registername;
         if(fullname.match('^[\.a-zA-Z ]*$') == null){
-            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
             throw new Error();
         }
         const hashedPassword = await bcrypt.hash(password, 8);
@@ -595,7 +595,7 @@ router.route('/registerinstitution').post(upload.single('businessproof'), async 
         }
         const fullname = req.body.registername;
         if(fullname.match('^[\.a-zA-Z ]*$') == null || username.length < 3){
-            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
             throw new Error();
         }
         const hashedPassword = await bcrypt.hash(password, 8);
@@ -656,7 +656,7 @@ router.route('/registerbuyer').post(upload.single('pancard'), async (req, res) =
         }
         const fullname = req.body.registername;
         if(fullname.match('^[\.a-zA-Z ]*$') == null){
-            req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+            req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
             throw new Error();
         }
         const hashedPassword = await bcrypt.hash(password, 8);
@@ -891,7 +891,7 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
             if(fullname.match('^[\.a-zA-Z ]*$') == null){
-                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
                 throw new Error();
             }
             const email = req.body.email;
@@ -914,7 +914,7 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
             if(fullname.match('^[\.a-zA-Z ]*$') == null){
-                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
                 throw new Error();
             }
             const email = req.body.email;
@@ -937,7 +937,7 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
             if(fullname.match('^[\.a-zA-Z ]*$') == null){
-                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
                 throw new Error();
             }
             const email = req.body.email;
@@ -958,7 +958,7 @@ router.route('/updateprofile').post(auth, async(req, res) => {
             const user = await User.findById(req.user._id);
             const fullname = req.body.registername;
             if(fullname.match('^[\.a-zA-Z ]*$') == null){
-                req.flash('messageFailure', 'Fullname should contain only alphabets and spaces');
+                req.flash('messageFailure', 'Full name should contain only alphabets and spaces');
                 throw new Error();
             }
             const email = req.body.email;
