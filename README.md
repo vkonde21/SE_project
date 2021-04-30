@@ -15,13 +15,14 @@ The tech stack used for this project is:
 
 ## Features
 - Registration: Farmers, investors, buyers and food making institutions can create their account
-- Verification: Admin verifies the accounts of registered users.
+- Verification: Admin verifies the accounts of registered users and a mail is sent to the users once they are verified.
 - Login: Once an account is verified by the admin, the user can login.
 - Crops: Farmers can add, update and delete crop details.
 - Search Farmers: Investors, food making institutions and buyers can search for farmers by applying filters.
-- Chat: Investors, food making institutions and buyers can initiate chat with farmers in order to finalize their deal or order.
+- Chat: Investors, food making institutions and buyers can initiate chat with farmers in order to finalize their deal or order. They can send each other text messages and images in real time once the chat is initiated. The users can also block each other in case of spamming and can unblock the blocked user anytime they want.
 - Notifications: Farmers can accept or reject deals/orders.
-- Orders: Buyers can confirm their orders by sending a notification to the farmer and rate that farmer.
+- Orders and deals: Buyers can confirm their orders and investors and institutions can confirm their deals by sending a confirmation request to the farmer which the farmer can accept or reject. A mail is sent to the buyers, investors and institutions once their order/ deal request is accepted or rejected by the farmer.
+- Ratings: Buyers can rate farmers once they have confirmed an order with the farmer. This rating will reflect in the farmer's profile.
 
 ## Run server locally
 1. Clone the repository
