@@ -2,6 +2,8 @@
 
 ## Team Members
 ```
+Division 2
+Group 221
 Arya Gandhi 111803151
 Vaishnavi Konde 111803185
 ```
@@ -33,3 +35,94 @@ The tech stack used for this project is:
 [Project demo](https://drive.google.com/file/d/1ih1qKpITBo03E86yiLZUQB80XrTyxloG/view?usp=sharing)
 
 ## Screenshots
+
+<table>
+ <tr>
+  <th>Login</th>
+  <th>Register</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Login.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Register.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>About</th>
+  <th>Help</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/About.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Help.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>Farmer Registration</th>
+  <th>Buyer Registration</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Farmer_Registration.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Buyer_Registration.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>Admin Dashboard</th>
+  <th>Verify Profile</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Admin_Dashboard.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Verify_Profiles.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>Farmer Dashboard</th>
+  <th>Farmer Notifications</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Farmer_Dashboard.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/farmer_notifications.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>Add new crop</th>
+  <th>Update investor profile</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/add_new_crop.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Investor_UpdateProfile.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>Institution Dashboard</th>
+  <th>Institution Update Profile</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Institution_Dashboard.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Institution_UpdateProfile.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>View Farmers' Profiles</th>
+  <th>Buyer Orders</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/view_farmer_profiles.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Buyer_Orders.png"></td>
+ </tr>
+</table>
+<table>
+ <tr>
+  <th>Chat List</th>
+  <th>Chat Window</th>
+ </tr>
+ <tr>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Chatlist.png"></td>
+  <td><img src="https://github.com/vkonde21/SE_project/blob/master/screenshots/Chat.png"></td>
+ </tr>
+</table>
