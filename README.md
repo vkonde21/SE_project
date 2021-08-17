@@ -2,8 +2,8 @@
 
 ## Team Members
 ```
-Arya Gandhi 111803151
-Vaishnavi Konde 111803185
+Arya Gandhi
+Vaishnavi Konde
 ```
 This website aims to connect farmers of organic crops, investors, buyers and food making institutions to bridge the gap between demand and supply of organic crops, thereby creating a viable solution for all.
 
